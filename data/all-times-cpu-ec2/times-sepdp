@@ -1,0 +1,38 @@
+Get key	Create tag	Create challenge	Create proof	Verify file	HEAD	GET	PUT	COPY	LIST	POST	Metadata	Timestamp
+0.0000050	0.0230000	0.0000339	0.0006189	0.0008459	0	0	0	0	0	0	SEPDP:Block size 4096:PRF key size 20:PRP key size 16:AE key size 16:years 1:minutes 1312:# challenge blocks 512:# threads 1:Filename ../../test-files/testfile_rand_2KB	Mon Sep 10 17:22:35 2012
+Get key	Create tag	Create challenge	Create proof	Verify file	HEAD	GET	PUT	COPY	LIST	POST	Metadata	Timestamp
+0.0000079	0.0345089	0.0000491	0.0006320	0.0010159	0	0	0	0	0	0	SEPDP:Block size 4096:PRF key size 20:PRP key size 16:AE key size 16:years 1:minutes 1312:# challenge blocks 512:# threads 1:Filename ../../test-files/testfile_rand_4KB	Mon Sep 10 17:22:38 2012
+Get key	Create tag	Create challenge	Create proof	Verify file	HEAD	GET	PUT	COPY	LIST	POST	Metadata	Timestamp
+0.0000062	0.0371041	0.0000350	0.0007901	0.0008819	0	0	0	0	0	0	SEPDP:Block size 4096:PRF key size 20:PRP key size 16:AE key size 16:years 1:minutes 1312:# challenge blocks 512:# threads 1:Filename ../../test-files/testfile_rand_8KB	Mon Sep 10 17:22:41 2012
+Get key	Create tag	Create challenge	Create proof	Verify file	HEAD	GET	PUT	COPY	LIST	POST	Metadata	Timestamp
+0.0000062	0.0191059	0.0000341	0.0010259	0.0008359	0	0	0	0	0	0	SEPDP:Block size 4096:PRF key size 20:PRP key size 16:AE key size 16:years 1:minutes 1312:# challenge blocks 512:# threads 1:Filename ../../test-files/testfile_rand_16KB	Mon Sep 10 17:22:43 2012
+Get key	Create tag	Create challenge	Create proof	Verify file	HEAD	GET	PUT	COPY	LIST	POST	Metadata	Timestamp
+0.0000069	0.0329199	0.0000339	0.0016141	0.0008721	0	0	0	0	0	0	SEPDP:Block size 4096:PRF key size 20:PRP key size 16:AE key size 16:years 1:minutes 1312:# challenge blocks 512:# threads 1:Filename ../../test-files/testfile_rand_32KB	Mon Sep 10 17:22:46 2012
+Get key	Create tag	Create challenge	Create proof	Verify file	HEAD	GET	PUT	COPY	LIST	POST	Metadata	Timestamp
+0.0000060	0.0234480	0.0000341	0.0028532	0.0009689	0	0	0	0	0	0	SEPDP:Block size 4096:PRF key size 20:PRP key size 16:AE key size 16:years 1:minutes 1312:# challenge blocks 512:# threads 1:Filename ../../test-files/testfile_rand_64KB	Mon Sep 10 17:22:48 2012
+Get key	Create tag	Create challenge	Create proof	Verify file	HEAD	GET	PUT	COPY	LIST	POST	Metadata	Timestamp
+0.0000050	0.0330269	0.0000350	0.0051210	0.0009880	0	0	0	0	0	0	SEPDP:Block size 4096:PRF key size 20:PRP key size 16:AE key size 16:years 1:minutes 1312:# challenge blocks 512:# threads 1:Filename ../../test-files/testfile_rand_128KB	Mon Sep 10 17:22:51 2012
+Get key	Create tag	Create challenge	Create proof	Verify file	HEAD	GET	PUT	COPY	LIST	POST	Metadata	Timestamp
+0.0000062	0.0339460	0.0000348	0.0094500	0.0008450	0	0	0	0	0	0	SEPDP:Block size 4096:PRF key size 20:PRP key size 16:AE key size 16:years 1:minutes 1312:# challenge blocks 512:# threads 1:Filename ../../test-files/testfile_rand_256KB	Mon Sep 10 17:22:54 2012
+Get key	Create tag	Create challenge	Create proof	Verify file	HEAD	GET	PUT	COPY	LIST	POST	Metadata	Timestamp
+0.0000062	0.0378361	0.0000410	0.0188081	0.0008731	0	0	0	0	0	0	SEPDP:Block size 4096:PRF key size 20:PRP key size 16:AE key size 16:years 1:minutes 1312:# challenge blocks 512:# threads 1:Filename ../../test-files/testfile_rand_512KB	Mon Sep 10 17:22:58 2012
+Get key	Create tag	Create challenge	Create proof	Verify file	HEAD	GET	PUT	COPY	LIST	POST	Metadata	Timestamp
+0.0000060	0.0741370	0.0000482	0.0428400	0.0010030	0	0	0	0	0	0	SEPDP:Block size 4096:PRF key size 20:PRP key size 16:AE key size 16:years 1:minutes 1312:# challenge blocks 512:# threads 1:Filename ../../test-files/testfile_rand_1024KB	Mon Sep 10 17:23:02 2012
+Get key	Create tag	Create challenge	Create proof	Verify file	HEAD	GET	PUT	COPY	LIST	POST	Metadata	Timestamp
+0.0000060	0.1231482	0.0000360	0.0805349	0.0008769	0	0	0	0	0	0	SEPDP:Block size 4096:PRF key size 20:PRP key size 16:AE key size 16:years 1:minutes 1312:# challenge blocks 512:# threads 1:Filename ../../test-files/testfile_rand_2048KB	Mon Sep 10 17:23:08 2012
+Get key	Create tag	Create challenge	Create proof	Verify file	HEAD	GET	PUT	COPY	LIST	POST	Metadata	Timestamp
+0.0000062	0.1162181	0.0000360	0.0721130	0.0008900	0	0	0	0	0	0	SEPDP:Block size 4096:PRF key size 20:PRP key size 16:AE key size 16:years 1:minutes 1312:# challenge blocks 512:# threads 1:Filename ../../test-files/testfile_rand_4096KB	Mon Sep 10 17:23:55 2012
+Get key	Create tag	Create challenge	Create proof	Verify file	HEAD	GET	PUT	COPY	LIST	POST	Metadata	Timestamp
+0.0000050	1.2771721	0.0000448	0.9247069	0.0010860	0	0	0	0	0	0	SEPDP:Block size 4096:PRF key size 20:PRP key size 16:AE key size 16:years 1:minutes 1312:# challenge blocks 512:# threads 1:Filename ../../test-files/testfile_rand_8192KB	Mon Sep 10 17:25:00 2012
+Get key	Create tag	Create challenge	Create proof	Verify file	HEAD	GET	PUT	COPY	LIST	POST	Metadata	Timestamp
+0.0000060	1.3358700	0.0000482	0.9153080	0.0009692	0	0	0	0	0	0	SEPDP:Block size 4096:PRF key size 20:PRP key size 16:AE key size 16:years 1:minutes 1312:# challenge blocks 512:# threads 1:Filename ../../test-files/testfile_rand_16384KB	Mon Sep 10 17:27:21 2012
+Get key	Create tag	Create challenge	Create proof	Verify file	HEAD	GET	PUT	COPY	LIST	POST	Metadata	Timestamp
+0.0000060	1.2438321	0.0000441	0.8226998	0.0009811	0	0	0	0	0	0	SEPDP:Block size 4096:PRF key size 20:PRP key size 16:AE key size 16:years 1:minutes 1312:# challenge blocks 512:# threads 1:Filename ../../test-files/testfile_rand_32768KB	Mon Sep 10 17:31:36 2012
+Get key	Create tag	Create challenge	Create proof	Verify file	HEAD	GET	PUT	COPY	LIST	POST	Metadata	Timestamp
+0.0000119	1.2310860	0.0000460	0.8372240	0.0008881	0	0	0	0	0	0	SEPDP:Block size 4096:PRF key size 20:PRP key size 16:AE key size 16:years 1:minutes 1312:# challenge blocks 512:# threads 1:Filename ../../test-files/testfile_rand_65536KB	Mon Sep 10 17:40:28 2012
+Get key	Create tag	Create challenge	Create proof	Verify file	HEAD	GET	PUT	COPY	LIST	POST	Metadata	Timestamp
+0.0000060	0.1214778	0.0000882	0.0853250	0.0008860	0	0	0	0	0	0	SEPDP:Block size 4096:PRF key size 20:PRP key size 16:AE key size 16:years 1:minutes 1312:# challenge blocks 512:# threads 1:Filename ../../test-files/testfile_rand_131072KB	Mon Sep 10 17:58:32 2012
+Get key	Create tag	Create challenge	Create proof	Verify file	HEAD	GET	PUT	COPY	LIST	POST	Metadata	Timestamp
+0.0000069	0.1211390	0.0000360	0.0869770	0.0008910	0	0	0	0	0	0	SEPDP:Block size 4096:PRF key size 20:PRP key size 16:AE key size 16:years 1:minutes 1312:# challenge blocks 512:# threads 1:Filename ../../test-files/testfile_rand_262144KB	Mon Sep 10 18:34:43 2012
+Get key	Create tag	Create challenge	Create proof	Verify file	HEAD	GET	PUT	COPY	LIST	POST	Metadata	Timestamp
+0.0000062	0.2783620	0.0000420	0.2459860	0.0070260	0	0	0	0	0	0	SEPDP:Block size 4096:PRF key size 20:PRP key size 16:AE key size 16:years 1:minutes 1312:# challenge blocks 512:# threads 1:Filename ../../test-files/testfile_rand_524288KB	Mon Sep 10 20:08:28 2012

@@ -1,0 +1,38 @@
+Get key	Create tag	Create challenge	Sanitize challenge	Create proof	Verify file	HEAD	GET	PUT	COPY	LIST	POST	Metadata	Timestamp
+0.0525382	0.0688722	0.0178661	0.0000110	2.1756620	0.0197968	0	0	0	0	0	0	PDP:Block size 16384:PRF key size 20:PRP key size 16:RSA key size 1024:use E-PDP 1:use safe primes 1:# challenges 460:# threads 1:Filename ../../test-files/testfile_rand_2KB	Mon Sep 10 17:22:38 2012
+Get key	Create tag	Create challenge	Sanitize challenge	Create proof	Verify file	HEAD	GET	PUT	COPY	LIST	POST	Metadata	Timestamp
+0.0254340	0.0637569	0.0187910	0.0000088	1.8801401	0.0192759	0	0	0	0	0	0	PDP:Block size 16384:PRF key size 20:PRP key size 16:RSA key size 1024:use E-PDP 1:use safe primes 1:# challenges 460:# threads 1:Filename ../../test-files/testfile_rand_4KB	Mon Sep 10 17:22:40 2012
+Get key	Create tag	Create challenge	Sanitize challenge	Create proof	Verify file	HEAD	GET	PUT	COPY	LIST	POST	Metadata	Timestamp
+0.0287828	0.0623600	0.0180612	0.0000129	1.9633820	0.0194061	0	0	0	0	0	0	PDP:Block size 16384:PRF key size 20:PRP key size 16:RSA key size 1024:use E-PDP 1:use safe primes 1:# challenges 460:# threads 1:Filename ../../test-files/testfile_rand_8KB	Mon Sep 10 17:22:43 2012
+Get key	Create tag	Create challenge	Sanitize challenge	Create proof	Verify file	HEAD	GET	PUT	COPY	LIST	POST	Metadata	Timestamp
+0.0261760	0.0633972	0.0181601	0.0000069	2.0856049	0.0193830	0	0	0	0	0	0	PDP:Block size 16384:PRF key size 20:PRP key size 16:RSA key size 1024:use E-PDP 1:use safe primes 1:# challenges 460:# threads 1:Filename ../../test-files/testfile_rand_16KB	Mon Sep 10 17:22:45 2012
+Get key	Create tag	Create challenge	Sanitize challenge	Create proof	Verify file	HEAD	GET	PUT	COPY	LIST	POST	Metadata	Timestamp
+0.0261011	0.1046271	0.0180609	0.0000069	2.0749321	0.0196850	0	0	0	0	0	0	PDP:Block size 16384:PRF key size 20:PRP key size 16:RSA key size 1024:use E-PDP 1:use safe primes 1:# challenges 460:# threads 1:Filename ../../test-files/testfile_rand_32KB	Mon Sep 10 17:22:48 2012
+Get key	Create tag	Create challenge	Sanitize challenge	Create proof	Verify file	HEAD	GET	PUT	COPY	LIST	POST	Metadata	Timestamp
+0.0263131	0.1656549	0.0187030	0.0000069	2.1289158	0.0195038	0	0	0	0	0	0	PDP:Block size 16384:PRF key size 20:PRP key size 16:RSA key size 1024:use E-PDP 1:use safe primes 1:# challenges 460:# threads 1:Filename ../../test-files/testfile_rand_64KB	Mon Sep 10 17:22:51 2012
+Get key	Create tag	Create challenge	Sanitize challenge	Create proof	Verify file	HEAD	GET	PUT	COPY	LIST	POST	Metadata	Timestamp
+0.0263121	0.3181121	0.0181510	0.0000079	2.1063721	0.0209210	0	0	0	0	0	0	PDP:Block size 16384:PRF key size 20:PRP key size 16:RSA key size 1024:use E-PDP 1:use safe primes 1:# challenges 460:# threads 1:Filename ../../test-files/testfile_rand_128KB	Mon Sep 10 17:22:54 2012
+Get key	Create tag	Create challenge	Sanitize challenge	Create proof	Verify file	HEAD	GET	PUT	COPY	LIST	POST	Metadata	Timestamp
+0.0260310	0.6033762	0.0179400	0.0000072	2.4530859	0.0212469	0	0	0	0	0	0	PDP:Block size 16384:PRF key size 20:PRP key size 16:RSA key size 1024:use E-PDP 1:use safe primes 1:# challenges 460:# threads 1:Filename ../../test-files/testfile_rand_256KB	Mon Sep 10 17:22:57 2012
+Get key	Create tag	Create challenge	Sanitize challenge	Create proof	Verify file	HEAD	GET	PUT	COPY	LIST	POST	Metadata	Timestamp
+0.0262780	1.1781349	0.0194221	0.0000100	2.1678660	0.0232038	0	0	0	0	0	0	PDP:Block size 16384:PRF key size 20:PRP key size 16:RSA key size 1024:use E-PDP 1:use safe primes 1:# challenges 460:# threads 1:Filename ../../test-files/testfile_rand_512KB	Mon Sep 10 17:23:02 2012
+Get key	Create tag	Create challenge	Sanitize challenge	Create proof	Verify file	HEAD	GET	PUT	COPY	LIST	POST	Metadata	Timestamp
+0.0275400	2.4950120	0.0192440	0.0000110	2.1589200	0.0260170	0	0	0	0	0	0	PDP:Block size 16384:PRF key size 20:PRP key size 16:RSA key size 1024:use E-PDP 1:use safe primes 1:# challenges 460:# threads 1:Filename ../../test-files/testfile_rand_1024KB	Mon Sep 10 17:23:07 2012
+Get key	Create tag	Create challenge	Sanitize challenge	Create proof	Verify file	HEAD	GET	PUT	COPY	LIST	POST	Metadata	Timestamp
+0.0262711	30.7939360	0.2345908	0.0000122	13.7538700	0.0319362	0	0	0	0	0	0	PDP:Block size 16384:PRF key size 20:PRP key size 16:RSA key size 1024:use E-PDP 1:use safe primes 1:# challenges 460:# threads 1:Filename ../../test-files/testfile_rand_2048KB	Mon Sep 10 17:23:53 2012
+Get key	Create tag	Create challenge	Sanitize challenge	Create proof	Verify file	HEAD	GET	PUT	COPY	LIST	POST	Metadata	Timestamp
+0.0256450	38.1186888	0.0184219	0.0000122	2.7755480	0.0433171	0	0	0	0	0	0	PDP:Block size 16384:PRF key size 20:PRP key size 16:RSA key size 1024:use E-PDP 1:use safe primes 1:# challenges 460:# threads 1:Filename ../../test-files/testfile_rand_4096KB	Mon Sep 10 17:24:36 2012
+Get key	Create tag	Create challenge	Sanitize challenge	Create proof	Verify file	HEAD	GET	PUT	COPY	LIST	POST	Metadata	Timestamp
+0.2335432	91.5034609	0.2343619	0.0000122	14.6310909	0.0659671	0	0	0	0	0	0	PDP:Block size 16384:PRF key size 20:PRP key size 16:RSA key size 1024:use E-PDP 1:use safe primes 1:# challenges 460:# threads 1:Filename ../../test-files/testfile_rand_8192KB	Mon Sep 10 17:26:47 2012
+Get key	Create tag	Create challenge	Sanitize challenge	Create proof	Verify file	HEAD	GET	PUT	COPY	LIST	POST	Metadata	Timestamp
+0.2430151	176.7310610	0.0178089	0.0000069	37.5587440	0.7030149	0	0	0	0	0	0	PDP:Block size 16384:PRF key size 20:PRP key size 16:RSA key size 1024:use E-PDP 1:use safe primes 1:# challenges 460:# threads 1:Filename ../../test-files/testfile_rand_16384KB	Mon Sep 10 17:30:57 2012
+Get key	Create tag	Create challenge	Sanitize challenge	Create proof	Verify file	HEAD	GET	PUT	COPY	LIST	POST	Metadata	Timestamp
+0.2318630	405.5947249	0.2228310	0.0000091	41.0063999	0.5976140	0	0	0	0	0	0	PDP:Block size 16384:PRF key size 20:PRP key size 16:RSA key size 1024:use E-PDP 1:use safe primes 1:# challenges 460:# threads 1:Filename ../../test-files/testfile_rand_32768KB	Mon Sep 10 17:39:04 2012
+Get key	Create tag	Create challenge	Sanitize challenge	Create proof	Verify file	HEAD	GET	PUT	COPY	LIST	POST	Metadata	Timestamp
+0.3524220	812.6498439	0.0190561	0.0000088	95.8208001	0.0666850	0	0	0	0	0	0	PDP:Block size 16384:PRF key size 20:PRP key size 16:RSA key size 1024:use E-PDP 1:use safe primes 1:# challenges 460:# threads 1:Filename ../../test-files/testfile_rand_65536KB	Mon Sep 10 17:55:37 2012
+Get key	Create tag	Create challenge	Sanitize challenge	Create proof	Verify file	HEAD	GET	PUT	COPY	LIST	POST	Metadata	Timestamp
+0.0267320	1623.2204940	0.1264920	0.0000088	166.5390618	0.0641079	0	0	0	0	0	0	PDP:Block size 16384:PRF key size 20:PRP key size 16:RSA key size 1024:use E-PDP 1:use safe primes 1:# challenges 460:# threads 1:Filename ../../test-files/testfile_rand_131072KB	Mon Sep 10 18:28:22 2012
+Get key	Create tag	Create challenge	Sanitize challenge	Create proof	Verify file	HEAD	GET	PUT	COPY	LIST	POST	Metadata	Timestamp
+0.0344419	4118.6497810	0.2226341	0.0000119	509.1161392	0.0673561	0	0	0	0	0	0	PDP:Block size 16384:PRF key size 20:PRP key size 16:RSA key size 1024:use E-PDP 1:use safe primes 1:# challenges 460:# threads 1:Filename ../../test-files/testfile_rand_262144KB	Mon Sep 10 19:51:51 2012
+Get key	Create tag	Create challenge	Sanitize challenge	Create proof	Verify file	HEAD	GET	PUT	COPY	LIST	POST	Metadata	Timestamp
+0.0446291	8691.7453098	0.2267661	0.0000129	1048.3654978	0.0724678	0	0	0	0	0	0	PDP:Block size 16384:PRF key size 20:PRP key size 16:RSA key size 1024:use E-PDP 1:use safe primes 1:# challenges 460:# threads 1:Filename ../../test-files/testfile_rand_524288KB	Mon Sep 10 22:50:48 2012

@@ -1,0 +1,40 @@
+Create tag	Create challenge	Create proof	Verify file	HEAD	GET	PUT	COPY	LIST	POST	Metadata	Timestamp
+0.0258470	0.0009820	0.0008171	0.0009260	0	0	0	0	0	0	CPOR:Block size 4096:PRF key size 20:ENC key size 32:MAC key size 20:lambda 80:Zp bits 80:# challenge blocks 80:# threads 1:Filename ../../test-files/testfile_rand_2KB	Mon Sep 10 17:22:35 2012
+Create tag	Create challenge	Create proof	Verify file	HEAD	GET	PUT	COPY	LIST	POST	Metadata	Timestamp
+0.0241950	0.0009980	0.0007839	0.0009320	0	0	0	0	0	0	CPOR:Block size 4096:PRF key size 20:ENC key size 32:MAC key size 20:lambda 80:Zp bits 80:# challenge blocks 80:# threads 1:Filename ../../test-files/testfile_rand_4KB	Mon Sep 10 17:22:38 2012
+Create tag	Create challenge	Create proof	Verify file	HEAD	GET	PUT	COPY	LIST	POST	Metadata	Timestamp
+0.0233791	0.0010431	0.0012751	0.0009930	0	0	0	0	0	0	CPOR:Block size 4096:PRF key size 20:ENC key size 32:MAC key size 20:lambda 80:Zp bits 80:# challenge blocks 80:# threads 1:Filename ../../test-files/testfile_rand_8KB	Mon Sep 10 17:22:40 2012
+Create tag	Create challenge	Create proof	Verify file	HEAD	GET	PUT	COPY	LIST	POST	Metadata	Timestamp
+0.0376229	0.0010831	0.0021880	0.0010161	0	0	0	0	0	0	CPOR:Block size 4096:PRF key size 20:ENC key size 32:MAC key size 20:lambda 80:Zp bits 80:# challenge blocks 80:# threads 1:Filename ../../test-files/testfile_rand_16KB	Mon Sep 10 17:22:43 2012
+Create tag	Create challenge	Create proof	Verify file	HEAD	GET	PUT	COPY	LIST	POST	Metadata	Timestamp
+0.0375938	0.0012319	0.0043821	0.0012500	0	0	0	0	0	0	CPOR:Block size 4096:PRF key size 20:ENC key size 32:MAC key size 20:lambda 80:Zp bits 80:# challenge blocks 80:# threads 1:Filename ../../test-files/testfile_rand_32KB	Mon Sep 10 17:22:46 2012
+Create tag	Create challenge	Create proof	Verify file	HEAD	GET	PUT	COPY	LIST	POST	Metadata	Timestamp
+0.0375049	0.0016410	0.0081460	0.0013249	0	0	0	0	0	0	CPOR:Block size 4096:PRF key size 20:ENC key size 32:MAC key size 20:lambda 80:Zp bits 80:# challenge blocks 80:# threads 1:Filename ../../test-files/testfile_rand_64KB	Mon Sep 10 17:22:48 2012
+Create tag	Create challenge	Create proof	Verify file	HEAD	GET	PUT	COPY	LIST	POST	Metadata	Timestamp
+0.0578191	0.0020320	0.0182230	0.0017009	0	0	0	0	0	0	CPOR:Block size 4096:PRF key size 20:ENC key size 32:MAC key size 20:lambda 80:Zp bits 80:# challenge blocks 80:# threads 1:Filename ../../test-files/testfile_rand_128KB	Mon Sep 10 17:22:51 2012
+Create tag	Create challenge	Create proof	Verify file	HEAD	GET	PUT	COPY	LIST	POST	Metadata	Timestamp
+0.0892031	0.0031612	0.0405109	0.0024719	0	0	0	0	0	0	CPOR:Block size 4096:PRF key size 20:ENC key size 32:MAC key size 20:lambda 80:Zp bits 80:# challenge blocks 80:# threads 1:Filename ../../test-files/testfile_rand_256KB	Mon Sep 10 17:22:54 2012
+Create tag	Create challenge	Create proof	Verify file	HEAD	GET	PUT	COPY	LIST	POST	Metadata	Timestamp
+0.0840011	0.0036519	0.0678840	0.0028958	0	0	0	0	0	0	CPOR:Block size 4096:PRF key size 20:ENC key size 32:MAC key size 20:lambda 80:Zp bits 80:# challenge blocks 80:# threads 1:Filename ../../test-files/testfile_rand_512KB	Mon Sep 10 17:22:58 2012
+Create tag	Create challenge	Create proof	Verify file	HEAD	GET	PUT	COPY	LIST	POST	Metadata	Timestamp
+0.1900330	0.0045931	0.1160851	0.0030360	0	0	0	0	0	0	CPOR:Block size 4096:PRF key size 20:ENC key size 32:MAC key size 20:lambda 80:Zp bits 80:# challenge blocks 80:# threads 1:Filename ../../test-files/testfile_rand_1024KB	Mon Sep 10 17:23:02 2012
+Create tag	Create challenge	Create proof	Verify file	HEAD	GET	PUT	COPY	LIST	POST	Metadata	Timestamp
+0.2973080	0.0043700	0.1881161	0.0029452	0	0	0	0	0	0	CPOR:Block size 4096:PRF key size 20:ENC key size 32:MAC key size 20:lambda 80:Zp bits 80:# challenge blocks 80:# threads 1:Filename ../../test-files/testfile_rand_2048KB	Mon Sep 10 17:23:08 2012
+Create tag	Create challenge	Create proof	Verify file	HEAD	GET	PUT	COPY	LIST	POST	Metadata	Timestamp
+0.6228302	0.0037320	0.3552980	0.0028820	0	0	0	0	0	0	CPOR:Block size 4096:PRF key size 20:ENC key size 32:MAC key size 20:lambda 80:Zp bits 80:# challenge blocks 80:# threads 1:Filename ../../test-files/testfile_rand_4096KB	Mon Sep 10 17:23:54 2012
+Create tag	Create challenge	Create proof	Verify file	HEAD	GET	PUT	COPY	LIST	POST	Metadata	Timestamp
+9.3079400	0.0046730	6.5087640	0.1115260	0	0	0	0	0	0	CPOR:Block size 4096:PRF key size 20:ENC key size 32:MAC key size 20:lambda 80:Zp bits 80:# challenge blocks 80:# threads 1:Filename ../../test-files/testfile_rand_8192KB	Mon Sep 10 17:24:52 2012
+Create tag	Create challenge	Create proof	Verify file	HEAD	GET	PUT	COPY	LIST	POST	Metadata	Timestamp
+9.8534219	0.0928309	13.5110650	0.1110070	0	0	0	0	0	0	CPOR:Block size 4096:PRF key size 20:ENC key size 32:MAC key size 20:lambda 80:Zp bits 80:# challenge blocks 80:# threads 1:Filename ../../test-files/testfile_rand_16384KB	Mon Sep 10 17:27:11 2012
+Create tag	Create challenge	Create proof	Verify file	HEAD	GET	PUT	COPY	LIST	POST	Metadata	Timestamp
+7.4233050	0.0045590	15.0268979	0.0995221	0	0	0	0	0	0	CPOR:Block size 4096:PRF key size 20:ENC key size 32:MAC key size 20:lambda 80:Zp bits 80:# challenge blocks 80:# threads 1:Filename ../../test-files/testfile_rand_32768KB	Mon Sep 10 17:31:20 2012
+Create tag	Create challenge	Create proof	Verify file	HEAD	GET	PUT	COPY	LIST	POST	Metadata	Timestamp
+41.3291600	0.0037889	10.7559409	0.0033619	0	0	0	0	0	0	CPOR:Block size 4096:PRF key size 20:ENC key size 32:MAC key size 20:lambda 80:Zp bits 80:# challenge blocks 80:# threads 1:Filename ../../test-files/testfile_rand_65536KB	Mon Sep 10 17:39:57 2012
+Create tag	Create challenge	Create proof	Verify file	HEAD	GET	PUT	COPY	LIST	POST	Metadata	Timestamp
+76.7094059	0.0042381	92.6079760	0.0028868	0	0	0	0	0	0	CPOR:Block size 4096:PRF key size 20:ENC key size 32:MAC key size 20:lambda 80:Zp bits 80:# challenge blocks 80:# threads 1:Filename ../../test-files/testfile_rand_131072KB	Mon Sep 10 17:58:26 2012
+Create tag	Create challenge	Create proof	Verify file	HEAD	GET	PUT	COPY	LIST	POST	Metadata	Timestamp
+188.8296411	0.1120310	127.0342131	0.0991800	0	0	0	0	0	0	CPOR:Block size 4096:PRF key size 20:ENC key size 32:MAC key size 20:lambda 80:Zp bits 80:# challenge blocks 80:# threads 1:Filename ../../test-files/testfile_rand_262144KB	Mon Sep 10 18:33:38 2012
+Create tag	Create challenge	Create proof	Verify file	HEAD	GET	PUT	COPY	LIST	POST	Metadata	Timestamp
+507.1589990	0.0043962	265.0821171	0.0029151	0	0	0	0	0	0	CPOR:Block size 4096:PRF key size 20:ENC key size 32:MAC key size 20:lambda 80:Zp bits 80:# challenge blocks 80:# threads 1:Filename ../../test-files/testfile_rand_524288KB	Mon Sep 10 20:04:43 2012
+Create tag	Create challenge	Create proof	Verify file	HEAD	GET	PUT	COPY	LIST	POST	Metadata	Timestamp
+0.0203819	0.0008979	0.0000100	0.0000248	0	0	0	0	0	0	CPOR:Block size 4096:PRF key size 20:ENC key size 32:MAC key size 20:lambda 80:Zp bits 80:# challenge blocks 80:# threads 1:Filename ../../test-files/testfile_rand_1048576KB	Mon Sep 10 22:50:49 2012

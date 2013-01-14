@@ -1,0 +1,1280 @@
+
+
+./src/cpor/cpor-s3
+cd ././src/cpor ; ./cpor-s3 -t ../../test-files/testfile_rand_2KB; cd ../../test-files; rm -f *.tag *.tok *.t
+
+Done
+Using the following settings:
+	Block Size: 4096 bytes
+	Number of Threads: 4 
+Tagging ../../test-files/testfile_rand_2KB...Done
+0.000548
+	Writing file ../../test-files/testfile_rand_2KB to S3...Done.
+	Writing tag file ../../test-files/testfile_rand_2KB.tag to S3...Done.
+	Writing t file ../../test-files/testfile_rand_2KB.t to S3...Done.
+Using the following settings:
+	Block Size: 4096 bytes
+	Number of Threads: 4 
+	Number of Challenge blocks: 80 
+Challenging file ../../test-files/testfile_rand_2KB...
+	Getting tag file...	Writing tag file ../../test-files/testfile_rand_2KB.tag to S3...Done.
+	Getting t file...Done.
+	Creating challenge for ../../test-files/testfile_rand_2KB...Done.
+	Computing proof...Done.
+	Verifying proof...Verified
+
+
+./src/macpdp/por-s3
+cd ././src/macpdp ; ./por-s3 -t ../../test-files/testfile_rand_2KB; cd ../../test-files; rm -f *.tag *.tok *.t
+
+Blocksize: 4096
+Number of threads: 4
+Number of challenges: 460
+Filename: ../../test-files/testfile_rand_2KB
+Tagging file...Done.
+Writing file to S3...Done.
+Writing tag to S3...Done.
+Creating challenge...Done.
+Challenging file...
+Retrieving tags...Done.
+Verified!
+
+
+./src/sepdp/sepdp-s3
+cd ././src/sepdp ; ./sepdp-s3 -t -y 1 -m 525600 ../../test-files/testfile_rand_2KB; cd ../../test-files; rm -f *.tag *.tok *.t
+
+Tagging ../../test-files/testfile_rand_2KB...Done
+Writing file ../../test-files/testfile_rand_2KB to S3...Done.
+Writing token file ../../test-files/testfile_rand_2KB.tok to S3...Done.
+Challenging file ../../test-files/testfile_rand_2KB...
+	Creating challenge 0 for ../../test-files/testfile_rand_2KB...Done.
+	Computing proof...Done.
+	Verifying proof...Verified!
+
+
+./src/apdp/pdp-s3
+cd ././src/apdp ; ./pdp-s3 -3 ../../test-files/testfile_rand_2KB; cd ../../test-files; rm -f *.tag *.tok *.t
+
+Tagging ../../test-files/testfile_rand_2KB...Done.
+Writing file ../../test-files/testfile_rand_2KB to S3...Done.
+Writing tag ../../test-files/testfile_rand_2KB to S3...Done.
+Verifying ../../test-files/testfile_rand_2KB...
+	Creating challenge ../../test-files/testfile_rand_2KB...Done.
+	Getting tag file...	Computing proof...Verified!
+140733995.414308
+
+
+./src/cpor/cpor-s3
+cd ././src/cpor ; ./cpor-s3 -t ../../test-files/testfile_rand_4KB; cd ../../test-files; rm -f *.tag *.tok *.t
+
+Done
+Using the following settings:
+	Block Size: 4096 bytes
+	Number of Threads: 4 
+Tagging ../../test-files/testfile_rand_4KB...Done
+0.000525
+	Writing file ../../test-files/testfile_rand_4KB to S3...Done.
+	Writing tag file ../../test-files/testfile_rand_4KB.tag to S3...Done.
+	Writing t file ../../test-files/testfile_rand_4KB.t to S3...Done.
+Using the following settings:
+	Block Size: 4096 bytes
+	Number of Threads: 4 
+	Number of Challenge blocks: 80 
+Challenging file ../../test-files/testfile_rand_4KB...
+	Getting tag file...	Writing tag file ../../test-files/testfile_rand_4KB.tag to S3...Done.
+	Getting t file...Done.
+	Creating challenge for ../../test-files/testfile_rand_4KB...Done.
+	Computing proof...Done.
+	Verifying proof...Verified
+
+
+./src/macpdp/por-s3
+cd ././src/macpdp ; ./por-s3 -t ../../test-files/testfile_rand_4KB; cd ../../test-files; rm -f *.tag *.tok *.t
+
+Blocksize: 4096
+Number of threads: 4
+Number of challenges: 460
+Filename: ../../test-files/testfile_rand_4KB
+Tagging file...Done.
+Writing file to S3...Done.
+Writing tag to S3...Done.
+Creating challenge...Done.
+Challenging file...
+Retrieving tags...Done.
+Verified!
+
+
+./src/sepdp/sepdp-s3
+cd ././src/sepdp ; ./sepdp-s3 -t -y 1 -m 525600 ../../test-files/testfile_rand_4KB; cd ../../test-files; rm -f *.tag *.tok *.t
+
+Tagging ../../test-files/testfile_rand_4KB...Done
+Writing file ../../test-files/testfile_rand_4KB to S3...Done.
+Writing token file ../../test-files/testfile_rand_4KB.tok to S3...Done.
+Challenging file ../../test-files/testfile_rand_4KB...
+	Creating challenge 0 for ../../test-files/testfile_rand_4KB...Done.
+	Computing proof...Done.
+	Verifying proof...Verified!
+
+
+./src/apdp/pdp-s3
+cd ././src/apdp ; ./pdp-s3 -3 ../../test-files/testfile_rand_4KB; cd ../../test-files; rm -f *.tag *.tok *.t
+
+Tagging ../../test-files/testfile_rand_4KB...Done.
+Writing file ../../test-files/testfile_rand_4KB to S3...Done.
+Writing tag ../../test-files/testfile_rand_4KB to S3...Done.
+Verifying ../../test-files/testfile_rand_4KB...
+	Creating challenge ../../test-files/testfile_rand_4KB...Done.
+	Getting tag file...	Computing proof...Verified!
+140735757.238116
+
+
+./src/cpor/cpor-s3
+cd ././src/cpor ; ./cpor-s3 -t ../../test-files/testfile_rand_8KB; cd ../../test-files; rm -f *.tag *.tok *.t
+
+Done
+Using the following settings:
+	Block Size: 4096 bytes
+	Number of Threads: 4 
+Tagging ../../test-files/testfile_rand_8KB...Done
+0.000625
+	Writing file ../../test-files/testfile_rand_8KB to S3...Done.
+	Writing tag file ../../test-files/testfile_rand_8KB.tag to S3...Done.
+	Writing t file ../../test-files/testfile_rand_8KB.t to S3...Done.
+Using the following settings:
+	Block Size: 4096 bytes
+	Number of Threads: 4 
+	Number of Challenge blocks: 80 
+Challenging file ../../test-files/testfile_rand_8KB...
+	Getting tag file...	Writing tag file ../../test-files/testfile_rand_8KB.tag to S3...Done.
+	Getting t file...Done.
+	Creating challenge for ../../test-files/testfile_rand_8KB...Done.
+	Computing proof...Done.
+	Verifying proof...Verified
+
+
+./src/macpdp/por-s3
+cd ././src/macpdp ; ./por-s3 -t ../../test-files/testfile_rand_8KB; cd ../../test-files; rm -f *.tag *.tok *.t
+
+Blocksize: 4096
+Number of threads: 4
+Number of challenges: 460
+Filename: ../../test-files/testfile_rand_8KB
+Tagging file...Done.
+Writing file to S3...Done.
+Writing tag to S3...Done.
+Creating challenge...Done.
+Challenging file...
+Retrieving tags...Done.
+Verified!
+
+
+./src/sepdp/sepdp-s3
+cd ././src/sepdp ; ./sepdp-s3 -t -y 1 -m 525600 ../../test-files/testfile_rand_8KB; cd ../../test-files; rm -f *.tag *.tok *.t
+
+Tagging ../../test-files/testfile_rand_8KB...Done
+Writing file ../../test-files/testfile_rand_8KB to S3...Done.
+Writing token file ../../test-files/testfile_rand_8KB.tok to S3...Done.
+Challenging file ../../test-files/testfile_rand_8KB...
+	Creating challenge 0 for ../../test-files/testfile_rand_8KB...Done.
+	Computing proof...Done.
+	Verifying proof...Verified!
+
+
+./src/apdp/pdp-s3
+cd ././src/apdp ; ./pdp-s3 -3 ../../test-files/testfile_rand_8KB; cd ../../test-files; rm -f *.tag *.tok *.t
+
+Tagging ../../test-files/testfile_rand_8KB...Done.
+Writing file ../../test-files/testfile_rand_8KB to S3...Done.
+Writing tag ../../test-files/testfile_rand_8KB to S3...Done.
+Verifying ../../test-files/testfile_rand_8KB...
+	Creating challenge ../../test-files/testfile_rand_8KB...Done.
+	Getting tag file...	Computing proof...Verified!
+140734159.071508
+
+
+./src/cpor/cpor-s3
+cd ././src/cpor ; ./cpor-s3 -t ../../test-files/testfile_rand_16KB; cd ../../test-files; rm -f *.tag *.tok *.t
+
+Done
+Using the following settings:
+	Block Size: 4096 bytes
+	Number of Threads: 4 
+Tagging ../../test-files/testfile_rand_16KB...Done
+0.000699
+	Writing file ../../test-files/testfile_rand_16KB to S3...Done.
+	Writing tag file ../../test-files/testfile_rand_16KB.tag to S3...Done.
+	Writing t file ../../test-files/testfile_rand_16KB.t to S3...Done.
+Using the following settings:
+	Block Size: 4096 bytes
+	Number of Threads: 4 
+	Number of Challenge blocks: 80 
+Challenging file ../../test-files/testfile_rand_16KB...
+	Getting tag file...	Writing tag file ../../test-files/testfile_rand_16KB.tag to S3...Done.
+	Getting t file...Done.
+	Creating challenge for ../../test-files/testfile_rand_16KB...Done.
+	Computing proof...Done.
+	Verifying proof...Verified
+
+
+./src/macpdp/por-s3
+cd ././src/macpdp ; ./por-s3 -t ../../test-files/testfile_rand_16KB; cd ../../test-files; rm -f *.tag *.tok *.t
+
+Blocksize: 4096
+Number of threads: 4
+Number of challenges: 460
+Filename: ../../test-files/testfile_rand_16KB
+Tagging file...Done.
+Writing file to S3...Done.
+Writing tag to S3...Done.
+Creating challenge...Done.
+Challenging file...
+Retrieving tags...Done.
+Verified!
+
+
+./src/sepdp/sepdp-s3
+cd ././src/sepdp ; ./sepdp-s3 -t -y 1 -m 525600 ../../test-files/testfile_rand_16KB; cd ../../test-files; rm -f *.tag *.tok *.t
+
+Tagging ../../test-files/testfile_rand_16KB...Done
+Writing file ../../test-files/testfile_rand_16KB to S3...Done.
+Writing token file ../../test-files/testfile_rand_16KB.tok to S3...Done.
+Challenging file ../../test-files/testfile_rand_16KB...
+	Creating challenge 0 for ../../test-files/testfile_rand_16KB...Done.
+	Computing proof...Done.
+	Verifying proof...Verified!
+
+
+./src/apdp/pdp-s3
+cd ././src/apdp ; ./pdp-s3 -3 ../../test-files/testfile_rand_16KB; cd ../../test-files; rm -f *.tag *.tok *.t
+
+Tagging ../../test-files/testfile_rand_16KB...Done.
+Writing file ../../test-files/testfile_rand_16KB to S3...Done.
+Writing tag ../../test-files/testfile_rand_16KB to S3...Done.
+Verifying ../../test-files/testfile_rand_16KB...
+	Creating challenge ../../test-files/testfile_rand_16KB...Done.
+	Getting tag file...	Computing proof...Verified!
+140735715.125380
+
+
+./src/cpor/cpor-s3
+cd ././src/cpor ; ./cpor-s3 -t ../../test-files/testfile_rand_32KB; cd ../../test-files; rm -f *.tag *.tok *.t
+
+Done
+Using the following settings:
+	Block Size: 4096 bytes
+	Number of Threads: 4 
+Tagging ../../test-files/testfile_rand_32KB...Done
+0.001032
+	Writing file ../../test-files/testfile_rand_32KB to S3...Done.
+	Writing tag file ../../test-files/testfile_rand_32KB.tag to S3...Done.
+	Writing t file ../../test-files/testfile_rand_32KB.t to S3...Done.
+Using the following settings:
+	Block Size: 4096 bytes
+	Number of Threads: 4 
+	Number of Challenge blocks: 80 
+Challenging file ../../test-files/testfile_rand_32KB...
+	Getting tag file...	Writing tag file ../../test-files/testfile_rand_32KB.tag to S3...Done.
+	Getting t file...Done.
+	Creating challenge for ../../test-files/testfile_rand_32KB...Done.
+	Computing proof...Done.
+	Verifying proof...Verified
+
+
+./src/macpdp/por-s3
+cd ././src/macpdp ; ./por-s3 -t ../../test-files/testfile_rand_32KB; cd ../../test-files; rm -f *.tag *.tok *.t
+
+Blocksize: 4096
+Number of threads: 4
+Number of challenges: 460
+Filename: ../../test-files/testfile_rand_32KB
+Tagging file...Done.
+Writing file to S3...Done.
+Writing tag to S3...Done.
+Creating challenge...Done.
+Challenging file...
+Retrieving tags...Done.
+Verified!
+
+
+./src/sepdp/sepdp-s3
+cd ././src/sepdp ; ./sepdp-s3 -t -y 1 -m 525600 ../../test-files/testfile_rand_32KB; cd ../../test-files; rm -f *.tag *.tok *.t
+
+Tagging ../../test-files/testfile_rand_32KB...Done
+Writing file ../../test-files/testfile_rand_32KB to S3...Done.
+Writing token file ../../test-files/testfile_rand_32KB.tok to S3...Done.
+Challenging file ../../test-files/testfile_rand_32KB...
+	Creating challenge 0 for ../../test-files/testfile_rand_32KB...Done.
+	Computing proof...Done.
+	Verifying proof...Verified!
+
+
+./src/apdp/pdp-s3
+cd ././src/apdp ; ./pdp-s3 -3 ../../test-files/testfile_rand_32KB; cd ../../test-files; rm -f *.tag *.tok *.t
+
+Tagging ../../test-files/testfile_rand_32KB...Done.
+Writing file ../../test-files/testfile_rand_32KB to S3...Done.
+Writing tag ../../test-files/testfile_rand_32KB to S3...Done.
+Verifying ../../test-files/testfile_rand_32KB...
+	Creating challenge ../../test-files/testfile_rand_32KB...Done.
+	Getting tag file...	Computing proof...Verified!
+140736785.443892
+
+
+./src/cpor/cpor-s3
+cd ././src/cpor ; ./cpor-s3 -t ../../test-files/testfile_rand_64KB; cd ../../test-files; rm -f *.tag *.tok *.t
+
+Done
+Using the following settings:
+	Block Size: 4096 bytes
+	Number of Threads: 4 
+Tagging ../../test-files/testfile_rand_64KB...Done
+0.001288
+	Writing file ../../test-files/testfile_rand_64KB to S3...Done.
+	Writing tag file ../../test-files/testfile_rand_64KB.tag to S3...Done.
+	Writing t file ../../test-files/testfile_rand_64KB.t to S3...Done.
+Using the following settings:
+	Block Size: 4096 bytes
+	Number of Threads: 4 
+	Number of Challenge blocks: 80 
+Challenging file ../../test-files/testfile_rand_64KB...
+	Getting tag file...	Writing tag file ../../test-files/testfile_rand_64KB.tag to S3...Done.
+	Getting t file...Done.
+	Creating challenge for ../../test-files/testfile_rand_64KB...Done.
+	Computing proof...Done.
+	Verifying proof...Verified
+
+
+./src/macpdp/por-s3
+cd ././src/macpdp ; ./por-s3 -t ../../test-files/testfile_rand_64KB; cd ../../test-files; rm -f *.tag *.tok *.t
+
+Blocksize: 4096
+Number of threads: 4
+Number of challenges: 460
+Filename: ../../test-files/testfile_rand_64KB
+Tagging file...Done.
+Writing file to S3...Done.
+Writing tag to S3...Done.
+Creating challenge...Done.
+Challenging file...
+Retrieving tags...Done.
+Verified!
+
+
+./src/sepdp/sepdp-s3
+cd ././src/sepdp ; ./sepdp-s3 -t -y 1 -m 525600 ../../test-files/testfile_rand_64KB; cd ../../test-files; rm -f *.tag *.tok *.t
+
+Tagging ../../test-files/testfile_rand_64KB...Done
+Writing file ../../test-files/testfile_rand_64KB to S3...Done.
+Writing token file ../../test-files/testfile_rand_64KB.tok to S3...Done.
+Challenging file ../../test-files/testfile_rand_64KB...
+	Creating challenge 0 for ../../test-files/testfile_rand_64KB...Done.
+	Computing proof...Done.
+	Verifying proof...Verified!
+
+
+./src/apdp/pdp-s3
+cd ././src/apdp ; ./pdp-s3 -3 ../../test-files/testfile_rand_64KB; cd ../../test-files; rm -f *.tag *.tok *.t
+
+Tagging ../../test-files/testfile_rand_64KB...Done.
+Writing file ../../test-files/testfile_rand_64KB to S3...Done.
+Writing tag ../../test-files/testfile_rand_64KB to S3...Done.
+Verifying ../../test-files/testfile_rand_64KB...
+	Creating challenge ../../test-files/testfile_rand_64KB...Done.
+	Getting tag file...	Computing proof...Verified!
+140736203.547572
+
+
+./src/cpor/cpor-s3
+cd ././src/cpor ; ./cpor-s3 -t ../../test-files/testfile_rand_128KB; cd ../../test-files; rm -f *.tag *.tok *.t
+
+Done
+Using the following settings:
+	Block Size: 4096 bytes
+	Number of Threads: 4 
+Tagging ../../test-files/testfile_rand_128KB...Done
+0.002132
+	Writing file ../../test-files/testfile_rand_128KB to S3...Done.
+	Writing tag file ../../test-files/testfile_rand_128KB.tag to S3...Done.
+	Writing t file ../../test-files/testfile_rand_128KB.t to S3...Done.
+Using the following settings:
+	Block Size: 4096 bytes
+	Number of Threads: 4 
+	Number of Challenge blocks: 80 
+Challenging file ../../test-files/testfile_rand_128KB...
+	Getting tag file...	Writing tag file ../../test-files/testfile_rand_128KB.tag to S3...Done.
+	Getting t file...Done.
+	Creating challenge for ../../test-files/testfile_rand_128KB...Done.
+	Computing proof...Done.
+	Verifying proof...Verified
+
+
+./src/macpdp/por-s3
+cd ././src/macpdp ; ./por-s3 -t ../../test-files/testfile_rand_128KB; cd ../../test-files; rm -f *.tag *.tok *.t
+
+Blocksize: 4096
+Number of threads: 4
+Number of challenges: 460
+Filename: ../../test-files/testfile_rand_128KB
+Tagging file...Done.
+Writing file to S3...Done.
+Writing tag to S3...Done.
+Creating challenge...Done.
+Challenging file...
+Retrieving tags...Done.
+Verified!
+
+
+./src/sepdp/sepdp-s3
+cd ././src/sepdp ; ./sepdp-s3 -t -y 1 -m 525600 ../../test-files/testfile_rand_128KB; cd ../../test-files; rm -f *.tag *.tok *.t
+
+Tagging ../../test-files/testfile_rand_128KB...Done
+Writing file ../../test-files/testfile_rand_128KB to S3...Done.
+Writing token file ../../test-files/testfile_rand_128KB.tok to S3...Done.
+Challenging file ../../test-files/testfile_rand_128KB...
+	Creating challenge 0 for ../../test-files/testfile_rand_128KB...Done.
+	Computing proof...Done.
+	Verifying proof...Verified!
+
+
+./src/apdp/pdp-s3
+cd ././src/apdp ; ./pdp-s3 -3 ../../test-files/testfile_rand_128KB; cd ../../test-files; rm -f *.tag *.tok *.t
+
+Tagging ../../test-files/testfile_rand_128KB...Done.
+Writing file ../../test-files/testfile_rand_128KB to S3...Done.
+Writing tag ../../test-files/testfile_rand_128KB to S3...Done.
+Verifying ../../test-files/testfile_rand_128KB...
+	Creating challenge ../../test-files/testfile_rand_128KB...Done.
+	Getting tag file...	Computing proof...Verified!
+140736394.806980
+
+
+./src/cpor/cpor-s3
+cd ././src/cpor ; ./cpor-s3 -t ../../test-files/testfile_rand_256KB; cd ../../test-files; rm -f *.tag *.tok *.t
+
+Done
+Using the following settings:
+	Block Size: 4096 bytes
+	Number of Threads: 4 
+Tagging ../../test-files/testfile_rand_256KB...Done
+0.003214
+	Writing file ../../test-files/testfile_rand_256KB to S3...Done.
+	Writing tag file ../../test-files/testfile_rand_256KB.tag to S3...Done.
+	Writing t file ../../test-files/testfile_rand_256KB.t to S3...Done.
+Using the following settings:
+	Block Size: 4096 bytes
+	Number of Threads: 4 
+	Number of Challenge blocks: 80 
+Challenging file ../../test-files/testfile_rand_256KB...
+	Getting tag file...	Writing tag file ../../test-files/testfile_rand_256KB.tag to S3...Done.
+	Getting t file...Done.
+	Creating challenge for ../../test-files/testfile_rand_256KB...Done.
+	Computing proof...Done.
+	Verifying proof...Verified
+
+
+./src/macpdp/por-s3
+cd ././src/macpdp ; ./por-s3 -t ../../test-files/testfile_rand_256KB; cd ../../test-files; rm -f *.tag *.tok *.t
+
+Blocksize: 4096
+Number of threads: 4
+Number of challenges: 460
+Filename: ../../test-files/testfile_rand_256KB
+Tagging file...Done.
+Writing file to S3...Done.
+Writing tag to S3...Done.
+Creating challenge...Done.
+Challenging file...
+Retrieving tags...Done.
+Verified!
+
+
+./src/sepdp/sepdp-s3
+cd ././src/sepdp ; ./sepdp-s3 -t -y 1 -m 525600 ../../test-files/testfile_rand_256KB; cd ../../test-files; rm -f *.tag *.tok *.t
+
+Tagging ../../test-files/testfile_rand_256KB...Done
+Writing file ../../test-files/testfile_rand_256KB to S3...Done.
+Writing token file ../../test-files/testfile_rand_256KB.tok to S3...Done.
+Challenging file ../../test-files/testfile_rand_256KB...
+	Creating challenge 0 for ../../test-files/testfile_rand_256KB...Done.
+	Computing proof...Done.
+	Verifying proof...Verified!
+
+
+./src/apdp/pdp-s3
+cd ././src/apdp ; ./pdp-s3 -3 ../../test-files/testfile_rand_256KB; cd ../../test-files; rm -f *.tag *.tok *.t
+
+Tagging ../../test-files/testfile_rand_256KB...Done.
+Writing file ../../test-files/testfile_rand_256KB to S3...Done.
+Writing tag ../../test-files/testfile_rand_256KB to S3...Done.
+Verifying ../../test-files/testfile_rand_256KB...
+	Creating challenge ../../test-files/testfile_rand_256KB...Done.
+	Getting tag file...	Computing proof...Verified!
+140734247.017444
+
+
+./src/cpor/cpor-s3
+cd ././src/cpor ; ./cpor-s3 -t ../../test-files/testfile_rand_512KB; cd ../../test-files; rm -f *.tag *.tok *.t
+
+Done
+Using the following settings:
+	Block Size: 4096 bytes
+	Number of Threads: 4 
+Tagging ../../test-files/testfile_rand_512KB...Done
+0.006405
+	Writing file ../../test-files/testfile_rand_512KB to S3...Done.
+	Writing tag file ../../test-files/testfile_rand_512KB.tag to S3...Done.
+	Writing t file ../../test-files/testfile_rand_512KB.t to S3...Done.
+Using the following settings:
+	Block Size: 4096 bytes
+	Number of Threads: 4 
+	Number of Challenge blocks: 80 
+Challenging file ../../test-files/testfile_rand_512KB...
+	Getting tag file...	Writing tag file ../../test-files/testfile_rand_512KB.tag to S3...Done.
+	Getting t file...Done.
+	Creating challenge for ../../test-files/testfile_rand_512KB...Done.
+	Computing proof...Done.
+	Verifying proof...Verified
+
+
+./src/macpdp/por-s3
+cd ././src/macpdp ; ./por-s3 -t ../../test-files/testfile_rand_512KB; cd ../../test-files; rm -f *.tag *.tok *.t
+
+Blocksize: 4096
+Number of threads: 4
+Number of challenges: 460
+Filename: ../../test-files/testfile_rand_512KB
+Tagging file...Done.
+Writing file to S3...Done.
+Writing tag to S3...Done.
+Creating challenge...Done.
+Challenging file...
+Retrieving tags...Done.
+Verified!
+
+
+./src/sepdp/sepdp-s3
+cd ././src/sepdp ; ./sepdp-s3 -t -y 1 -m 525600 ../../test-files/testfile_rand_512KB; cd ../../test-files; rm -f *.tag *.tok *.t
+
+Tagging ../../test-files/testfile_rand_512KB...Done
+Writing file ../../test-files/testfile_rand_512KB to S3...Done.
+Writing token file ../../test-files/testfile_rand_512KB.tok to S3...Done.
+Challenging file ../../test-files/testfile_rand_512KB...
+	Creating challenge 0 for ../../test-files/testfile_rand_512KB...Done.
+	Computing proof...Done.
+	Verifying proof...Verified!
+
+
+./src/apdp/pdp-s3
+cd ././src/apdp ; ./pdp-s3 -3 ../../test-files/testfile_rand_512KB; cd ../../test-files; rm -f *.tag *.tok *.t
+
+Tagging ../../test-files/testfile_rand_512KB...Done.
+Writing file ../../test-files/testfile_rand_512KB to S3...Done.
+Writing tag ../../test-files/testfile_rand_512KB to S3...Done.
+Verifying ../../test-files/testfile_rand_512KB...
+	Creating challenge ../../test-files/testfile_rand_512KB...Done.
+	Getting tag file...	Computing proof...Verified!
+140735099.780660
+
+
+./src/cpor/cpor-s3
+cd ././src/cpor ; ./cpor-s3 -t ../../test-files/testfile_rand_1024KB; cd ../../test-files; rm -f *.tag *.tok *.t
+
+Done
+Using the following settings:
+	Block Size: 4096 bytes
+	Number of Threads: 4 
+Tagging ../../test-files/testfile_rand_1024KB...Done
+0.011546
+	Writing file ../../test-files/testfile_rand_1024KB to S3...Done.
+	Writing tag file ../../test-files/testfile_rand_1024KB.tag to S3...Done.
+	Writing t file ../../test-files/testfile_rand_1024KB.t to S3...Done.
+Using the following settings:
+	Block Size: 4096 bytes
+	Number of Threads: 4 
+	Number of Challenge blocks: 80 
+Challenging file ../../test-files/testfile_rand_1024KB...
+	Getting tag file...	Writing tag file ../../test-files/testfile_rand_1024KB.tag to S3...Done.
+	Getting t file...Done.
+	Creating challenge for ../../test-files/testfile_rand_1024KB...Done.
+	Computing proof...Done.
+	Verifying proof...Verified
+
+
+./src/macpdp/por-s3
+cd ././src/macpdp ; ./por-s3 -t ../../test-files/testfile_rand_1024KB; cd ../../test-files; rm -f *.tag *.tok *.t
+
+Blocksize: 4096
+Number of threads: 4
+Number of challenges: 460
+Filename: ../../test-files/testfile_rand_1024KB
+Tagging file...Done.
+Writing file to S3...Done.
+Writing tag to S3...Done.
+Creating challenge...Done.
+Challenging file...
+Retrieving tags...Done.
+Verified!
+
+
+./src/sepdp/sepdp-s3
+cd ././src/sepdp ; ./sepdp-s3 -t -y 1 -m 525600 ../../test-files/testfile_rand_1024KB; cd ../../test-files; rm -f *.tag *.tok *.t
+
+Tagging ../../test-files/testfile_rand_1024KB...Done
+Writing file ../../test-files/testfile_rand_1024KB to S3...Done.
+Writing token file ../../test-files/testfile_rand_1024KB.tok to S3...Done.
+Challenging file ../../test-files/testfile_rand_1024KB...
+	Creating challenge 0 for ../../test-files/testfile_rand_1024KB...Done.
+	Computing proof...Done.
+	Verifying proof...Verified!
+
+
+./src/apdp/pdp-s3
+cd ././src/apdp ; ./pdp-s3 -3 ../../test-files/testfile_rand_1024KB; cd ../../test-files; rm -f *.tag *.tok *.t
+
+Tagging ../../test-files/testfile_rand_1024KB...Done.
+Writing file ../../test-files/testfile_rand_1024KB to S3...Done.
+Writing tag ../../test-files/testfile_rand_1024KB to S3...Done.
+Verifying ../../test-files/testfile_rand_1024KB...
+	Creating challenge ../../test-files/testfile_rand_1024KB...Done.
+	Getting tag file...	Computing proof...Verified!
+140733972.868020
+
+
+./src/cpor/cpor-s3
+cd ././src/cpor ; ./cpor-s3 -t ../../test-files/testfile_rand_2048KB; cd ../../test-files; rm -f *.tag *.tok *.t
+
+Done
+Using the following settings:
+	Block Size: 4096 bytes
+	Number of Threads: 4 
+Tagging ../../test-files/testfile_rand_2048KB...Done
+0.021763
+	Writing file ../../test-files/testfile_rand_2048KB to S3...Done.
+	Writing tag file ../../test-files/testfile_rand_2048KB.tag to S3...Done.
+	Writing t file ../../test-files/testfile_rand_2048KB.t to S3...Done.
+Using the following settings:
+	Block Size: 4096 bytes
+	Number of Threads: 4 
+	Number of Challenge blocks: 80 
+Challenging file ../../test-files/testfile_rand_2048KB...
+	Getting tag file...	Writing tag file ../../test-files/testfile_rand_2048KB.tag to S3...Done.
+	Getting t file...Done.
+	Creating challenge for ../../test-files/testfile_rand_2048KB...Done.
+	Computing proof...Done.
+	Verifying proof...Verified
+
+
+./src/macpdp/por-s3
+cd ././src/macpdp ; ./por-s3 -t ../../test-files/testfile_rand_2048KB; cd ../../test-files; rm -f *.tag *.tok *.t
+
+Blocksize: 4096
+Number of threads: 4
+Number of challenges: 460
+Filename: ../../test-files/testfile_rand_2048KB
+Tagging file...Done.
+Writing file to S3...Done.
+Writing tag to S3...Done.
+Creating challenge...Done.
+Challenging file...
+Retrieving tags...Done.
+Verified!
+
+
+./src/sepdp/sepdp-s3
+cd ././src/sepdp ; ./sepdp-s3 -t -y 1 -m 525600 ../../test-files/testfile_rand_2048KB; cd ../../test-files; rm -f *.tag *.tok *.t
+
+Tagging ../../test-files/testfile_rand_2048KB...Done
+Writing file ../../test-files/testfile_rand_2048KB to S3...Done.
+Writing token file ../../test-files/testfile_rand_2048KB.tok to S3...Done.
+Challenging file ../../test-files/testfile_rand_2048KB...
+	Creating challenge 0 for ../../test-files/testfile_rand_2048KB...Done.
+	Computing proof...Done.
+	Verifying proof...Verified!
+
+
+./src/apdp/pdp-s3
+cd ././src/apdp ; ./pdp-s3 -3 ../../test-files/testfile_rand_2048KB; cd ../../test-files; rm -f *.tag *.tok *.t
+
+Tagging ../../test-files/testfile_rand_2048KB...Done.
+Writing file ../../test-files/testfile_rand_2048KB to S3...Done.
+Writing tag ../../test-files/testfile_rand_2048KB to S3...Done.
+Verifying ../../test-files/testfile_rand_2048KB...
+	Creating challenge ../../test-files/testfile_rand_2048KB...Done.
+	Getting tag file...	Computing proof...Verified!
+140733885.306548
+
+
+./src/cpor/cpor-s3
+cd ././src/cpor ; ./cpor-s3 -t ../../test-files/testfile_rand_4096KB; cd ../../test-files; rm -f *.tag *.tok *.t
+
+Done
+Using the following settings:
+	Block Size: 4096 bytes
+	Number of Threads: 4 
+Tagging ../../test-files/testfile_rand_4096KB...Done
+0.045981
+	Writing file ../../test-files/testfile_rand_4096KB to S3...Done.
+	Writing tag file ../../test-files/testfile_rand_4096KB.tag to S3...Done.
+	Writing t file ../../test-files/testfile_rand_4096KB.t to S3...Done.
+Using the following settings:
+	Block Size: 4096 bytes
+	Number of Threads: 4 
+	Number of Challenge blocks: 80 
+Challenging file ../../test-files/testfile_rand_4096KB...
+	Getting tag file...	Writing tag file ../../test-files/testfile_rand_4096KB.tag to S3...Done.
+	Getting t file...Done.
+	Creating challenge for ../../test-files/testfile_rand_4096KB...Done.
+	Computing proof...Done.
+	Verifying proof...Verified
+
+
+./src/macpdp/por-s3
+cd ././src/macpdp ; ./por-s3 -t ../../test-files/testfile_rand_4096KB; cd ../../test-files; rm -f *.tag *.tok *.t
+
+Blocksize: 4096
+Number of threads: 4
+Number of challenges: 460
+Filename: ../../test-files/testfile_rand_4096KB
+Tagging file...Done.
+Writing file to S3...Done.
+Writing tag to S3...Done.
+Creating challenge...Done.
+Challenging file...
+Retrieving tags...Done.
+Verified!
+
+
+./src/sepdp/sepdp-s3
+cd ././src/sepdp ; ./sepdp-s3 -t -y 1 -m 525600 ../../test-files/testfile_rand_4096KB; cd ../../test-files; rm -f *.tag *.tok *.t
+
+Tagging ../../test-files/testfile_rand_4096KB...Done
+Writing file ../../test-files/testfile_rand_4096KB to S3...Done.
+Writing token file ../../test-files/testfile_rand_4096KB.tok to S3...Done.
+Challenging file ../../test-files/testfile_rand_4096KB...
+	Creating challenge 0 for ../../test-files/testfile_rand_4096KB...Done.
+	Computing proof...Done.
+	Verifying proof...Verified!
+
+
+./src/apdp/pdp-s3
+cd ././src/apdp ; ./pdp-s3 -3 ../../test-files/testfile_rand_4096KB; cd ../../test-files; rm -f *.tag *.tok *.t
+
+Tagging ../../test-files/testfile_rand_4096KB...Done.
+Writing file ../../test-files/testfile_rand_4096KB to S3...Done.
+Writing tag ../../test-files/testfile_rand_4096KB to S3...Done.
+Verifying ../../test-files/testfile_rand_4096KB...
+	Creating challenge ../../test-files/testfile_rand_4096KB...Done.
+	Getting tag file...	Computing proof...Verified!
+140736206.576884
+
+
+./src/cpor/cpor-s3
+cd ././src/cpor ; ./cpor-s3 -t ../../test-files/testfile_rand_8192KB; cd ../../test-files; rm -f *.tag *.tok *.t
+
+Done
+Using the following settings:
+	Block Size: 4096 bytes
+	Number of Threads: 4 
+Tagging ../../test-files/testfile_rand_8192KB...Done
+0.084230
+	Writing file ../../test-files/testfile_rand_8192KB to S3...Done.
+	Writing tag file ../../test-files/testfile_rand_8192KB.tag to S3...Done.
+	Writing t file ../../test-files/testfile_rand_8192KB.t to S3...Done.
+Using the following settings:
+	Block Size: 4096 bytes
+	Number of Threads: 4 
+	Number of Challenge blocks: 80 
+Challenging file ../../test-files/testfile_rand_8192KB...
+	Getting tag file...	Writing tag file ../../test-files/testfile_rand_8192KB.tag to S3...Done.
+	Getting t file...Done.
+	Creating challenge for ../../test-files/testfile_rand_8192KB...Done.
+	Computing proof...Done.
+	Verifying proof...Verified
+
+
+./src/macpdp/por-s3
+cd ././src/macpdp ; ./por-s3 -t ../../test-files/testfile_rand_8192KB; cd ../../test-files; rm -f *.tag *.tok *.t
+
+Blocksize: 4096
+Number of threads: 4
+Number of challenges: 460
+Filename: ../../test-files/testfile_rand_8192KB
+Tagging file...Done.
+Writing file to S3...Done.
+Writing tag to S3...Done.
+Creating challenge...Done.
+Challenging file...
+Retrieving tags...Done.
+Verified!
+
+
+./src/sepdp/sepdp-s3
+cd ././src/sepdp ; ./sepdp-s3 -t -y 1 -m 525600 ../../test-files/testfile_rand_8192KB; cd ../../test-files; rm -f *.tag *.tok *.t
+
+Tagging ../../test-files/testfile_rand_8192KB...Done
+Writing file ../../test-files/testfile_rand_8192KB to S3...Done.
+Writing token file ../../test-files/testfile_rand_8192KB.tok to S3...Done.
+Challenging file ../../test-files/testfile_rand_8192KB...
+	Creating challenge 0 for ../../test-files/testfile_rand_8192KB...Done.
+	Computing proof...Done.
+	Verifying proof...Verified!
+
+
+./src/apdp/pdp-s3
+cd ././src/apdp ; ./pdp-s3 -3 ../../test-files/testfile_rand_8192KB; cd ../../test-files; rm -f *.tag *.tok *.t
+
+Tagging ../../test-files/testfile_rand_8192KB...Done.
+Writing file ../../test-files/testfile_rand_8192KB to S3...Done.
+Writing tag ../../test-files/testfile_rand_8192KB to S3...Done.
+Verifying ../../test-files/testfile_rand_8192KB...
+	Creating challenge ../../test-files/testfile_rand_8192KB...Done.
+	Getting tag file...	Computing proof...Verified!
+140736430.277668
+
+
+./src/cpor/cpor-s3
+cd ././src/cpor ; ./cpor-s3 -t ../../test-files/testfile_rand_16384KB; cd ../../test-files; rm -f *.tag *.tok *.t
+
+Done
+Using the following settings:
+	Block Size: 4096 bytes
+	Number of Threads: 4 
+Tagging ../../test-files/testfile_rand_16384KB...Done
+0.184497
+	Writing file ../../test-files/testfile_rand_16384KB to S3...Done.
+	Writing tag file ../../test-files/testfile_rand_16384KB.tag to S3...Done.
+	Writing t file ../../test-files/testfile_rand_16384KB.t to S3...Done.
+Using the following settings:
+	Block Size: 4096 bytes
+	Number of Threads: 4 
+	Number of Challenge blocks: 80 
+Challenging file ../../test-files/testfile_rand_16384KB...
+	Getting tag file...	Writing tag file ../../test-files/testfile_rand_16384KB.tag to S3...Done.
+	Getting t file...Done.
+	Creating challenge for ../../test-files/testfile_rand_16384KB...Done.
+	Computing proof...Done.
+	Verifying proof...Verified
+
+
+./src/macpdp/por-s3
+cd ././src/macpdp ; ./por-s3 -t ../../test-files/testfile_rand_16384KB; cd ../../test-files; rm -f *.tag *.tok *.t
+
+Blocksize: 4096
+Number of threads: 4
+Number of challenges: 460
+Filename: ../../test-files/testfile_rand_16384KB
+Tagging file...Done.
+Writing file to S3...Done.
+Writing tag to S3...Done.
+Creating challenge...Done.
+Challenging file...
+Retrieving tags...Done.
+Verified!
+
+
+./src/sepdp/sepdp-s3
+cd ././src/sepdp ; ./sepdp-s3 -t -y 1 -m 525600 ../../test-files/testfile_rand_16384KB; cd ../../test-files; rm -f *.tag *.tok *.t
+
+Tagging ../../test-files/testfile_rand_16384KB...Done
+Writing file ../../test-files/testfile_rand_16384KB to S3...Done.
+Writing token file ../../test-files/testfile_rand_16384KB.tok to S3...Done.
+Challenging file ../../test-files/testfile_rand_16384KB...
+	Creating challenge 0 for ../../test-files/testfile_rand_16384KB...Done.
+	Computing proof...Done.
+	Verifying proof...Verified!
+
+
+./src/apdp/pdp-s3
+cd ././src/apdp ; ./pdp-s3 -3 ../../test-files/testfile_rand_16384KB; cd ../../test-files; rm -f *.tag *.tok *.t
+
+Tagging ../../test-files/testfile_rand_16384KB...Done.
+Writing file ../../test-files/testfile_rand_16384KB to S3...Done.
+Writing tag ../../test-files/testfile_rand_16384KB to S3...Done.
+Verifying ../../test-files/testfile_rand_16384KB...
+	Creating challenge ../../test-files/testfile_rand_16384KB...Done.
+	Getting tag file...	Computing proof...Verified!
+140736800.310196
+
+
+./src/cpor/cpor-s3
+cd ././src/cpor ; ./cpor-s3 -t ../../test-files/testfile_rand_32768KB; cd ../../test-files; rm -f *.tag *.tok *.t
+
+Done
+Using the following settings:
+	Block Size: 4096 bytes
+	Number of Threads: 4 
+Tagging ../../test-files/testfile_rand_32768KB...Done
+0.355513
+	Writing file ../../test-files/testfile_rand_32768KB to S3...Done.
+	Writing tag file ../../test-files/testfile_rand_32768KB.tag to S3...Done.
+	Writing t file ../../test-files/testfile_rand_32768KB.t to S3...Done.
+Using the following settings:
+	Block Size: 4096 bytes
+	Number of Threads: 4 
+	Number of Challenge blocks: 80 
+Challenging file ../../test-files/testfile_rand_32768KB...
+	Getting tag file...	Writing tag file ../../test-files/testfile_rand_32768KB.tag to S3...Done.
+	Getting t file...Done.
+	Creating challenge for ../../test-files/testfile_rand_32768KB...Done.
+	Computing proof...Done.
+	Verifying proof...Verified
+
+
+./src/macpdp/por-s3
+cd ././src/macpdp ; ./por-s3 -t ../../test-files/testfile_rand_32768KB; cd ../../test-files; rm -f *.tag *.tok *.t
+
+Blocksize: 4096
+Number of threads: 4
+Number of challenges: 460
+Filename: ../../test-files/testfile_rand_32768KB
+Tagging file...Done.
+Writing file to S3...Done.
+Writing tag to S3...Done.
+Creating challenge...Done.
+Challenging file...
+Retrieving tags...Done.
+Verified!
+
+
+./src/sepdp/sepdp-s3
+cd ././src/sepdp ; ./sepdp-s3 -t -y 1 -m 525600 ../../test-files/testfile_rand_32768KB; cd ../../test-files; rm -f *.tag *.tok *.t
+
+Tagging ../../test-files/testfile_rand_32768KB...Done
+Writing file ../../test-files/testfile_rand_32768KB to S3...Done.
+Writing token file ../../test-files/testfile_rand_32768KB.tok to S3...Done.
+Challenging file ../../test-files/testfile_rand_32768KB...
+	Creating challenge 0 for ../../test-files/testfile_rand_32768KB...Done.
+	Computing proof...Done.
+	Verifying proof...Verified!
+
+
+./src/apdp/pdp-s3
+cd ././src/apdp ; ./pdp-s3 -3 ../../test-files/testfile_rand_32768KB; cd ../../test-files; rm -f *.tag *.tok *.t
+
+Tagging ../../test-files/testfile_rand_32768KB...Done.
+Writing file ../../test-files/testfile_rand_32768KB to S3...Done.
+Writing tag ../../test-files/testfile_rand_32768KB to S3...Done.
+Verifying ../../test-files/testfile_rand_32768KB...
+	Creating challenge ../../test-files/testfile_rand_32768KB...Done.
+	Getting tag file...	Computing proof...Verified!
+140734098.537684
+
+
+./src/cpor/cpor-s3
+cd ././src/cpor ; ./cpor-s3 -t ../../test-files/testfile_rand_65536KB; cd ../../test-files; rm -f *.tag *.tok *.t
+
+Done
+Using the following settings:
+	Block Size: 4096 bytes
+	Number of Threads: 4 
+Tagging ../../test-files/testfile_rand_65536KB...Done
+0.677781
+	Writing file ../../test-files/testfile_rand_65536KB to S3...Done.
+	Writing tag file ../../test-files/testfile_rand_65536KB.tag to S3...Done.
+	Writing t file ../../test-files/testfile_rand_65536KB.t to S3...Done.
+Using the following settings:
+	Block Size: 4096 bytes
+	Number of Threads: 4 
+	Number of Challenge blocks: 80 
+Challenging file ../../test-files/testfile_rand_65536KB...
+	Getting tag file...	Writing tag file ../../test-files/testfile_rand_65536KB.tag to S3...Done.
+	Getting t file...Done.
+	Creating challenge for ../../test-files/testfile_rand_65536KB...Done.
+	Computing proof...Done.
+	Verifying proof...Verified
+
+
+./src/macpdp/por-s3
+cd ././src/macpdp ; ./por-s3 -t ../../test-files/testfile_rand_65536KB; cd ../../test-files; rm -f *.tag *.tok *.t
+
+Blocksize: 4096
+Number of threads: 4
+Number of challenges: 460
+Filename: ../../test-files/testfile_rand_65536KB
+Tagging file...Done.
+Writing file to S3...Done.
+Writing tag to S3...Done.
+Creating challenge...Done.
+Challenging file...
+Retrieving tags...Done.
+Verified!
+
+
+./src/sepdp/sepdp-s3
+cd ././src/sepdp ; ./sepdp-s3 -t -y 1 -m 525600 ../../test-files/testfile_rand_65536KB; cd ../../test-files; rm -f *.tag *.tok *.t
+
+Tagging ../../test-files/testfile_rand_65536KB...Done
+Writing file ../../test-files/testfile_rand_65536KB to S3...Done.
+Writing token file ../../test-files/testfile_rand_65536KB.tok to S3...Done.
+Challenging file ../../test-files/testfile_rand_65536KB...
+	Creating challenge 0 for ../../test-files/testfile_rand_65536KB...Done.
+	Computing proof...Done.
+	Verifying proof...Verified!
+
+
+./src/apdp/pdp-s3
+cd ././src/apdp ; ./pdp-s3 -3 ../../test-files/testfile_rand_65536KB; cd ../../test-files; rm -f *.tag *.tok *.t
+
+Tagging ../../test-files/testfile_rand_65536KB...Done.
+Writing file ../../test-files/testfile_rand_65536KB to S3...Done.
+Writing tag ../../test-files/testfile_rand_65536KB to S3...Done.
+Verifying ../../test-files/testfile_rand_65536KB...
+	Creating challenge ../../test-files/testfile_rand_65536KB...Done.
+	Getting tag file...	Computing proof...Verified!
+140733414.406644
+
+
+./src/cpor/cpor-s3
+cd ././src/cpor ; ./cpor-s3 -t ../../test-files/testfile_rand_131072KB; cd ../../test-files; rm -f *.tag *.tok *.t
+
+Done
+Using the following settings:
+	Block Size: 4096 bytes
+	Number of Threads: 4 
+Tagging ../../test-files/testfile_rand_131072KB...Done
+1.397481
+	Writing file ../../test-files/testfile_rand_131072KB to S3...Done.
+	Writing tag file ../../test-files/testfile_rand_131072KB.tag to S3...Done.
+	Writing t file ../../test-files/testfile_rand_131072KB.t to S3...Done.
+Using the following settings:
+	Block Size: 4096 bytes
+	Number of Threads: 4 
+	Number of Challenge blocks: 80 
+Challenging file ../../test-files/testfile_rand_131072KB...
+	Getting tag file...	Writing tag file ../../test-files/testfile_rand_131072KB.tag to S3...Done.
+	Getting t file...Done.
+	Creating challenge for ../../test-files/testfile_rand_131072KB...Done.
+	Computing proof...Done.
+	Verifying proof...Verified
+
+
+./src/macpdp/por-s3
+cd ././src/macpdp ; ./por-s3 -t ../../test-files/testfile_rand_131072KB; cd ../../test-files; rm -f *.tag *.tok *.t
+
+Blocksize: 4096
+Number of threads: 4
+Number of challenges: 460
+Filename: ../../test-files/testfile_rand_131072KB
+Tagging file...Done.
+Writing file to S3...Done.
+Writing tag to S3...Done.
+Creating challenge...Done.
+Challenging file...
+Retrieving tags...Done.
+Verified!
+
+
+./src/sepdp/sepdp-s3
+cd ././src/sepdp ; ./sepdp-s3 -t -y 1 -m 525600 ../../test-files/testfile_rand_131072KB; cd ../../test-files; rm -f *.tag *.tok *.t
+
+Tagging ../../test-files/testfile_rand_131072KB...Done
+Writing file ../../test-files/testfile_rand_131072KB to S3...Done.
+Writing token file ../../test-files/testfile_rand_131072KB.tok to S3...Done.
+Challenging file ../../test-files/testfile_rand_131072KB...
+	Creating challenge 0 for ../../test-files/testfile_rand_131072KB...Done.
+	Computing proof...Done.
+	Verifying proof...Verified!
+
+
+./src/apdp/pdp-s3
+cd ././src/apdp ; ./pdp-s3 -3 ../../test-files/testfile_rand_131072KB; cd ../../test-files; rm -f *.tag *.tok *.t
+
+Tagging ../../test-files/testfile_rand_131072KB...Done.
+Writing file ../../test-files/testfile_rand_131072KB to S3...Done.
+Writing tag ../../test-files/testfile_rand_131072KB to S3...Done.
+Verifying ../../test-files/testfile_rand_131072KB...
+	Creating challenge ../../test-files/testfile_rand_131072KB...Done.
+	Getting tag file...	Computing proof...Verified!
+140737345.917572
+
+
+./src/cpor/cpor-s3
+cd ././src/cpor ; ./cpor-s3 -t ../../test-files/testfile_rand_262144KB; cd ../../test-files; rm -f *.tag *.tok *.t
+
+Done
+Using the following settings:
+	Block Size: 4096 bytes
+	Number of Threads: 4 
+Tagging ../../test-files/testfile_rand_262144KB...Done
+2.918706
+	Writing file ../../test-files/testfile_rand_262144KB to S3...Done.
+	Writing tag file ../../test-files/testfile_rand_262144KB.tag to S3...Done.
+	Writing t file ../../test-files/testfile_rand_262144KB.t to S3...Done.
+Using the following settings:
+	Block Size: 4096 bytes
+	Number of Threads: 4 
+	Number of Challenge blocks: 80 
+Challenging file ../../test-files/testfile_rand_262144KB...
+	Getting tag file...	Writing tag file ../../test-files/testfile_rand_262144KB.tag to S3...Done.
+	Getting t file...Done.
+	Creating challenge for ../../test-files/testfile_rand_262144KB...Done.
+	Computing proof...Done.
+	Verifying proof...Verified
+
+
+./src/macpdp/por-s3
+cd ././src/macpdp ; ./por-s3 -t ../../test-files/testfile_rand_262144KB; cd ../../test-files; rm -f *.tag *.tok *.t
+
+Blocksize: 4096
+Number of threads: 4
+Number of challenges: 460
+Filename: ../../test-files/testfile_rand_262144KB
+Tagging file...Done.
+Writing file to S3...Done.
+Writing tag to S3...Done.
+Creating challenge...Done.
+Challenging file...
+Retrieving tags...Done.
+Verified!
+
+
+./src/sepdp/sepdp-s3
+cd ././src/sepdp ; ./sepdp-s3 -t -y 1 -m 525600 ../../test-files/testfile_rand_262144KB; cd ../../test-files; rm -f *.tag *.tok *.t
+
+Tagging ../../test-files/testfile_rand_262144KB...Done
+Writing file ../../test-files/testfile_rand_262144KB to S3...Done.
+Writing token file ../../test-files/testfile_rand_262144KB.tok to S3...Done.
+Challenging file ../../test-files/testfile_rand_262144KB...
+	Creating challenge 0 for ../../test-files/testfile_rand_262144KB...Done.
+	Computing proof...Done.
+	Verifying proof...Verified!
+
+
+./src/apdp/pdp-s3
+cd ././src/apdp ; ./pdp-s3 -3 ../../test-files/testfile_rand_262144KB; cd ../../test-files; rm -f *.tag *.tok *.t
+
+Tagging ../../test-files/testfile_rand_262144KB...Done.
+Writing file ../../test-files/testfile_rand_262144KB to S3...Done.
+Writing tag ../../test-files/testfile_rand_262144KB to S3...Done.
+Verifying ../../test-files/testfile_rand_262144KB...
+	Creating challenge ../../test-files/testfile_rand_262144KB...Done.
+	Getting tag file...	Computing proof...Verified!
+140734617.066820
+
+
+./src/cpor/cpor-s3
+cd ././src/cpor ; ./cpor-s3 -t ../../test-files/testfile_rand_524288KB; cd ../../test-files; rm -f *.tag *.tok *.t
+
+Done
+Using the following settings:
+	Block Size: 4096 bytes
+	Number of Threads: 4 
+Tagging ../../test-files/testfile_rand_524288KB...Done
+5.762730
+	Writing file ../../test-files/testfile_rand_524288KB to S3...Done.
+	Writing tag file ../../test-files/testfile_rand_524288KB.tag to S3...Done.
+	Writing t file ../../test-files/testfile_rand_524288KB.t to S3...Done.
+Using the following settings:
+	Block Size: 4096 bytes
+	Number of Threads: 4 
+	Number of Challenge blocks: 80 
+Challenging file ../../test-files/testfile_rand_524288KB...
+	Getting tag file...	Writing tag file ../../test-files/testfile_rand_524288KB.tag to S3...Done.
+	Getting t file...Done.
+	Creating challenge for ../../test-files/testfile_rand_524288KB...Done.
+	Computing proof...Done.
+	Verifying proof...Verified
+
+
+./src/macpdp/por-s3
+cd ././src/macpdp ; ./por-s3 -t ../../test-files/testfile_rand_524288KB; cd ../../test-files; rm -f *.tag *.tok *.t
+
+Blocksize: 4096
+Number of threads: 4
+Number of challenges: 460
+Filename: ../../test-files/testfile_rand_524288KB
+Tagging file...Done.
+Writing file to S3...Done.
+Writing tag to S3...Done.
+Creating challenge...Done.
+Challenging file...
+Retrieving tags...Done.
+Verified!
+
+
+./src/sepdp/sepdp-s3
+cd ././src/sepdp ; ./sepdp-s3 -t -y 1 -m 525600 ../../test-files/testfile_rand_524288KB; cd ../../test-files; rm -f *.tag *.tok *.t
+
+Tagging ../../test-files/testfile_rand_524288KB...Done
+Writing file ../../test-files/testfile_rand_524288KB to S3...Done.
+Writing token file ../../test-files/testfile_rand_524288KB.tok to S3...Done.
+Challenging file ../../test-files/testfile_rand_524288KB...
+	Creating challenge 0 for ../../test-files/testfile_rand_524288KB...Done.
+	Computing proof...Done.
+	Verifying proof...Verified!
+
+
+./src/apdp/pdp-s3
+cd ././src/apdp ; ./pdp-s3 -3 ../../test-files/testfile_rand_524288KB; cd ../../test-files; rm -f *.tag *.tok *.t
+
+Tagging ../../test-files/testfile_rand_524288KB...Done.
+Writing file ../../test-files/testfile_rand_524288KB to S3...Done.
+Writing tag ../../test-files/testfile_rand_524288KB to S3...Done.
+Verifying ../../test-files/testfile_rand_524288KB...
+	Creating challenge ../../test-files/testfile_rand_524288KB...Done.
+	Getting tag file...	Computing proof...Verified!
+140735820.845908
+
+
+./src/cpor/cpor-s3
+cd ././src/cpor ; ./cpor-s3 -t ../../test-files/testfile_rand_1048576KB; cd ../../test-files; rm -f *.tag *.tok *.t
+
+Done
+Using the following settings:
+	Block Size: 4096 bytes
+	Number of Threads: 4 
+Tagging ../../test-files/testfile_rand_1048576KB...Done
+11.520185
+	Writing file ../../test-files/testfile_rand_1048576KB to S3...Done.
+	Writing tag file ../../test-files/testfile_rand_1048576KB.tag to S3...Done.
+	Writing t file ../../test-files/testfile_rand_1048576KB.t to S3...Done.
+Using the following settings:
+	Block Size: 4096 bytes
+	Number of Threads: 4 
+	Number of Challenge blocks: 80 
+Challenging file ../../test-files/testfile_rand_1048576KB...
+	Getting tag file...	Writing tag file ../../test-files/testfile_rand_1048576KB.tag to S3...Done.
+	Getting t file...Done.
+	Creating challenge for ../../test-files/testfile_rand_1048576KB...Done.
+	Computing proof...Done.
+	Verifying proof...Verified
+
+
+./src/macpdp/por-s3
+cd ././src/macpdp ; ./por-s3 -t ../../test-files/testfile_rand_1048576KB; cd ../../test-files; rm -f *.tag *.tok *.t
+
+Blocksize: 4096
+Number of threads: 4
+Number of challenges: 460
+Filename: ../../test-files/testfile_rand_1048576KB
+Tagging file...Done.
+Writing file to S3...Done.
+Writing tag to S3...Done.
+Creating challenge...Done.
+Challenging file...
+Retrieving tags...Done.
+Verified!
+
+
+./src/sepdp/sepdp-s3
+cd ././src/sepdp ; ./sepdp-s3 -t -y 1 -m 525600 ../../test-files/testfile_rand_1048576KB; cd ../../test-files; rm -f *.tag *.tok *.t
+
+Tagging ../../test-files/testfile_rand_1048576KB...Done
+Writing file ../../test-files/testfile_rand_1048576KB to S3...Done.
+Writing token file ../../test-files/testfile_rand_1048576KB.tok to S3...Done.
+Challenging file ../../test-files/testfile_rand_1048576KB...
+	Creating challenge 0 for ../../test-files/testfile_rand_1048576KB...Done.
+	Computing proof...Done.
+	Verifying proof...Verified!
+
+
+./src/apdp/pdp-s3
+cd ././src/apdp ; ./pdp-s3 -3 ../../test-files/testfile_rand_1048576KB; cd ../../test-files; rm -f *.tag *.tok *.t
+
+Tagging ../../test-files/testfile_rand_1048576KB...Done.
+Writing file ../../test-files/testfile_rand_1048576KB to S3...Done.
+Writing tag ../../test-files/testfile_rand_1048576KB to S3...Done.
+Verifying ../../test-files/testfile_rand_1048576KB...
+	Creating challenge ../../test-files/testfile_rand_1048576KB...Done.
+	Getting tag file...	Computing proof...Verified!
+140733365.505332

@@ -1,0 +1,40 @@
+Create tag	Create challenge	Verify file	HEAD	GET	PUT	COPY	LIST	POST	Metadata	Timestamp
+0.0214190	0.0001500	0.0004711	0	0	0	0	0	0	MAC-PDP:Block size 4096:# challenges 460:# threads 1:Filename ../../test-files/testfile_rand_2KB	Mon Sep 10 17:22:35 2012
+Create tag	Create challenge	Verify file	HEAD	GET	PUT	COPY	LIST	POST	Metadata	Timestamp
+0.0245509	0.0002232	0.0005240	0	0	0	0	0	0	MAC-PDP:Block size 4096:# challenges 460:# threads 1:Filename ../../test-files/testfile_rand_4KB	Mon Sep 10 17:22:38 2012
+Create tag	Create challenge	Verify file	HEAD	GET	PUT	COPY	LIST	POST	Metadata	Timestamp
+0.0247591	0.0002041	0.0010560	0	0	0	0	0	0	MAC-PDP:Block size 4096:# challenges 460:# threads 1:Filename ../../test-files/testfile_rand_8KB	Mon Sep 10 17:22:40 2012
+Create tag	Create challenge	Verify file	HEAD	GET	PUT	COPY	LIST	POST	Metadata	Timestamp
+0.0273061	0.0001938	0.0018139	0	0	0	0	0	0	MAC-PDP:Block size 4096:# challenges 460:# threads 1:Filename ../../test-files/testfile_rand_16KB	Mon Sep 10 17:22:43 2012
+Create tag	Create challenge	Verify file	HEAD	GET	PUT	COPY	LIST	POST	Metadata	Timestamp
+0.0295732	0.0002151	0.0035701	0	0	0	0	0	0	MAC-PDP:Block size 4096:# challenges 460:# threads 1:Filename ../../test-files/testfile_rand_32KB	Mon Sep 10 17:22:46 2012
+Create tag	Create challenge	Verify file	HEAD	GET	PUT	COPY	LIST	POST	Metadata	Timestamp
+0.0240111	0.0002480	0.0074880	0	0	0	0	0	0	MAC-PDP:Block size 4096:# challenges 460:# threads 1:Filename ../../test-files/testfile_rand_64KB	Mon Sep 10 17:22:48 2012
+Create tag	Create challenge	Verify file	HEAD	GET	PUT	COPY	LIST	POST	Metadata	Timestamp
+0.0292981	0.0003262	0.0146129	0	0	0	0	0	0	MAC-PDP:Block size 4096:# challenges 460:# threads 1:Filename ../../test-files/testfile_rand_128KB	Mon Sep 10 17:22:51 2012
+Create tag	Create challenge	Verify file	HEAD	GET	PUT	COPY	LIST	POST	Metadata	Timestamp
+0.0316570	0.0004981	0.0286651	0	0	0	0	0	0	MAC-PDP:Block size 4096:# challenges 460:# threads 1:Filename ../../test-files/testfile_rand_256KB	Mon Sep 10 17:22:54 2012
+Create tag	Create challenge	Verify file	HEAD	GET	PUT	COPY	LIST	POST	Metadata	Timestamp
+0.0361018	0.0008259	0.0559011	0	0	0	0	0	0	MAC-PDP:Block size 4096:# challenges 460:# threads 1:Filename ../../test-files/testfile_rand_512KB	Mon Sep 10 17:22:58 2012
+Create tag	Create challenge	Verify file	HEAD	GET	PUT	COPY	LIST	POST	Metadata	Timestamp
+0.0785639	0.0016770	0.1466570	0	0	0	0	0	0	MAC-PDP:Block size 4096:# challenges 460:# threads 1:Filename ../../test-files/testfile_rand_1024KB	Mon Sep 10 17:23:02 2012
+Create tag	Create challenge	Verify file	HEAD	GET	PUT	COPY	LIST	POST	Metadata	Timestamp
+0.0985200	0.0025911	0.2099769	0	0	0	0	0	0	MAC-PDP:Block size 4096:# challenges 460:# threads 1:Filename ../../test-files/testfile_rand_2048KB	Mon Sep 10 17:23:08 2012
+Create tag	Create challenge	Verify file	HEAD	GET	PUT	COPY	LIST	POST	Metadata	Timestamp
+0.1727500	0.0026801	0.2096848	0	0	0	0	0	0	MAC-PDP:Block size 4096:# challenges 460:# threads 1:Filename ../../test-files/testfile_rand_4096KB	Mon Sep 10 17:23:55 2012
+Create tag	Create challenge	Verify file	HEAD	GET	PUT	COPY	LIST	POST	Metadata	Timestamp
+2.8889380	0.0024469	2.2168472	0	0	0	0	0	0	MAC-PDP:Block size 4096:# challenges 460:# threads 1:Filename ../../test-files/testfile_rand_8192KB	Mon Sep 10 17:24:58 2012
+Create tag	Create challenge	Verify file	HEAD	GET	PUT	COPY	LIST	POST	Metadata	Timestamp
+5.7875421	0.0986049	2.1302409	0	0	0	0	0	0	MAC-PDP:Block size 4096:# challenges 460:# threads 1:Filename ../../test-files/testfile_rand_16384KB	Mon Sep 10 17:27:19 2012
+Create tag	Create challenge	Verify file	HEAD	GET	PUT	COPY	LIST	POST	Metadata	Timestamp
+11.5382578	0.0024769	2.2046330	0	0	0	0	0	0	MAC-PDP:Block size 4096:# challenges 460:# threads 1:Filename ../../test-files/testfile_rand_32768KB	Mon Sep 10 17:31:34 2012
+Create tag	Create challenge	Verify file	HEAD	GET	PUT	COPY	LIST	POST	Metadata	Timestamp
+25.4544249	0.0027349	2.2428260	0	0	0	0	0	0	MAC-PDP:Block size 4096:# challenges 460:# threads 1:Filename ../../test-files/testfile_rand_65536KB	Mon Sep 10 17:40:25 2012
+Create tag	Create challenge	Verify file	HEAD	GET	PUT	COPY	LIST	POST	Metadata	Timestamp
+4.8476131	0.0027990	0.2181020	0	0	0	0	0	0	MAC-PDP:Block size 4096:# challenges 460:# threads 1:Filename ../../test-files/testfile_rand_131072KB	Mon Sep 10 17:58:31 2012
+Create tag	Create challenge	Verify file	HEAD	GET	PUT	COPY	LIST	POST	Metadata	Timestamp
+63.4247720	0.0027590	0.2288299	0	0	0	0	0	0	MAC-PDP:Block size 4096:# challenges 460:# threads 1:Filename ../../test-files/testfile_rand_262144KB	Mon Sep 10 18:34:42 2012
+Create tag	Create challenge	Verify file	HEAD	GET	PUT	COPY	LIST	POST	Metadata	Timestamp
+222.2611821	0.0030379	0.9201281	0	0	0	0	0	0	MAC-PDP:Block size 4096:# challenges 460:# threads 1:Filename ../../test-files/testfile_rand_524288KB	Mon Sep 10 20:08:27 2012
+Create tag	Create challenge	Verify file	HEAD	GET	PUT	COPY	LIST	POST	Metadata	Timestamp
+0.0208180	0.0001421	0.0000010	0	0	0	0	0	0	MAC-PDP:Block size 4096:# challenges 460:# threads 1:Filename ../../test-files/testfile_rand_1048576KB	Mon Sep 10 22:50:49 2012
