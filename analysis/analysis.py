@@ -72,6 +72,33 @@ def create_tag_cost(x, c0, c1, c2, c3, c4, c5):
         ans = [0 for i in x]
     return array(ans)
 
+def create_tag_block_cost(x, c0, c1, c2, c3, c4, c5):
+    """ A cost function for file size vs. tagging time.
+    
+        Ex: ./analysis.py --exp_path ../data/all-times-block-size/ --Xattrib 'Block size' --Yattrib 'Create tag' --Xlabel 'Block size (bytes)' --fit_curve
+    """
+    f = 2**15    # file size in kb
+    kb = 2**10   # bytes in kb
+    ans = []
+    case = str(M).strip()
+    if case == "MAC-PDP":
+        ans = [c0 + c1 * f * kb/b for b in x]
+    elif case == "APDP":
+        b = 16384
+        ans = [c0 + c1 * f * kb/b for b in x]
+    elif case == "CPOR":
+        ans = [c0 + c1 * f * kb/b for b in x]
+    elif case == "SEPDP":
+        magic = 512
+        for b in x:
+            y = c0 + c1 * f/b
+            if f * kb / b >= magic:   # cost function switches at 2**16 kb
+                y = c2
+            ans.append(y)
+    else:
+        ans = [0 for i in x]
+    return array(ans)
+
 def create_proof_cost(x, c0, c1, c2, c3, c4, c5):
     """ A cost function for file size vs. tagging time.
     
@@ -144,6 +171,15 @@ def select_fun():
     if (args.Xattrib == "File size (kb)" and 
         args.Yattrib == "Create tag"):
         f = create_tag_cost
+    if (args.Xattrib == "Block size" and 
+        args.Yattrib == "Create tag"):
+        f = create_tag_block_cost
+        if case == "MAC-PDP":
+            guess = (0.25, 0, 1, 1, 1, 1)
+        elif case == "SEPDP":
+            guess = (0, 1, 1.148**(-2), 1, 1, 1)
+        elif case == "CPOR":
+            guess = (.5, 0, 1, 1, 1, 1)
     elif (args.Xattrib == "File size (kb)" and 
           args.Yattrib == "GET"):
         f = num_gets_cost
@@ -151,13 +187,10 @@ def select_fun():
         args.Yattrib == "Create proof"):
         f = create_proof_cost
         if case == "MAC-PDP":
-            f = create_proof_cost
             guess = (10**(-7), 1, 1, 1, 1, 1)
         elif case == "APDP":
-            f = create_proof_cost
             guess = (10**(-8), 1, 1, 1, 1, 1)
         elif case == "CPOR":
-            f = create_proof_cost
             guess = (10**(-5), 10**(-6), 1, 1, 1, 1)
     elif (args.Xattrib == "File size (kb)" and 
         args.Yattrib == "Verify file"):
