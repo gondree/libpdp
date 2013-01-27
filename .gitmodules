@@ -1,0 +1,6 @@
+[submodule "lib/libs3"]
+	path = lib/libs3
+	url = https://github.com/ceph/libs3.git
+[submodule "libs3"]
+	path = libs3
+	url = https://github.com/ceph/libs3.git
