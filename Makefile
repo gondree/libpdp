@@ -1,44 +1,29 @@
+.PHONY: all clean distclean
 
-SRC_DIR=./src
-LIB_DIR=./lib
+VPATH  +=
 
-MACPDP_DIR=$(SRC_DIR)/macpdp
-CPOR_DIR=$(SRC_DIR)/cpor
-APDP_DIR=$(SRC_DIR)/apdp
-SEPDP_DIR=$(SRC_DIR)/sepdp
-TIMEIT_DIR=$(LIB_DIR)/time_it
-LIBS3_DIR=$(LIB_DIR)/libs3-2.0
+CC = gcc
+LD = gcc
+AR = ar
+#-----------------------------------------------------------------------------
+SUBPROJS = libs3 libpdp bench
+.PHONY: $(SUBPROJS)
 
-.PHONY: all timeit libs3 cpor macpdp apdp sepdp clean rebuild install uninstall
-
-all: timeit libs3 cpor macpdp apdp sepdp
-
-cpor:
-	$(MAKE) -C $(CPOR_DIR) cpor-s3 ; $(MAKE) -C $(CPOR_DIR) cpor-cpu
-
-macpdp:
-	$(MAKE) -C $(MACPDP_DIR) por-s3 ; $(MAKE) -C $(MACPDP_DIR) por-cpu
-
-sepdp: 
-	$(MAKE) -C $(SEPDP_DIR) sepdp-s3 ; $(MAKE) -C $(SEPDP_DIR) sepdp-cpu
-
-apdp:
-	$(MAKE) -C $(APDP_DIR) pdp-s3 ; $(MAKE) -C $(APDP_DIR) pdp-cpu
+all: $(SUBPROJS)
 
 libs3:
-	$(MAKE) -C $(LIBS3_DIR)
+	if [! -d libs3 ]; then \
+		git clone https://github.com/ceph/libs3.git \
+	fi
+	@
+	@echo "Building libs3"
+	$(MAKE) -C libs3
 
-timeit:
-	$(MAKE) -C $(TIMEIT_DIR)
+libpdp:
+	@echo "Building libpdp"
+	$(MAKE) -C libpdp all
 
-rebuild: clean all uninstall install 
-
-install:
-	sudo $(MAKE) -C $(LIBS3_DIR) install
-
-uninstall:
-	sudo $(MAKE) -C $(LIBS3_DIR) uninstall
-	 
-clean:
-	$(MAKE) -C $(MACPDP_DIR) clean; $(MAKE) -C $(SEPDP_DIR) clean; $(MAKE) -C $(APDP_DIR) clean; $(MAKE) -C $(CPOR_DIR) clean; $(MAKE) -C $(TIMEIT_DIR) clean; $(MAKE) -C $(LIBS3_DIR) clean; $(RM) $(SRC_DIR)/*/times-* $(SRC_DIR)/*/callgrind.out* $(SRC_DIR)/*/gmon.out
+bench:
+	@echo "Building the pdp_bench benchmarking utility"
+	$(MAKE) -C tools all
 
