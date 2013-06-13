@@ -1,0 +1,12 @@
+bucket.c:    string_buffer_initialize(contents->key);
+bucket.c:    string_buffer_initialize(contents->lastModified);
+bucket.c:    string_buffer_initialize(contents->eTag);
+bucket.c:    string_buffer_initialize(contents->size);
+bucket.c:    string_buffer_initialize(contents->ownerId);
+bucket.c:    string_buffer_initialize(contents->ownerDisplayName);
+bucket.c:            string_buffer_append(contents->key, data, dataLen, fit);
+bucket.c:            string_buffer_append(contents->lastModified, data, dataLen, fit);
+bucket.c:            string_buffer_append(contents->eTag, data, dataLen, fit);
+bucket.c:            string_buffer_append(contents->size, data, dataLen, fit);
+bucket.c:            string_buffer_append(contents->ownerId, data, dataLen, fit);
+bucket.c:                (contents->ownerDisplayName, data, dataLen, fit);
