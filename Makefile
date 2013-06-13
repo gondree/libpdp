@@ -1,4 +1,4 @@
-.PHONY: all clean distclean
+.PHONY: all clean distclean doc
 
 VPATH  +=
 
@@ -9,21 +9,27 @@ AR = ar
 SUBPROJS = libs3 libpdp bench
 .PHONY: $(SUBPROJS)
 
-all: $(SUBPROJS)
+all: bench
 
 libs3:
-	if [! -d libs3 ]; then \
-		git clone https://github.com/ceph/libs3.git \
-	fi
-	@
+	@echo "Getting libs3 source, if needed"
+	[ -d libs3 ] || git clone https://github.com/ceph/libs3.git
 	@echo "Building libs3"
 	$(MAKE) -C libs3
 
-libpdp:
+libpdp: libs3
 	@echo "Building libpdp"
 	$(MAKE) -C libpdp all
 
-bench:
+bench: libpdp
 	@echo "Building the pdp_bench benchmarking utility"
-	$(MAKE) -C tools all
+	$(MAKE) -C tools pdp_bench
+
+doc: doxyfile
+	doxygen doxyfile
+
+clean:
+	[ -d tools ] && $(MAKE) -C tools clean
+	[ -d libpdp ] && $(MAKE) -C libpdp clean
+	[ -d libs3 ] && $(MAKE) -C libs3 clean
 
