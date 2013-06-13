@@ -4,3 +4,6 @@ libs3/*
 # files we generate for testing
 tools/test-files/*
 
+# for git on MacOS
+.DS_Store
+
