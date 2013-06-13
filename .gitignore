@@ -1,2 +1,6 @@
 # We bring in libs3 from its source
 libs3/*
+
+# files we generate for testing
+tools/test-files/*
+
