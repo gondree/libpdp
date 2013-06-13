@@ -19,9 +19,11 @@ S3_ACCESS_KEY_ID = "97b962f0222e4c0294b3087561d34443"
 S3_SECRET_ACCESS_KEY = "a117221246fc4e0ca69e5e87f4be443c"
 S3_HOSTNAME = "192.168.99.173:8080"
 
-TESTFILES = "./test-files/" # location of generated files for testing
-KEYFILES = "./test-keys/"   # location of saved keys
-S3UTIL = "./s3_util.py"     # a support script for making and cleaning buckets
+SCRIPTPATH = os.path.dirname(os.path.abspath(__file__))
+
+TESTFILES = SCRIPTPATH+"./test-files/" # location of generated files
+KEYFILES = SCRIPTPATH+"./test-keys/"   # location of saved keys
+S3UTIL = SCRIPTPATH+"./s3_util.py"     # a support script for changing buckets
 TIME_FILE = TESTFILES + "timing-data.csv"
 
 # default parameters
@@ -77,6 +79,8 @@ class WrapperTest(unittest.TestCase):
 
     def fillFile(self, len=100):
         """ Fill file with random data """
+        if not os.path.exists(TESTFILES):
+            os.mkdir(TESTFILES)
         fd, path = tempfile.mkstemp(dir=TESTFILES)
         self.path = path
         os.write(fd, os.urandom(len))

@@ -42,7 +42,7 @@ LDFLAGS  += $(LIBPDP) $(S3_LIB)
 all: pdp_bench
 
 clean:
-	rm -rf *.o *.dSYM
+	rm -rf *.o *.dSYM *.a
 
 distclean: clean
 	rm -rf pdp_bench
