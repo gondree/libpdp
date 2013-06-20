@@ -34,7 +34,7 @@ int cpor_write_tags_to_file(const pdp_ctx_t *ctx, const pdp_cpor_tagdata_t* t)
 {
     unsigned char *buf = NULL;
     FILE *tagfile = NULL;
-    size_t len = 0;
+    unsigned int len = 0;
     size_t off = 0;
     int status = -1;
 
@@ -86,7 +86,7 @@ int cpor_get_tag_file(const pdp_ctx_t* ctx, unsigned int index,
     pdp_cpor_tag_t *tag = NULL;
     static FILE* tagfile = NULL;
     unsigned char *data = NULL;
-    size_t data_len = 0;
+    unsigned int data_len = 0;
     int status = -1;
     
     // If buf is NULL, it is a signal to re-set the stateful variables

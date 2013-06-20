@@ -29,7 +29,7 @@
  * Each token is of the form:
  *  <index, sigma len, sigma>
  **/
-size_t cpor_serialized_tag_size(const pdp_ctx_t *ctx)
+unsigned int cpor_serialized_tag_size(const pdp_ctx_t *ctx)
 {
     pdp_cpor_ctx_t *p = NULL;
 
@@ -51,14 +51,15 @@ size_t cpor_serialized_tag_size(const pdp_ctx_t *ctx)
  * @return 0 on success, non-zero on error
  **/
 int cpor_serialize_tags(const pdp_ctx_t *ctx, const pdp_cpor_tagdata_t* t,
-                        unsigned char **buffer, size_t *buffer_len)
+                        unsigned char **buffer, unsigned int *buffer_len)
 {
     pdp_cpor_ctx_t *p = NULL;
     pdp_cpor_tag_t *tag = NULL;
     unsigned char *buf_ptr = NULL;
     unsigned char *buf = NULL;
     unsigned char *sigma = NULL;
-    size_t tag_size, sigma_size, sigma_len, buf_len;
+    size_t tag_size, sigma_size, sigma_len;
+    unsigned int buf_len;
     int i, status = -1;
 
     if (!is_cpor(ctx) || !t || !buffer || !buffer_len ||
@@ -89,12 +90,12 @@ int cpor_serialize_tags(const pdp_ctx_t *ctx, const pdp_cpor_tagdata_t* t,
         if (sigma_len > sigma_size) goto cleanup;
 
         // write index
-        memcpy(buf_ptr, &(tag->index), sizeof(unsigned int));
-        buf_ptr += sizeof(unsigned int);
+        memcpy(buf_ptr, &(tag->index), sizeof(tag->index));
+        buf_ptr += sizeof(tag->index);
 
         // write sigma size
-        memcpy(buf_ptr, &sigma_len, sizeof(size_t));
-        buf_ptr += sizeof(size_t);
+        memcpy(buf_ptr, &sigma_len, sizeof(sigma_len));
+        buf_ptr += sizeof(sigma_len);
         
         // write sigma
         memset(sigma, 0, sigma_size);
@@ -132,7 +133,7 @@ cleanup:
  * @return 0 on success, non-zero on error
  **/
 int cpor_deserialize_tag(const pdp_ctx_t *ctx, pdp_cpor_tag_t* tag,
-                         unsigned char *buf, size_t buf_len)
+                         unsigned char *buf, unsigned int buf_len)
 {
     pdp_cpor_ctx_t *p = NULL;
     unsigned char *buf_ptr = buf;
@@ -153,12 +154,12 @@ int cpor_deserialize_tag(const pdp_ctx_t *ctx, pdp_cpor_tag_t* tag,
     if (buf_len < tag_size) goto cleanup;
 
     // Tag is <index, sigma_size, sigma>
-    memcpy(&(tag->index), buf_ptr, sizeof(unsigned int));
-    buf_ptr += sizeof(unsigned int);
+    memcpy(&(tag->index), buf_ptr, sizeof(tag->index));
+    buf_ptr += sizeof(tag->index);
 
     // read sigma size
-    memcpy(&sigma_len, buf_ptr, sizeof(size_t));
-    buf_ptr += sizeof(size_t);
+    memcpy(&sigma_len, buf_ptr, sizeof(sigma_len));
+    buf_ptr += sizeof(sigma_len);
 
     // double-check the size is sensible
     if (sigma_size < sigma_len) goto cleanup;

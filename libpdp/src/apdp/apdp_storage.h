@@ -19,19 +19,19 @@
  * function prototypes - apdp_file.c
  */
 int apdp_write_tags_to_file(const pdp_ctx_t *ctx, 
-		const pdp_apdp_tagdata_t* t);
+        const pdp_apdp_tagdata_t* t);
 int apdp_get_tag_file(const pdp_ctx_t* ctx, unsigned int i, 
-		void *b, unsigned int *len);
+        void *b, unsigned int *len);
 int apdp_get_block_file(const pdp_ctx_t* ctx, unsigned int i, 
-		void *b, unsigned int *len);
+        void *b, unsigned int *len);
 /*
  * function prototypes - apdp_s3.c
  */
 int apdp_write_data_to_s3(const pdp_ctx_t *ctx, const pdp_apdp_tagdata_t* t);
 int apdp_get_tag_s3(const pdp_ctx_t* ctx, unsigned int index, 
-		void *b, unsigned int* buf_len);
+        void *b, unsigned int* buf_len);
 int apdp_get_block_s3(const pdp_ctx_t* ctx, unsigned int index, 
-		void *b, unsigned int* len);
+        void *b, unsigned int* len);
 
 #endif
 /** @} */

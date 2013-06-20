@@ -19,11 +19,11 @@
 /*
  * function prototypes - sepdp_serialize.c
  */
-size_t sepdp_serialized_tag_size(const pdp_ctx_t *ctx);
+unsigned int sepdp_serialized_tag_size(const pdp_ctx_t *ctx);
 int sepdp_serialize_tags(const pdp_ctx_t *ctx, const pdp_sepdp_tagdata_t* t,
-        unsigned char **buffer, size_t *buffer_len);
+        unsigned char **buffer, unsigned int *buffer_len);
 int sepdp_deserialize_tag(const pdp_ctx_t *ctx, pdp_sepdp_tag_t* tag,
-        unsigned char *buf, size_t buf_len);
+        unsigned char *buf, unsigned int buf_len);
 
 
 /*

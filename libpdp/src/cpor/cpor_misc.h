@@ -18,11 +18,11 @@
 /*
  * function prototypes - cpor_serialize.c
  */
-size_t cpor_serialized_tag_size(const pdp_ctx_t *ctx);
+unsigned int cpor_serialized_tag_size(const pdp_ctx_t *ctx);
 int cpor_serialize_tags(const pdp_ctx_t *ctx, const pdp_cpor_tagdata_t* t,
-		unsigned char **buffer, size_t *buffer_len);
+        unsigned char **buffer, unsigned int *buffer_len);
 int cpor_deserialize_tag(const pdp_ctx_t *ctx, pdp_cpor_tag_t* tag,
-		unsigned char *buf, size_t buf_len);
+        unsigned char *buf, unsigned int buf_len);
 
 /*
  * function prototypes - cpor.c
@@ -30,9 +30,9 @@ int cpor_deserialize_tag(const pdp_ctx_t *ctx, pdp_cpor_tag_t* tag,
 pdp_cpor_tag_t *cpor_tag_new(void);
 void cpor_tag_free(pdp_cpor_tag_t *tag);
 int cpor_fkey_open(const pdp_ctx_t *ctx, const pdp_cpor_key_t *key, 
-		pdp_cpor_tagdata_t **td);
+        pdp_cpor_tagdata_t **td);
 int cpor_fkey_store(const pdp_ctx_t *ctx, const pdp_cpor_key_t *key, 
-		const pdp_cpor_tagdata_t *td);
+        const pdp_cpor_tagdata_t *td);
 
 #endif
 /** @} */

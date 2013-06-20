@@ -25,11 +25,11 @@ void apdp_tag_free(pdp_apdp_tag_t *tag);
 /*
  * function prototypes - apdp_serialize.c
  */
-size_t apdp_serialized_tag_size(const pdp_ctx_t *ctx);
+unsigned int apdp_serialized_tag_size(const pdp_ctx_t *ctx);
 int apdp_serialize_tags(const pdp_ctx_t *ctx, const pdp_apdp_tagdata_t* t,
-		unsigned char **buffer, size_t *buffer_len);
+        unsigned char **buffer, unsigned int *buffer_len);
 int apdp_deserialize_tag(const pdp_ctx_t *ctx, pdp_apdp_tag_t* tag,
-		unsigned char *buffer, size_t buffer_len);
+        unsigned char *buffer, unsigned int buffer_len);
 
 #endif
 /** @} */

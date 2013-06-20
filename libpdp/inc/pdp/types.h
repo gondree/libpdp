@@ -14,6 +14,9 @@
 #include <pdp/apdp_types.h>
 #include <pdp/cpor_types.h>
 #include <pdp/sepdp_types.h>
+#ifdef _S3_SUPPORT
+#include <libs3.h>
+#endif
 
 /// Context for the use of a PDP algorithm.
 typedef struct {
@@ -33,17 +36,19 @@ typedef struct {
     size_t ofilepath_len;       ///< ofilepath length
 
 #ifdef _S3_SUPPORT
-    char *s3_access_key;
+    char *s3_access_key;        ///< S3 access id
     size_t s3_access_key_len;    
 
-    char *s3_secret_key;
+    char *s3_secret_key;        ///< S3 secret key
     size_t s3_secret_key_len;
 
-    char *s3_hostname;
+    char *s3_hostname;          ///< interface hostname:port
     size_t s3_hostname_len;
 
-    char *s3_bucket_name;
+    char *s3_bucket_name;       ///< S3 bucket name
     size_t s3_bucket_name_len;
+    
+    S3Protocol s3_protocol;     ///< HTTP or HTTPS
 #endif
 
     /// algorithm-specific params

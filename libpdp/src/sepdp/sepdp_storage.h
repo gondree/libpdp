@@ -31,7 +31,7 @@ int sepdp_get_block_file(const pdp_ctx_t* ctx, unsigned int i,
 int sepdp_write_data_to_s3(const pdp_ctx_t *ctx,
         const pdp_sepdp_tagdata_t* t);
 int sepdp_get_tag_s3(const pdp_ctx_t* ctx, unsigned int index, 
-		void *buffer, unsigned int *len);
+        void *buffer, unsigned int *len);
 int sepdp_get_block_s3(const pdp_ctx_t* ctx, unsigned int index, 
         void *b, unsigned int *len);
 

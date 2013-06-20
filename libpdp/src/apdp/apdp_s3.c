@@ -42,7 +42,7 @@ int apdp_write_data_to_s3(const pdp_ctx_t *ctx, const pdp_apdp_tagdata_t* t)
     return -1;
 #else
     unsigned char *buf = NULL;
-    size_t len = 0;
+    unsigned int len = 0;
     int status = -1;
 
     if (!t || !t->tags) return -1;
@@ -89,8 +89,8 @@ int apdp_get_tag_s3(const pdp_ctx_t* ctx, unsigned int index,
     pdp_apdp_tag_t *tag = NULL;
     unsigned char *buf = NULL;
     unsigned int i = 0;
-    size_t buf_len = 0;
-    size_t buf_size = 0;
+    unsigned int buf_len = 0;
+    unsigned int buf_size = 0;
     int status = -1;
 
     if (!ctx || !tag_ptr)

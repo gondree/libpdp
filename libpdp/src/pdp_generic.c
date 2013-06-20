@@ -156,6 +156,7 @@ int pdp_ctx_init(pdp_ctx_t *ctx)
     ctx->s3_hostname_len = 0;
     ctx->s3_bucket_name = NULL;
     ctx->s3_bucket_name_len = 0;
+    ctx->s3_protocol = 0;
 #endif
 
     // process algo specific context data
@@ -209,6 +210,7 @@ int pdp_ctx_create(pdp_ctx_t *ctx, const char* filename, const char* output)
 {
     int err = 0;
     struct stat st;
+    unsigned int slen;
     char *tmp = NULL;
     char tmps[MAXPATHLEN];
 
@@ -332,6 +334,19 @@ int pdp_ctx_create(pdp_ctx_t *ctx, const char* filename, const char* output)
                 goto cleanup;
             }
             strcpy(ctx->s3_bucket_name, tmp);
+        }
+        if (ctx->s3_hostname) {
+            slen = sizeof(":443");
+            if (ctx->opts & PDP_OPT_HTTPS) {
+                ctx->s3_protocol = S3ProtocolHTTPS;
+            } else if (ctx->s3_hostname_len < slen) {
+                ctx->s3_protocol = S3ProtocolHTTP;
+            } else if (strncmp(ctx->s3_hostname + ctx->s3_hostname_len - slen,
+                               ":443", slen) == 0) {
+                ctx->s3_protocol = S3ProtocolHTTPS;
+            } else {
+                ctx->s3_protocol = S3ProtocolHTTP;
+            }
         }
 #endif //_S3_SUPPORT
     }

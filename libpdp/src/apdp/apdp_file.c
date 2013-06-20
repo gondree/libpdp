@@ -35,7 +35,7 @@ int apdp_write_tags_to_file(const pdp_ctx_t *ctx, const pdp_apdp_tagdata_t* t)
 {
     unsigned char *buf = NULL;
     FILE *tagfile = NULL;
-    size_t len = 0;
+    unsigned int len = 0;
     size_t off = 0;
     int status = -1;
 

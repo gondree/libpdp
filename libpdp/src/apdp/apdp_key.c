@@ -343,7 +343,7 @@ int apdp_key_store(const pdp_ctx_t *ctx, const pdp_key_t *k, const char *path)
 
     // Write the length of g
     gen_len = BN_num_bytes(key->g);
-    fwrite(&gen_len, sizeof(size_t), 1, pub_key);
+    fwrite(&gen_len, sizeof(gen_len), 1, pub_key);
     if (ferror(pub_key)) goto cleanup;
 
     // Convert g to binary and write it
@@ -412,7 +412,7 @@ static int apdp_pub_key_open(const pdp_ctx_t *ctx, pdp_key_t *k,
     if (!key->rsa->n || !key->rsa->e) goto cleanup;
     
     // Read g data length and then binary g data
-    fread(&gen_len, sizeof(size_t), 1, pub_key);
+    fread(&gen_len, sizeof(gen_len), 1, pub_key);
     if (ferror(pub_key)) goto cleanup;
     if ((gen = malloc(gen_len)) == NULL) goto cleanup;
     fread(gen, gen_len, 1, pub_key);
@@ -535,7 +535,7 @@ static int apdp_pri_key_open(const pdp_ctx_t *ctx, pdp_key_t *k,
     if (!rsa) goto cleanup;
     
     // Read g data length and then binary g data
-    fread(&gen_len, sizeof(size_t), 1, pub_key);
+    fread(&gen_len, sizeof(gen_len), 1, pub_key);
     if (ferror(pub_key)) goto cleanup;
     if ((gen = malloc(gen_len)) == NULL) goto cleanup;
     fread(gen, gen_len, 1, pub_key);

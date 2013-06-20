@@ -20,18 +20,18 @@
  */
 int cpor_write_tags_to_file(const pdp_ctx_t *ctx, const pdp_cpor_tagdata_t* t);
 int cpor_get_tag_file(const pdp_ctx_t* ctx, unsigned int i, 
-		void *b, unsigned int *len);
+        void *b, unsigned int *len);
 int cpor_get_block_file(const pdp_ctx_t* ctx, unsigned int i, 
-		void *b, unsigned int *len);
+        void *b, unsigned int *len);
 
 /*
  * function prototypes - apdp_s3.c
  */
 int cpor_write_data_to_s3(const pdp_ctx_t *ctx, const pdp_cpor_tagdata_t* t);
 int cpor_get_tag_s3(const pdp_ctx_t* ctx, unsigned int index, 
-		void *buffer, unsigned int* b_len);
+        void *buffer, unsigned int* b_len);
 int cpor_get_block_s3(const pdp_ctx_t* ctx, unsigned int index, 
-		void *b, unsigned int* buf_len);
+        void *b, unsigned int* buf_len);
 
 #endif
 /** @} */

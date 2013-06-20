@@ -33,7 +33,7 @@ static unsigned int s3_initialized = 0;  ///< ensures we init once
 struct buffer_pointer {
     unsigned char *buf;
     int offset;
-    size_t len;
+    unsigned int len;
 };
 
 static int putObjectFileCallback(int bufferSize, char *buffer, 
@@ -115,7 +115,7 @@ static S3Status responseSizeCallback(const S3ResponseProperties *properties,
  * @return 0 on success, non-zero on error
  **/
 int pdp_write_data_to_s3(const pdp_ctx_t *ctx, const char* filepath,
-                         unsigned char *data, size_t data_len)
+                         unsigned char *data, unsigned int data_len)
 {
 #ifndef _S3_SUPPORT
     PDP_UNSUPPORTED("S3");
@@ -144,7 +144,7 @@ int pdp_write_data_to_s3(const pdp_ctx_t *ctx, const char* filepath,
     S3BucketContext bucketContext = {
         0,
         ctx->s3_bucket_name,
-        S3ProtocolHTTP,
+        ctx->s3_protocol,
         S3UriStylePath,
         ctx->s3_access_key,
         ctx->s3_secret_key
@@ -232,7 +232,7 @@ int pdp_write_file_to_s3(const pdp_ctx_t *ctx, const char* filepath)
     S3BucketContext bucketContext = {
         0,
         ctx->s3_bucket_name,
-        S3ProtocolHTTP,
+        ctx->s3_protocol,
         S3UriStylePath,
         ctx->s3_access_key,
         ctx->s3_secret_key
@@ -292,14 +292,14 @@ cleanup:
  **/
 
 int pdp_get_file_from_s3(const pdp_ctx_t *ctx, const char *filepath,
-                         unsigned char **buf, size_t *buf_len)
+                         unsigned char **buf, unsigned int *buf_len)
 {
 #ifndef _S3_SUPPORT
     PDP_UNSUPPORTED("S3");
     return -1;
 #else
     int err;
-    size_t len = 0;
+    unsigned int len = 0;
     unsigned char *data = NULL;
     
     err = pdp_get_chunk_from_s3(ctx, filepath, &data, &len, 0);
@@ -333,7 +333,7 @@ int pdp_get_file_from_s3(const pdp_ctx_t *ctx, const char *filepath,
  * @return 0 on success, non-zero on error
  **/
 int pdp_get_chunk_from_s3(const pdp_ctx_t *ctx, const char *filepath,
-                          unsigned char **buf, size_t *buf_len, 
+                          unsigned char **buf, unsigned int *buf_len, 
                           unsigned int index)
 {
 #ifndef _S3_SUPPORT
@@ -365,7 +365,7 @@ int pdp_get_chunk_from_s3(const pdp_ctx_t *ctx, const char *filepath,
     S3BucketContext bucketContext = {
         0,
         ctx->s3_bucket_name,
-        S3ProtocolHTTP,
+        ctx->s3_protocol,
         S3UriStylePath,
         ctx->s3_access_key,
         ctx->s3_secret_key

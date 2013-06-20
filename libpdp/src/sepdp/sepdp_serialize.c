@@ -29,14 +29,14 @@
  * Each token is of the form:
  *  <index, iv_size, iv, token_size, token, mac_size, mac>
  **/
-size_t sepdp_serialized_tag_size(const pdp_ctx_t *ctx)
+unsigned int sepdp_serialized_tag_size(const pdp_ctx_t *ctx)
 {
     pdp_sepdp_ctx_t *p = NULL;
 
     if (!is_sepdp(ctx)) return -1;
     p = ctx->sepdp_param;
 
-    return ( sizeof(unsigned int) + 
+    return ( sizeof(size_t) + 
              sizeof(size_t) + p->ae_key_size + 
              sizeof(size_t) + p->block_size + 
              sizeof(size_t) + EVP_MAX_MD_SIZE );
@@ -65,7 +65,7 @@ size_t sepdp_serialized_tag_size(const pdp_ctx_t *ctx)
  * @return 0 on success, non-zero on error
  **/
 int sepdp_serialize_tags(const pdp_ctx_t *ctx, const pdp_sepdp_tagdata_t* t,
-                         unsigned char **buffer, size_t *buffer_len)
+                         unsigned char **buffer, unsigned int *buffer_len)
 {
     pdp_sepdp_ctx_t *p = NULL;
     pdp_sepdp_tag_t *tag = NULL;
@@ -92,15 +92,15 @@ int sepdp_serialize_tags(const pdp_ctx_t *ctx, const pdp_sepdp_tagdata_t* t,
         tag = t->tokens[i];
 
         // write index
-        memcpy(buf_ptr, &(tag->index), sizeof(unsigned int));
-        buf_ptr += sizeof(unsigned int);
+        memcpy(buf_ptr, &(tag->index), sizeof(tag->index));
+        buf_ptr += sizeof(tag->index);
 
         // make sure our assumptions re: bounds are correct
         if (tag->iv_size > p->ae_key_size) goto cleanup;
 
         // write iv length
-        memcpy(buf_ptr, &(tag->iv_size), sizeof(size_t));
-        buf_ptr += sizeof(size_t);
+        memcpy(buf_ptr, &(tag->iv_size), sizeof(tag->iv_size));
+        buf_ptr += sizeof(tag->iv_size);
 
         // write iv
         memset(buf_ptr, 0, p->ae_key_size);
@@ -111,8 +111,8 @@ int sepdp_serialize_tags(const pdp_ctx_t *ctx, const pdp_sepdp_tagdata_t* t,
         if (tag->tok_size > p->block_size) goto cleanup;
         
         // write token length
-        memcpy(buf_ptr, &(tag->tok_size), sizeof(size_t));
-        buf_ptr += sizeof(size_t);
+        memcpy(buf_ptr, &(tag->tok_size), sizeof(tag->tok_size));
+        buf_ptr += sizeof(tag->tok_size);
 
         // write token
         memset(buf_ptr, 0, p->block_size);
@@ -123,8 +123,8 @@ int sepdp_serialize_tags(const pdp_ctx_t *ctx, const pdp_sepdp_tagdata_t* t,
         if (tag->mac_size > EVP_MAX_MD_SIZE) goto cleanup;
         
         // write token length
-        memcpy(buf_ptr, &(tag->mac_size), sizeof(size_t));
-        buf_ptr += sizeof(size_t);
+        memcpy(buf_ptr, &(tag->mac_size), sizeof(tag->mac_size));
+        buf_ptr += sizeof(tag->mac_size);
 
         // write mac
         memset(buf_ptr, 0, EVP_MAX_MD_SIZE);
@@ -150,7 +150,7 @@ cleanup:
  * @return 0 on success, non-zero on error
  **/
 int sepdp_deserialize_tag(const pdp_ctx_t *ctx, pdp_sepdp_tag_t* tag,
-                          unsigned char *buf, size_t buf_len)
+                          unsigned char *buf, unsigned int buf_len)
 {
     pdp_sepdp_ctx_t *p = NULL;
     unsigned char *buf_ptr = buf;
@@ -167,11 +167,11 @@ int sepdp_deserialize_tag(const pdp_ctx_t *ctx, pdp_sepdp_tag_t* tag,
     // double-check size of buf
     if (buf_len < tag_size) goto cleanup;
 
-    memcpy(&(tag->index), buf_ptr, sizeof(unsigned int));
-    buf_ptr += sizeof(unsigned int);
+    memcpy(&(tag->index), buf_ptr, sizeof(tag->index));
+    buf_ptr += sizeof(tag->index);
 
-    memcpy(&(tag->iv_size), buf_ptr, sizeof(size_t));
-    buf_ptr += sizeof(size_t);
+    memcpy(&(tag->iv_size), buf_ptr, sizeof(tag->iv_size));
+    buf_ptr += sizeof(tag->iv_size);
 
     // make sure our assumptions re: bounds are correct
     if (tag->iv_size > p->ae_key_size) goto cleanup;
@@ -180,8 +180,8 @@ int sepdp_deserialize_tag(const pdp_ctx_t *ctx, pdp_sepdp_tag_t* tag,
     memcpy(tag->iv, buf_ptr, tag->iv_size);
     buf_ptr += p->ae_key_size;
     
-    memcpy(&(tag->tok_size), buf_ptr, sizeof(size_t));
-    buf_ptr += sizeof(size_t);
+    memcpy(&(tag->tok_size), buf_ptr, sizeof(tag->tok_size));
+    buf_ptr += sizeof(tag->tok_size);
     
     // make sure our assumptions re: bounds are correct
     if (tag->tok_size > p->block_size) goto cleanup;
@@ -190,8 +190,8 @@ int sepdp_deserialize_tag(const pdp_ctx_t *ctx, pdp_sepdp_tag_t* tag,
     memcpy(tag->tok, buf_ptr, tag->tok_size);
     buf_ptr += p->block_size;
 
-    memcpy(&(tag->mac_size), buf_ptr, sizeof(size_t));
-    buf_ptr += sizeof(size_t);
+    memcpy(&(tag->mac_size), buf_ptr, sizeof(tag->mac_size));
+    buf_ptr += sizeof(tag->mac_size);
 
     // make sure our assumptions re: bounds are correct
     if (tag->mac_size > EVP_MAX_MD_SIZE) goto cleanup;

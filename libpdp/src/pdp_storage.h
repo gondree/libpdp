@@ -30,9 +30,9 @@ int pdp_get_block_file(const pdp_ctx_t* ctx, unsigned int i,
  */
 int pdp_write_file_to_s3(const pdp_ctx_t *ctx, const char* filepath);
 int pdp_write_data_to_s3(const pdp_ctx_t *ctx, const char* filepath,
-		unsigned char *data, size_t data_len);
+        unsigned char *data, unsigned int data_len);
 int pdp_get_chunk_from_s3(const pdp_ctx_t *ctx, const char *filepath,
-		unsigned char **buf, size_t *buf_len, unsigned int index);
+        unsigned char **buf, unsigned int *buf_len, unsigned int index);
 
 #endif
 /** @} */

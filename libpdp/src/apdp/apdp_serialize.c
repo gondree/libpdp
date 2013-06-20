@@ -29,7 +29,7 @@
  * Each token is of the form:
  *  <Tag len, Tag, index, nonce len, nonce>
  **/
-size_t apdp_serialized_tag_size(const pdp_ctx_t *ctx)
+unsigned int apdp_serialized_tag_size(const pdp_ctx_t *ctx)
 {
     pdp_apdp_ctx_t *p = NULL;
 
@@ -52,7 +52,7 @@ size_t apdp_serialized_tag_size(const pdp_ctx_t *ctx)
  * @return 0 on success, non-zero on error
  **/
 int apdp_serialize_tags(const pdp_ctx_t *ctx, const pdp_apdp_tagdata_t* t,
-                        unsigned char **buffer, size_t *buffer_len)
+                        unsigned char **buffer, unsigned int *buffer_len)
 {
     pdp_apdp_ctx_t *p = NULL;
     pdp_apdp_tag_t *tag = NULL;
@@ -61,8 +61,8 @@ int apdp_serialize_tags(const pdp_ctx_t *ctx, const pdp_apdp_tagdata_t* t,
     unsigned char *buf = NULL;
     unsigned char *tim = NULL;
     unsigned char *prf = NULL;
-    size_t tag_size, tim_size, prf_size, buf_len;
-    size_t tim_len = 0;
+    size_t tag_size, prf_size, buf_len;
+    size_t tim_size, tim_len = 0;
     int i, status = -1;
 
     if (!is_apdp(ctx) || !t || !buffer || !buffer_len ||
@@ -98,8 +98,8 @@ int apdp_serialize_tags(const pdp_ctx_t *ctx, const pdp_apdp_tagdata_t* t,
         if (tag->index_prf_size > prf_size) goto cleanup;
 
         // write Tim size
-        memcpy(buf_ptr, &tim_len, sizeof(size_t));
-        buf_ptr += sizeof(size_t);
+        memcpy(buf_ptr, &tim_len, sizeof(tim_len));
+        buf_ptr += sizeof(tim_len);
         
         // write Tim
         if (!BN_bn2bin(tag->Tim, tim)) goto cleanup;
@@ -107,12 +107,12 @@ int apdp_serialize_tags(const pdp_ctx_t *ctx, const pdp_apdp_tagdata_t* t,
         buf_ptr += tim_size;
 
         // write index
-        memcpy(buf_ptr, &(tag->index), sizeof(unsigned int));
-        buf_ptr += sizeof(unsigned int);
+        memcpy(buf_ptr, &(tag->index), sizeof(tag->index));
+        buf_ptr += sizeof(tag->index);
         
         // write index_prf_size
-        memcpy(buf_ptr, &(tag->index_prf_size), sizeof(size_t));
-        buf_ptr += sizeof(size_t);
+        memcpy(buf_ptr, &(tag->index_prf_size), sizeof(tag->index_prf_size));
+        buf_ptr += sizeof(tag->index_prf_size);
 
         // write index_prf
         memcpy(prf, tag->index_prf, tag->index_prf_size);
@@ -153,13 +153,13 @@ cleanup:
  * @return 0 on success, non-zero on error
  **/
 int apdp_deserialize_tag(const pdp_ctx_t *ctx, pdp_apdp_tag_t* tag,
-                         unsigned char *buf, size_t buf_len)
+                         unsigned char *buf, unsigned int buf_len)
 {
     pdp_apdp_ctx_t *p = NULL;
     unsigned char *buf_ptr = buf;
     unsigned char *tim = NULL;
-    size_t tim_size, tag_size, prf_size;
-    size_t tim_len = 0;
+    size_t tag_size, prf_size;
+    size_t tim_size, tim_len = 0;
     int status = -1;
     
     if (!is_apdp(ctx) || !tag || !buf || !buf_len)
@@ -175,8 +175,8 @@ int apdp_deserialize_tag(const pdp_ctx_t *ctx, pdp_apdp_tag_t* tag,
     if (!tag_size || (buf_len > tag_size)) goto cleanup;
 
     // read Tim size
-    memcpy(&tim_len, buf_ptr, sizeof(size_t));
-    buf_ptr += sizeof(size_t);
+    memcpy(&tim_len, buf_ptr, sizeof(tim_len));
+    buf_ptr += sizeof(tim_len);
 
     // read Tim
     if ((tim = malloc(tim_len)) == NULL) goto cleanup;
@@ -186,12 +186,12 @@ int apdp_deserialize_tag(const pdp_ctx_t *ctx, pdp_apdp_tag_t* tag,
     if (!BN_bin2bn(tim, tim_len, tag->Tim)) goto cleanup;
 
     // read index
-    memcpy(&(tag->index), buf_ptr, sizeof(unsigned int));
-    buf_ptr += sizeof(unsigned int);
+    memcpy(&(tag->index), buf_ptr, sizeof(tag->index));
+    buf_ptr += sizeof(tag->index);
     
     // read index_prf_size
-    memcpy(&(tag->index_prf_size), buf_ptr, sizeof(size_t));
-    buf_ptr += sizeof(size_t);
+    memcpy(&(tag->index_prf_size), buf_ptr, sizeof(tag->index_prf_size));
+    buf_ptr += sizeof(tag->index_prf_size);
 
     // double check size of prf
     if (!tag->index_prf_size || (tag->index_prf_size > prf_size)) goto cleanup;

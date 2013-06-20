@@ -332,7 +332,8 @@ int cpor_fkey_open(const pdp_ctx_t *ctx, const pdp_cpor_key_t *key,
     unsigned char *buf = NULL;
     unsigned char *alpha = NULL;
     unsigned char *tmp_ptr = NULL;
-    size_t len, ctxt_len, mac_len, buf_len, alpha_size, num_sectors;
+    size_t len, ctxt_len, mac_len, buf_len, alpha_size;
+    unsigned int num_sectors;
     int i, status = -1;
 
     if (!is_cpor(ctx) || !td || !key)
@@ -360,7 +361,7 @@ int cpor_fkey_open(const pdp_ctx_t *ctx, const pdp_cpor_key_t *key,
     memset(t, 0, sizeof(pdp_cpor_tagdata_t));
 
     // read len of file contents
-    fread(&len, sizeof(size_t), 1, file);
+    fread(&len, sizeof(len), 1, file);
     if (ferror(file)) goto cleanup;
 
     // read ctxt and mac
@@ -380,14 +381,14 @@ int cpor_fkey_open(const pdp_ctx_t *ctx, const pdp_cpor_key_t *key,
         goto cleanup;
 
     // read num_sectors from the front of ctxt
-    memcpy(&(num_sectors), ctxt, sizeof(unsigned int));
+    memcpy(&num_sectors, ctxt, sizeof(num_sectors));
 
     // double-check num_blocks matched ctx
     if (p->num_sectors != num_sectors) goto cleanup;
 
     // tmp_ptr points to ciphertext
-    tmp_ptr = ctxt + sizeof(unsigned int);
-    len = ctxt_len - sizeof(unsigned int);
+    tmp_ptr = ctxt + sizeof(num_sectors);
+    len = ctxt_len - sizeof(num_sectors);
     
     // ciphertext length is upper-bound on plaintext length
     buf_len = len;
@@ -413,8 +414,8 @@ int cpor_fkey_open(const pdp_ctx_t *ctx, const pdp_cpor_key_t *key,
     // read alphas out of plaintext
     tmp_ptr += p->prf_key_size;
     for (i = 0; i < p->num_sectors; i++) {
-        memcpy(&alpha_size, tmp_ptr, sizeof(size_t));
-        tmp_ptr += sizeof(size_t);
+        memcpy(&alpha_size, tmp_ptr, sizeof(alpha_size));
+        tmp_ptr += sizeof(alpha_size);
 
         if ((alpha = malloc(alpha_size)) == NULL) goto cleanup;
         memset(alpha, 0, alpha_size);
@@ -531,7 +532,7 @@ int cpor_fkey_store(const pdp_ctx_t *ctx, const pdp_cpor_key_t *key,
     }
 
     // ctxt holds number of blocks, followed by the encryption of k_ptxt
-    k_ctxt_len = sizeof(unsigned int) + k_ptxt_len + ctx_overhead();
+    k_ctxt_len = sizeof(p->num_sectors) + k_ptxt_len + ctx_overhead();
     if ((k_ctxt = malloc(k_ctxt_len)) == NULL) goto cleanup;
     memset(k_ctxt, 0, k_ctxt_len);
 
@@ -540,11 +541,11 @@ int cpor_fkey_store(const pdp_ctx_t *ctx, const pdp_cpor_key_t *key,
     memset(k_mac, 0, k_mac_len);
     
     // copy the number of blocks in the file into output
-    memcpy(k_ctxt, &(p->num_sectors), sizeof(unsigned int));
+    memcpy(k_ctxt, &(p->num_sectors), sizeof(p->num_sectors));
     
     // advance ptr past num_sectors, to where ciphertext will go
-    tmp_ptr = k_ctxt + sizeof(unsigned int);
-    len = k_ctxt_len - sizeof(unsigned int);
+    tmp_ptr = k_ctxt + sizeof(p->num_sectors);
+    len = k_ctxt_len - sizeof(p->num_sectors);
     
     /// @todo fix NULL iv    
     if (encrypt_then_mac(key->k_enc, key->k_enc_size, key->k_mac, 
@@ -553,7 +554,7 @@ int cpor_fkey_store(const pdp_ctx_t *ctx, const pdp_cpor_key_t *key,
     tmp_ptr = NULL;
     
     // get length of what was output into k_ctxt
-    k_ctxt_len = len + sizeof(unsigned int);
+    k_ctxt_len = len + sizeof(p->num_sectors);
 
     // create buffer to hold total output
     buf_len = sizeof(k_ctxt_len) + k_ctxt_len + sizeof(k_mac_len) + k_mac_len;

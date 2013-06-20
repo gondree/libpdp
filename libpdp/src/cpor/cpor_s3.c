@@ -39,7 +39,7 @@ int cpor_write_data_to_s3(const pdp_ctx_t *ctx, const pdp_cpor_tagdata_t* t)
     return -1;
 #else
     unsigned char *buf = NULL;
-    size_t len = 0;
+    unsigned int len = 0;
     int status = -1;
 
     if (!t || !t->tags)
@@ -76,7 +76,7 @@ cleanup:
  * @return 0 on success, non-zero on error
  **/
 int cpor_get_tag_s3(const pdp_ctx_t* ctx, unsigned int index, 
-                    void *buffer, unsigned int* b_len)
+                    void *buffer, unsigned int *b_len)
 {
 #ifndef _S3_SUPPORT
     PDP_UNSUPPORTED("S3");
@@ -86,8 +86,8 @@ int cpor_get_tag_s3(const pdp_ctx_t* ctx, unsigned int index,
     pdp_cpor_tag_t *tag = NULL;
     unsigned char *buf = NULL;
     unsigned int i = 0;
-    size_t buf_len = 0;
-    size_t buf_size = 0;
+    unsigned int buf_len = 0;
+    unsigned int buf_size = 0;
     int status = -1;
 
     if (!ctx || !tag_ptr)

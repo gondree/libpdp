@@ -47,8 +47,8 @@
 #define PDP_OPT_THREADED 0x01   ///< Use threaded routines, when possible
 #define PDP_OPT_USE_S3   0x02   ///< Use Amazon S3 as storage backend
 #define PDP_USE_ECC      0x04   ///< Use an ECC tranform before tagging
-#define PDP_PW_NOINPUT   0x08   ///< Read password from environment (not safe)
-
+#define PDP_OPT_HTTPS    0x08   ///< Force using HTTPS
+#define PDP_PW_NOINPUT   0x10   ///< Read password from environment (not safe)
 
 /*
  * function prototypes
