@@ -8,8 +8,8 @@ import argparse
 import boto
 from boto.s3.connection import OrdinaryCallingFormat
 
-Id = "97b962f0222e4c0294b3087561d34443"
-Key = "a117221246fc4e0ca69e5e87f4be443c"
+Id = "XXX"
+Key = "YYY"
 Host, Port = "192.168.99.173", "8080"
 
 DEFAULT_BUCKETS = ["libpdp_data"]

@@ -88,6 +88,7 @@ static struct option long_opts[] = {
 #endif
 #ifdef _S3_SUPPORT
     {"s3", no_argument, NULL, '3'},
+    {"https", no_argument, NULL, '$'},
 #endif
     {0, 0, 0, 0}
 };
@@ -118,10 +119,11 @@ const opts_desc_t opts_desc[] = {
     {2, " [bytes], manually input file size (e.g., using -C with no -T)"},
     {3, " [filepath], use filepath to open or store saved key data"},
 #ifdef _THREAD_SUPPORT
-    {opts_len-3, " [num], number of threads (defaults to core count)"},
+    {opts_len-4, " [num], number of threads (defaults to core count)"},
 #endif
 #ifdef _S3_SUPPORT
-    {opts_len-2, ", use S3 for storage (default is flat file storage)"},
+    {opts_len-3, ", use S3 for storage (default is flat file storage)"},
+    {opts_len-2, ", force using HTTPS"},
 #endif
     {-1, "benchmarking OPTIONS"},    
     {11, " [filename], output timing data"},
@@ -178,6 +180,7 @@ typedef struct {
     unsigned short verb;
     unsigned short ops;
     unsigned short noninteractive;
+    unsigned short force_https;
     unsigned int file_st_size;
     unsigned int alg;
     unsigned int block_size;
@@ -245,6 +248,7 @@ int main(int argc, char **argv)
     params.keypath = NULL;
     params.num_threads = 1;
     params.num_loops = 1;
+    params.force_https = 0;
     time_it_init();
 
     if (argc < 2) {
@@ -253,7 +257,7 @@ int main(int argc, char **argv)
     }
 
     while ((opt = getopt_long(argc, argv, "a:b:c:d:ef:hk:l:m:n:r:t:vCM:PTVY:3"
-                              "4:5:6:7:8:~:*!#", long_opts, NULL)) != -1) {
+                              "4:5:6:7:8:~:*!#$", long_opts, NULL)) != -1) {
         switch(opt) {
             case 'a':
                 params.algo = optarg;
@@ -343,6 +347,9 @@ int main(int argc, char **argv)
             case '#':
                 params.apdp_opts |= APDP_USE_E_PDP;
                 break;
+            case '$':
+                params.force_https = 1;
+                break;
             default:
                 usage(argv[0], -1);
                 return -1;
@@ -377,6 +384,9 @@ int main(int argc, char **argv)
     }
     if (params.s3) {
         ctx->opts |= PDP_OPT_USE_S3;
+        if (params.force_https) {
+            ctx->opts |= PDP_OPT_HTTPS;
+        }
     }
     if (params.noninteractive) {
         ctx->opts |= PDP_PW_NOINPUT;
@@ -495,27 +505,29 @@ int main(int argc, char **argv)
                 printf("\tBlocksize: %d\n", ctx->macpdp_param->block_size);
                 printf("\tNumber of challenges: %d\n", 
                         ctx->macpdp_param->num_challenge_blocks);
-                printf("\tKey Len: %u\n", ctx->macpdp_param->prf_key_size);
+                printf("\tKey Len: %zd\n", ctx->macpdp_param->prf_key_size);
                 break;
             case PDP_APDP:
                 printf("\tBlocksize: %d\n", ctx->apdp_param->block_size);
                 printf("\tNumber of challenges: %d\n", 
                         ctx->apdp_param->num_challenge_blocks);
-                printf("\tPRF Key Len: %u\n", ctx->apdp_param->prf_key_size);
-                printf("\tPRP Key Len: %u\n", ctx->apdp_param->prp_key_size);
-                printf("\tRSA Key Len: %u\n", ctx->apdp_param->rsa_key_size);
+                printf("\tPRF Key Len: %zd\n", ctx->apdp_param->prf_key_size);
+                printf("\tPRP Key Len: %zd\n", ctx->apdp_param->prp_key_size);
+                printf("\tRSA Key Len: %zd\n", ctx->apdp_param->rsa_key_size);
                 break;
             case PDP_CPOR:
                 printf("\tBlocksize: %d\n", ctx->cpor_param->block_size);
                 printf("\tLambda: %u\n", ctx->cpor_param->lambda);
-                printf("\tPRF Key Len: %u\n", ctx->cpor_param->prf_key_size);
-                printf("\tENC Key Len: %u\n", ctx->cpor_param->enc_key_size);
-                printf("\tMAC Key Len: %u\n", ctx->cpor_param->mac_key_size);
+                printf("\tPRF Key Len: %zd\n", ctx->cpor_param->prf_key_size);
+                printf("\tENC Key Len: %zd\n", ctx->cpor_param->enc_key_size);
+                printf("\tMAC Key Len: %zd\n", ctx->cpor_param->mac_key_size);
+                break;
             case PDP_SEPDP:
                 printf("\tBlocksize: %d\n", ctx->sepdp_param->block_size);
-                printf("\tPRF Key Len: %u\n", ctx->sepdp_param->prf_key_size);
-                printf("\tPRP Key Len: %u\n", ctx->sepdp_param->prp_key_size);
-                printf("\tENC Key Len: %u\n", ctx->sepdp_param->ae_key_size);
+                printf("\tPRF Key Len: %zd\n", ctx->sepdp_param->prf_key_size);
+                printf("\tPRP Key Len: %zd\n", ctx->sepdp_param->prp_key_size);
+                printf("\tENC Key Len: %zd\n", ctx->sepdp_param->ae_key_size);
+                break;
             default:
                 break;
         }
@@ -643,9 +655,9 @@ TOC("Verify file");
             case PDP_MACPDP:
                 printf("\tNum blocks: %d\n", ctx->macpdp_param->num_blocks);
                 if (tag.macpdp)
-                    printf("\tTag length: %d bytes\n", tag.macpdp->tags_size);
+                    printf("\tTag length: %zd bytes\n", tag.macpdp->tags_size);
                 if (ver_chal.macpdp)
-                    printf("\tNum challenges: %d\n", ver_chal.macpdp->ell);
+                    printf("\tNum challenges: %u\n", ver_chal.macpdp->ell);
                 break;
             case PDP_APDP:
                 printf("\tNum blocks: %d\n", ctx->apdp_param->num_blocks);
@@ -692,7 +704,7 @@ TOC("Verify file");
                     "Filename", ctx->filepath);
             break;
         case PDP_APDP:
-            sprintf(meta, "%s:%s %d:%s %u:%s %u:%s %u: %s %hu:"
+            sprintf(meta, "%s:%s %d:%s %zd:%s %zd:%s %zd: %s %hu:"
                           "%s %hu:%s %d:%s %d:%s %s", 
                     params.algo,
                     "Block size", ctx->apdp_param->block_size,
@@ -709,7 +721,7 @@ TOC("Verify file");
                     "Filename", ctx->filepath);
             break;
         case PDP_CPOR:
-            sprintf(meta, "%s:%s %d:%s %u:%s %u:%s %u:%s %u:%s %u:"
+            sprintf(meta, "%s:%s %d:%s %zd:%s %zd:%s %zd:%s %u:%s %u:"
                           "%s %d:%s %d:%s %d:%s %s",
                     params.algo,
                     "Block size", ctx->cpor_param->block_size,
@@ -725,7 +737,7 @@ TOC("Verify file");
                     "Filename", ctx->filepath);
             break;
         case PDP_SEPDP:
-            sprintf(meta, "%s:%s %d:%s %u:%s %u:%s %u:%s %hu:%s %hu:"
+            sprintf(meta, "%s:%s %d:%s %zd:%s %zd:%s %zd:%s %hu:%s %hu:"
                           "%s %d:%s %d:%s %s",
                     params.algo,
                     "Block size", ctx->sepdp_param->block_size,

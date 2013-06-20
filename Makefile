@@ -33,3 +33,8 @@ clean:
 	[ -d libpdp ] && $(MAKE) -C libpdp clean
 	[ -d libs3 ] && $(MAKE) -C libs3 clean
 
+distclean: clean
+	[ -d tools ] && $(MAKE) -C tools distclean
+	[ -d libpdp ] && $(MAKE) -C libpdp distclean
+	[ -d libs3 ] && $(MAKE) -C libs3 distclean
+	rm -rf doc/html

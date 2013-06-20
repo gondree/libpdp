@@ -15,16 +15,17 @@ RSA_ACCESS_KEY = "Z" # fake passphrase for testing
 
 # Some fake parameters for a local DevStack server test environment
 S3_BUCKET_NAME = "libpdp_data" # default / testing bucket name
-S3_ACCESS_KEY_ID = "97b962f0222e4c0294b3087561d34443"
-S3_SECRET_ACCESS_KEY = "a117221246fc4e0ca69e5e87f4be443c"
+S3_ACCESS_KEY_ID = "XXX"
+S3_SECRET_ACCESS_KEY = "YYY"
 S3_HOSTNAME = "192.168.99.173:8080"
 
 SCRIPTPATH = os.path.dirname(os.path.abspath(__file__))
 
-TESTFILES = SCRIPTPATH+"./test-files/" # location of generated files
-KEYFILES = SCRIPTPATH+"./test-keys/"   # location of saved keys
-S3UTIL = SCRIPTPATH+"./s3_util.py"     # a support script for changing buckets
+TESTFILES = SCRIPTPATH+"/test-files/" # location of generated files
+KEYFILES = SCRIPTPATH+"/test-keys/"   # location of saved keys
+S3UTIL = SCRIPTPATH+"/s3_util.py"     # a support script for changing buckets
 TIME_FILE = TESTFILES + "timing-data.csv"
+APP = SCRIPTPATH+"/pdp_bench"
 
 # default parameters
 MACPDP = {"alg":'MAC-PDP', "blocksize":4096, "challenges":460}
@@ -67,15 +68,9 @@ def rimin(*args):
 class WrapperTest(unittest.TestCase):
     """ A Support Test Class, other tests inherit """
 
-    def setup(self):
+    def setUp(self):
         if not os.path.exists(TESTFILES):
             os.makedirs(TESTFILES)
-        if 'S3_ACCESS_KEY_ID' in os.environ:
-            S3_ACCESS_KEY_ID = os.environ['S3_ACCESS_KEY_ID']
-        if 'S3_SECRET_ACCESS_KEY' in os.environ:
-            S3_SECRET_ACCESS_KEY = os.environ['S3_SECRET_ACCESS_KEY']
-        if 'S3_HOSTNAME' in os.environ:
-            S3_HOSTNAME = os.environ['S3_HOSTNAME']
 
     def fillFile(self, len=100):
         """ Fill file with random data """
@@ -105,6 +100,7 @@ class WrapperTest(unittest.TestCase):
         (out, err) = p.communicate()
         p.wait()
         print "stdout:\n%s" % (out)
+        print "stderr:\n%s" % (err)
         for pat in eout:
             print "searching for pattern '%s'" %(pat)
             self.assertRegexpMatches(out, ".*%s*" % pat)
@@ -139,9 +135,8 @@ class TestBasic(WrapperTest):
             blocksize = alg["blocksize"]
             for num in [0.5, 1, 2, 2.5, 3.5]:
                 self.fillFile(int(blocksize * num))
-                self.output_test(["./pdp_bench", 
-                                  "-a", alg["alg"], "-f", self.path, "-v",
-                                  "-T", "-C", "-P", "-V"], 
+                self.output_test([APP, "-a", alg["alg"], "-f", self.path,
+                                  "-v", "-T", "-C", "-P", "-V"],
                                  ["File Integrity: Yes",
                                   "Filename: %s" %(self.path),
                                   "Num challenges: %d" %(rimin(num)),
@@ -155,9 +150,8 @@ class TestBasic(WrapperTest):
             challenges = alg["challenges"]
             for num in [0.5*challenges, 2.2*challenges, 5*challenges]:
                 self.fillFile(int(blocksize * num))
-                self.output_test(["./pdp_bench", 
-                                  "-a", alg["alg"], "-f", self.path, "-v",
-                                  "-T", "-C", "-P", "-V"], 
+                self.output_test([APP, "-a", alg["alg"], "-f", self.path,
+                                  "-v", "-T", "-C", "-P", "-V"],
                                  ["File Integrity: Yes",
                                   "Filename: %s" %(self.path),
                                   "Num challenges: %d" 
@@ -176,9 +170,8 @@ class TestOps(WrapperTest):
             challenges = alg["challenges"]
             for num in [0.5, 1, 2*challenges]:
                 self.fillFile(int(blocksize * num))
-                self.output_test(["./pdp_bench", 
-                                  "-a", alg["alg"], "-f", self.path, "-v",
-                                  "-T", "-C", "-P"], 
+                self.output_test([APP, "-a", alg["alg"], "-f", self.path,
+                                  "-v", "-T", "-C", "-P"],
                                  ["Filename: %s" %(self.path)])
                 self.emptyFile()
 
@@ -189,9 +182,8 @@ class TestOps(WrapperTest):
             challenges = alg["challenges"]
             for num in [0.5, 1, 2*challenges]:
                 self.fillFile(int(blocksize * num))
-                self.output_test(["./pdp_bench", 
-                                  "-a", alg["alg"], "-f", self.path, "-v",
-                                  "-T", "-C", "-V"],
+                self.output_test([APP, "-a", alg["alg"], "-f", self.path,
+                                  "-v", "-T", "-C", "-V"],
                                  ["Filename: %s" %(self.path)])
                 self.emptyFile()
 
@@ -202,9 +194,8 @@ class TestOps(WrapperTest):
             challenges = alg["challenges"]
             for num in [0.5, 1, 2*challenges]:
                 self.fillFile(int(blocksize * num))
-                self.output_test(["./pdp_bench", 
-                                  "-a", alg["alg"], "-f", self.path, "-v",
-                                  "-T", "-C"],
+                self.output_test([APP, "-a", alg["alg"], "-f", self.path,
+                                  "-v", "-T", "-C"],
                                  ["Filename: %s" %(self.path)])
                 self.emptyFile()
 
@@ -215,9 +206,8 @@ class TestOps(WrapperTest):
             challenges = alg["challenges"]
             for num in [0.5, 1, 2*challenges]:
                 self.fillFile(int(blocksize * num))
-                self.output_test(["./pdp_bench", 
-                                  "-a", alg["alg"], "-f", self.path, "-v",
-                                  "-T"],
+                self.output_test([APP, "-a", alg["alg"], "-f", self.path,
+                                  "-v", "-T"],
                                  ["Filename: %s" %(self.path)])
                 self.emptyFile()
 
@@ -228,8 +218,8 @@ class TestOps(WrapperTest):
             challenges = alg["challenges"]
             for num in [0.5, 1, 2*challenges]:
                 self.fillFile(int(blocksize * num))
-                self.output_test(["./pdp_bench", 
-                                  "-a", alg["alg"], "-f", self.path, "-v"],
+                self.output_test([APP, "-a", alg["alg"], "-f", self.path,
+                                  "-v"],
                                  ["Filename: %s" %(self.path)])
                 self.emptyFile()
 
@@ -245,9 +235,8 @@ class TestThreaded(WrapperTest):
             for num in [0.5, 1, 2, 2.5, 3.5, 0.5*challenges, 
                         2.2*challenges, 5*challenges]:
                 self.fillFile(int(blocksize * num))
-                self.output_test(["./pdp_bench", 
-                                  "-a", alg["alg"], "-f", self.path, "-v",
-                                  "-T", "-C", "-P", "-V",
+                self.output_test([APP, "-a", alg["alg"], "-f", self.path,
+                                  "-v", "-T", "-C", "-P", "-V",
                                   "--numthreads", "20"], 
                                  ["File Integrity: Yes",
                                   "Filename: %s" %(self.path),
@@ -264,9 +253,8 @@ class TestThreaded(WrapperTest):
             for num in [0.5, 1, 2, 2.5, 3.5, 0.5*challenges, 
                         2.2*challenges, 5*challenges]:
                 self.fillFile(int(blocksize * num))
-                self.output_test(["./pdp_bench", 
-                                  "-a", alg["alg"], "-f", self.path, "-v",
-                                  "-T", "-C", "-P", "-V",
+                self.output_test([APP, "-a", alg["alg"], "-f", self.path,
+                                  "-v", "-T", "-C", "-P", "-V",
                                   "--numthreads", "1"], 
                                  ["File Integrity: Yes",
                                   "Filename: %s" %(self.path),
@@ -279,15 +267,15 @@ class TestThreaded(WrapperTest):
 class TestStoredKeys(WrapperTest):
     """ Testing different operations using stored keys """
 
+    @unittest.skip("This test is not portable")
     def test_read_keyfile_apdp(self):
         """ Use a stored key and (non-interactive) password """
         for alg in [APDP, CPOR]:
             blocksize = alg["blocksize"]
             for num in [0.5, 1, 2, 2.5, 3.5]:
                 self.fillFile(int(blocksize * num))
-                self.output_test(["./pdp_bench", 
-                                  "-a", alg["alg"], "-f", self.path, "-v",
-                                  "-T", "-C", "-P", "-V", 
+                self.output_test([APP, "-a", alg["alg"], "-f", self.path,
+                                  "-v", "-T", "-C", "-P", "-V",
                                   "-k", KEYFILES, "--noninteractive"], 
                                  ["File Integrity: Yes"],
                                   env={"RSA_ACCESS_KEY":RSA_ACCESS_KEY})
@@ -300,9 +288,8 @@ class TestStoredKeys(WrapperTest):
             newtestdir = TESTFILES + "new/"
             for num in [1]:
                 self.fillFile(int(blocksize * num))
-                self.output_test(["./pdp_bench", 
-                                  "-a", alg["alg"], "-f", self.path, "-v",
-                                  "-T", "-C", "-P", "-V", 
+                self.output_test([APP, "-a", alg["alg"], "-f", self.path,
+                                  "-v", "-T", "-C", "-P", "-V",
                                   "-k", newtestdir, "--noninteractive"], 
                                  ["File Integrity: Yes"],
                                   env={"RSA_ACCESS_KEY":RSA_ACCESS_KEY})
@@ -315,20 +302,17 @@ class TestStoredKeys(WrapperTest):
             blocksize = alg["blocksize"]
             newtestdir = TESTFILES + "new/"
             self.fillFile(int(blocksize * 50))
-            self.output_test(["./pdp_bench", 
-                              "-a", alg["alg"], "-f", self.path, "-v",
-                              "-k", newtestdir, "--noninteractive"], 
+            self.output_test([APP, "-a", alg["alg"], "-f", self.path,
+                              "-v", "-k", newtestdir, "--noninteractive"],
                              ["Generating keys...Done"],
                               env={"RSA_ACCESS_KEY":RSA_ACCESS_KEY})
-            self.output_test(["./pdp_bench", 
-                              "-a", alg["alg"], "-f", self.path, "-v",
-                              "-T", 
-                              "-k", newtestdir, "--noninteractive"], 
+            self.output_test([APP, "-a", alg["alg"], "-f", self.path,
+                              "-v", "-T",
+                              "-k", newtestdir, "--noninteractive"],
                              ["Storing tag and file data...Done."],
                               env={"RSA_ACCESS_KEY":RSA_ACCESS_KEY})
-            self.output_test(["./pdp_bench", 
-                              "-a", alg["alg"], "-f", self.path, "-v",
-                              "-C", "-P", "-V", 
+            self.output_test([APP, "-a", alg["alg"], "-f", self.path,
+                              "-v", "-C", "-P", "-V",
                               "-k", newtestdir, "--noninteractive"], 
                              ["File Integrity: Yes"],
                               env={"RSA_ACCESS_KEY":RSA_ACCESS_KEY})
@@ -341,14 +325,25 @@ class TestS3Storage(WrapperTest):
     """ A test that uses S3 as a storage backend """
 
     def setUp(self):
+        global S3_ACCESS_KEY_ID, S3_SECRET_ACCESS_KEY, S3_HOSTNAME
         """ Prepare for running test """
-        subcall(["make", "all"])
-        subcall([S3UTIL, "--mk", S3_BUCKET_NAME])
+        if 'S3_ACCESS_KEY_ID' in os.environ:
+            S3_ACCESS_KEY_ID = os.environ['S3_ACCESS_KEY_ID']
+        if 'S3_SECRET_ACCESS_KEY' in os.environ:
+            S3_SECRET_ACCESS_KEY = os.environ['S3_SECRET_ACCESS_KEY']
+        if 'S3_HOSTNAME' in os.environ:
+            S3_HOSTNAME = os.environ['S3_HOSTNAME']
+        subcall([S3UTIL, "--mk", S3_BUCKET_NAME],
+                env={"S3_ACCESS_KEY_ID":S3_ACCESS_KEY_ID,
+                     "S3_SECRET_ACCESS_KEY":S3_SECRET_ACCESS_KEY,
+                     "S3_HOSTNAME":S3_HOSTNAME})
 
     def tearDown(self):
         """ Teardown test set-up """
-        subcall([S3UTIL, "--ls"])
-        subcall([S3UTIL, "--rm"])
+        subcall([S3UTIL, "--rm", S3_BUCKET_NAME],
+                env={"S3_ACCESS_KEY_ID":S3_ACCESS_KEY_ID,
+                     "S3_SECRET_ACCESS_KEY":S3_SECRET_ACCESS_KEY,
+                     "S3_HOSTNAME":S3_HOSTNAME})
 
     def test_TCPV_s3(self):
         """ Use S3 as tag storage """
@@ -356,10 +351,8 @@ class TestS3Storage(WrapperTest):
             blocksize = alg["blocksize"]
             for num in [0.5, 1, 2, 2.5, 3.5]:
                 self.fillFile(int(blocksize * num))
-                self.output_test(["./pdp_bench", 
-                                  "-a", alg["alg"], "-f", self.path, "-v",
-                                  "-T", "-C", "-P", "-V",
-                                  "-3"], 
+                self.output_test([APP, "-a", alg["alg"], "-f", self.path,
+                                  "-v", "-T", "-C", "-P", "-V", "-3"],
                                  ["File Integrity: Yes",
                                   "Num blocks: %d" %(rimin(num))],
                           env={"RSA_ACCESS_KEY":RSA_ACCESS_KEY,
@@ -375,14 +368,14 @@ class TestParams(WrapperTest):
     def test_no_alg(self):
         self.fillFile(100)
         for p in ["-a", "--algo"]:
-            self.error_test(["./pdp_bench", p, "-f", self.path, "-v"],
+            self.error_test([APP, p, "-f", self.path, "-v"],
                              "no algo arg")
         self.emptyFile()
 
     def test_no_file(self):
         for p in ["-a", "--algo"]:
             for alg in [MACPDP, APDP, CPOR, SEPDP]:
-                self.error_test(["./pdp_bench", p, alg["alg"], "-v"],
+                self.error_test([APP, p, alg["alg"], "-v"],
                                  "no filename arg")
 
     def test_params(self):
@@ -390,9 +383,8 @@ class TestParams(WrapperTest):
         for p, f in iter.product(["-a", "--algo"], ["-f", "--filename"]):
             for alg in [MACPDP, APDP, CPOR, SEPDP]:
                 self.fillFile(100)
-                self.output_test(["./pdp_bench", p, alg["alg"], "-v",
-                                  "-T", "-C", "-P", "-V",
-                                  f, self.path],
+                self.output_test([APP, p, alg["alg"], "-v",
+                                  "-T", "-C", "-P", "-V", f, self.path],
                                  ["File Integrity: Yes"])
                 self.emptyFile()
 
@@ -403,6 +395,6 @@ class TestParams(WrapperTest):
 #
 if __name__=="__main__":
     print >> sys.stderr, "--------> Testing '%s'" % ("pdp_bench")
-    unittest.main()
+    unittest.main(buffer=True)
     exit(0);
 
