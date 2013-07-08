@@ -80,4 +80,4 @@ against a special instrumented version of `libs3` (found under
 `tools/Makefile` so that the `S3_LIB` linker variable points
 to `$(LIBS3_TIMING)`.
 
-    env S3_ACCESS_KEY_ID=<your access key ID> S3_SECRET_ACCESS_KEY=<your secret access key> S3_HOSTNAME=<host:port> ./bench/run-tests.py --buffer
+    env S3_ACCESS_KEY_ID=<your access key ID> S3_SECRET_ACCESS_KEY=<your secret access key> S3_HOSTNAME=<host:port> ./bench/run-tests.py

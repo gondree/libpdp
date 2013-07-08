@@ -4,6 +4,24 @@ libs3/*
 # files we generate for testing
 tools/test-files/*
 
-# for git on MacOS
+# for MacOS
 .DS_Store
+
+# Object files
+*.o
+
+# Libraries
+*.lib
+*.a
+
+# Shared objects (inc. Windows DLLs)
+*.dll
+*.so
+*.so.*
+*.dylib
+
+# Executables
+*.exe
+*.out
+*.app
 

@@ -435,6 +435,7 @@ int main(int argc, char **argv)
                 ctx->cpor_param->enc_key_size = params.enc_key_size;
             if (params.mac_key_size)
                 ctx->cpor_param->mac_key_size = params.mac_key_size;
+            break;
         case PDP_SEPDP:
             if (params.block_size)
                 ctx->sepdp_param->block_size = params.block_size;
@@ -450,6 +451,7 @@ int main(int argc, char **argv)
                 ctx->sepdp_param->year = params.year;
             if (params.minutes)
                 ctx->sepdp_param->min = params.minutes;
+            break;
         default:
             break;
     }
