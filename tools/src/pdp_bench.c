@@ -246,7 +246,7 @@ int main(int argc, char **argv)
     params.timing_filename = "pdp-timing-data.csv";
     params.filename = NULL;
     params.keypath = NULL;
-    params.num_threads = 1;
+    params.num_threads = 0;
     params.num_loops = 1;
     params.force_https = 0;
     time_it_init();

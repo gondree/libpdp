@@ -91,7 +91,6 @@ int cpor_ctx_init(pdp_ctx_t *ctx)
     memset(p, 0, sizeof(pdp_cpor_ctx_t));
     ctx->cpor_param = p;
 
-    OpenSSL_add_all_algorithms();
     return 0;
 }
 
@@ -500,8 +499,10 @@ static int cpor_gen_tags_all_threaded(pdp_ctx_t *ctx, pdp_cpor_key_t *k,
             goto cleanup;
         // free the space for its return value
         free(ret);
-        // close its file
-        if (args[i].file) {
+    }
+    // close any files
+    for (i=0; i < ctx->num_threads; i++) {
+        if (args && args[i].file) {
             fclose(args[i].file);
             args[i].file = NULL;
         }
@@ -550,8 +551,6 @@ int cpor_tags_gen(pdp_ctx_t *ctx, pdp_cpor_key_t *k, pdp_cpor_tagdata_t *t)
         return -1;
     p = ctx->cpor_param;
 
-    OpenSSL_add_all_digests();
-
     // our caller filled out some ctx at this point, so
     // we can calculate some relevant params
     num_blocks = (ctx->file_st_size / p->block_size);
@@ -590,7 +589,6 @@ int cpor_tags_gen(pdp_ctx_t *ctx, pdp_cpor_key_t *k, pdp_cpor_tagdata_t *t)
     status = 0;
 
 cleanup:
-    EVP_cleanup();
     if (status) cpor_tags_free(ctx, t);
     return status;
 }

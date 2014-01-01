@@ -371,8 +371,9 @@ static int macpdp_gen_tags_all_threaded(pdp_ctx_t *ctx, pdp_macpdp_key_t *k,
     }
     // check each thread for error
     for (i=0; i < ctx->num_threads; i++) {
-        if (!threads[i])
+        if (!threads[i]) {
             continue;
+        }
         // wait for the job to complete
         if (pthread_join(threads[i], (void **) &ret))
             goto cleanup;
@@ -381,8 +382,10 @@ static int macpdp_gen_tags_all_threaded(pdp_ctx_t *ctx, pdp_macpdp_key_t *k,
             goto cleanup;
         // free the space for its return value
         free(ret);
-        // close its file
-        if (args[i].file) {
+    }
+    // close any files
+    for (i=0; i < ctx->num_threads; i++) {
+        if (args && args[i].file) {
             fclose(args[i].file);
             args[i].file = NULL;
         }
@@ -449,8 +452,6 @@ int macpdp_tags_gen(pdp_ctx_t *ctx, pdp_macpdp_key_t *k,
     p = ctx->macpdp_param;
     t->tags = NULL;
 
-    OpenSSL_add_all_digests();
-
     // our caller filled out some ctx at this point, so
     // we can calculate some relevant params
     num_blocks = (ctx->file_st_size / p->block_size);
@@ -475,12 +476,10 @@ int macpdp_tags_gen(pdp_ctx_t *ctx, pdp_macpdp_key_t *k,
 
     if (err)
         goto cleanup;
-    EVP_cleanup();
     return 0;
 
 cleanup:
     sfree(tags, t->tags_size);
-    EVP_cleanup();
     return -1;
 }
 

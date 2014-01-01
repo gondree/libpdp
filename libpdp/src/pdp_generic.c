@@ -23,6 +23,7 @@
 #include <pdp/apdp.h>
 #include <pdp/cpor.h>
 #include <pdp/sepdp.h>
+#include <openssl/evp.h>
 #include "pdp_misc.h"
 
 #define DEFUALT_BUCKET_NAME "libpdp_data";
@@ -129,6 +130,10 @@ int pdp_ctx_init(pdp_ctx_t *ctx)
         return -1;
     }
 
+    // thiese are not thread-safe, so we do it early
+    OpenSSL_add_all_algorithms();
+    OpenSSL_add_all_digests();
+
     // remember to free this in pdp_ctx_free
     if ((ctx->ops = malloc(sizeof(struct pdp_ctx_ops))) == NULL)
         goto cleanup;
@@ -140,6 +145,11 @@ int pdp_ctx_init(pdp_ctx_t *ctx)
     ctx->opts = 0;
     ctx->verbose = 0;
     ctx->num_threads = sysconf(_SC_NPROCESSORS_ONLN);
+    if (ctx->num_threads == -1) {
+       goto cleanup;
+    } else if (ctx->num_threads > 1) {
+        ctx->opts |= PDP_OPT_THREADED;
+    }
     ctx->ifilepath = NULL;
     ctx->ifilepath_len = 0;
     ctx->filepath = NULL;
@@ -182,6 +192,7 @@ int pdp_ctx_init(pdp_ctx_t *ctx)
     return 0;
 
 cleanup:
+    EVP_cleanup();
     sfree(ctx->ops, sizeof(struct pdp_ctx_ops));
     return -1;
 }
@@ -419,6 +430,7 @@ int pdp_ctx_free(pdp_ctx_t *ctx)
     sfree(ctx->s3_hostname, ctx->s3_hostname_len);
     sfree(ctx->s3_bucket_name, ctx->s3_bucket_name_len);
 #endif
+    EVP_cleanup();
     return err;
 }
 

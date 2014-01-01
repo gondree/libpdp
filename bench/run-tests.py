@@ -32,9 +32,9 @@ RSA_ACCESS_KEY = "Z" # fake passphrase for testing
 
 # Some fake parameters for a local DevStack server test environment
 S3_BUCKET_NAME = "libpdp_data" # default / testing bucket name
-S3_ACCESS_KEY_ID = "XXX"
-S3_SECRET_ACCESS_KEY = "YYY"
-S3_HOSTNAME = "192.168.99.173:8080"
+S3_ACCESS_KEY_ID = None
+S3_SECRET_ACCESS_KEY = None
+S3_HOSTNAME = None
 
 test_env = {}
 Id = None
@@ -66,6 +66,13 @@ def subproc(*args, **kwargs):
 
 class PdpExperiment(unittest.TestCase):
     """ A Support Test Class, other tests inherit """
+
+    def setUp(self):
+        self.setup_files()
+
+    def tearDown(self):
+        self.store_results()
+        self.remove_tags()
 
     def setup_files(self):
         """ generate files with random contents (caching, because these
@@ -155,7 +162,7 @@ class PdpS3Experiment(PdpExperiment):
                 logger.info("The bucket %s couldn't be deleted." % b)
 
 
-class TestSepdpExperiments(PdpS3Experiment):
+class TestSepdpExperiments(PdpExperiment):
 
     def test_sepdp_minutes(self):
         """ run tests for SEPDP """
@@ -180,12 +187,11 @@ class TestSepdpExperiments(PdpS3Experiment):
                 if p.returncode != 0:
                     logger.error(out)
                     logger.error(err)
-                self.cleanup_buckets()
                 self.remove_tags()
         self.outputs.append(output)
 
 
-class TestAllSchemesLocal(PdpS3Experiment):
+class TestAllSchemesLocal(PdpExperiment):
 
     def test_all_file_sizes(self):
         """ run tests across all file sizes """
@@ -207,7 +213,6 @@ class TestAllSchemesLocal(PdpS3Experiment):
                 if p.returncode != 0:
                     logger.error(out)
                     logger.error(err)
-                self.cleanup_buckets()
                 self.remove_tags()
         self.outputs.append(output)
 
@@ -231,7 +236,6 @@ class TestAllSchemesLocal(PdpS3Experiment):
                 if p.returncode != 0:
                     logger.error(out)
                     logger.error(err)
-                self.cleanup_buckets()
                 self.remove_tags()
         self.outputs.append(output)
 
@@ -255,7 +259,6 @@ class TestAllSchemesLocal(PdpS3Experiment):
                 if p.returncode != 0:
                     logger.error(out)
                     logger.error(err)
-                self.cleanup_buckets()
                 self.remove_tags()
         self.outputs.append(output)
 
@@ -280,7 +283,6 @@ class TestAllSchemesLocal(PdpS3Experiment):
                 if p.returncode != 0:
                     logger.error(out)
                     logger.error(err)
-                self.cleanup_buckets()
                 self.remove_tags()
         self.outputs.append(output)
 
@@ -305,7 +307,6 @@ class TestAllSchemesLocal(PdpS3Experiment):
                 if p.returncode != 0:
                     logger.error(out)
                     logger.error(err)
-                self.cleanup_buckets()
                 self.remove_tags()
         self.outputs.append(output)
 
@@ -330,12 +331,12 @@ class TestAllSchemesLocal(PdpS3Experiment):
                 if p.returncode != 0:
                     logger.error(out)
                     logger.error(err)
-                self.cleanup_buckets()
                 self.remove_tags()
         self.outputs.append(output)
 
 class TestAllSchemes(PdpS3Experiment):
 
+    @unittest.skipUnless(not S3_HOSTNAME is None, "S3 test")
     def test_all_file_sizes_s3(self):
         """ run tests across all file sizes """
         fn = inspect.stack()[0][3]
@@ -360,6 +361,7 @@ class TestAllSchemes(PdpS3Experiment):
                 self.remove_tags()
         self.outputs.append(output)
 
+    @unittest.skipUnless(not S3_HOSTNAME is None, "S3 test")
     def test_all_file_sizes_no_threads_s3(self):
         """ run tests across all file sizes """
         fn = inspect.stack()[0][3]
@@ -384,6 +386,7 @@ class TestAllSchemes(PdpS3Experiment):
                 self.remove_tags()
         self.outputs.append(output)
 
+    @unittest.skipUnless(not S3_HOSTNAME is None, "S3 test")
     def test_all_block_sizes_s3(self):
         """ run tests across all file sizes """
         fn = inspect.stack()[0][3]
@@ -409,6 +412,7 @@ class TestAllSchemes(PdpS3Experiment):
                 self.remove_tags()
         self.outputs.append(output)
 
+    @unittest.skipUnless(not S3_HOSTNAME is None, "S3 test")
     def test_all_block_sizes_no_threads_s3(self):
         """ run tests across all file sizes """
         fn = inspect.stack()[0][3]
@@ -436,7 +440,7 @@ class TestAllSchemes(PdpS3Experiment):
 
 class TestAllSchemesCpu(PdpS3Experiment):
 
-    @unittest.skipUnless('CALLGRIND' in os.environ, "non-performance test")
+    @unittest.skipUnless('CALLGRIND' in os.environ and not S3_HOSTNAME is None, "S3 test / non-performance test")
     def test_all_file_sizes_callgrind(self):
         """ gather data using callgrind """
         fn = inspect.stack()[0][3]
@@ -464,7 +468,7 @@ class TestAllSchemesCpu(PdpS3Experiment):
                 self.remove_tags()
         self.outputs.append(output)
 
-    @unittest.skipUnless('CALLGRIND' in os.environ, "non-performance test")
+    @unittest.skipUnless('CALLGRIND' in os.environ and not S3_HOSTNAME is None, "S3 test / non-performance test")
     def test_all_block_sizes_callgrind(self):
         """ gather data using callgrind """
         fn = inspect.stack()[0][3]
@@ -493,6 +497,7 @@ class TestAllSchemesCpu(PdpS3Experiment):
                 self.remove_tags()
         self.outputs.append(output)
 
+    @unittest.skipUnless(not S3_HOSTNAME is None, "S3 test")
     def test_all_file_sizes_cpu(self):
         """ run tests in a loop to gather timing data for operations """
         fn = inspect.stack()[0][3]
@@ -517,7 +522,7 @@ class TestAllSchemesCpu(PdpS3Experiment):
                 self.remove_tags()
         self.outputs.append(output)
 
-
+    @unittest.skipUnless(not S3_HOSTNAME is None, "S3 test")
     def test_all_block_sizes_cpu(self):
         """ run tests in a loop to gather timing data for operations """
         fn = inspect.stack()[0][3]
@@ -557,16 +562,18 @@ if __name__=="__main__":
     if 'S3_HOSTNAME' in os.environ:
         S3_HOSTNAME  = os.environ['S3_HOSTNAME']
 
-    test_env = {"RSA_ACCESS_KEY":S3_SECRET_ACCESS_KEY,
-                "S3_ACCESS_KEY_ID":S3_ACCESS_KEY_ID,
-                "S3_SECRET_ACCESS_KEY":S3_SECRET_ACCESS_KEY,
-                "S3_HOSTNAME":S3_HOSTNAME,
-                "RSA_ACCESS_KEY":RSA_ACCESS_KEY}
-
-    Id = test_env["S3_ACCESS_KEY_ID"]
-    Key = test_env["S3_SECRET_ACCESS_KEY"]
-    Host, Port = test_env["S3_HOSTNAME"].split(':')
-    Port = int(Port)
+    if not S3_SECRET_ACCESS_KEY is None:
+        test_env["S3_SECRET_ACCESS_KEY"] = S3_SECRET_ACCESS_KEY
+        Key = test_env["S3_SECRET_ACCESS_KEY"]
+    if not S3_ACCESS_KEY_ID is None:
+        test_env["S3_ACCESS_KEY_ID"] = S3_ACCESS_KEY_ID
+        Id = test_env["S3_ACCESS_KEY_ID"]
+    if not S3_HOSTNAME is None:
+        test_env["S3_HOSTNAME"] = S3_HOSTNAME
+        Host, Port = test_env["S3_HOSTNAME"].split(':')
+        Port = int(Port)
+    if not RSA_ACCESS_KEY is None:
+        test_env["RSA_ACCESS_KEY"] = RSA_ACCESS_KEY
 
     if not os.path.exists(testdir):
         os.mkdir(testdir)

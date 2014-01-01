@@ -538,8 +538,6 @@ int encrypt_then_mac(const unsigned char *ekey, size_t ekey_len,
         !input_len || !ctxt || !ctxt_len || !mac || !mac_len)
         return -1;
     
-    OpenSSL_add_all_algorithms();
-    
     EVP_CIPHER_CTX_init(&ctx);
     switch(ekey_len){
         case 16:
@@ -615,7 +613,6 @@ int verify_then_decrypt(const unsigned char *ekey, size_t ekey_len,
         !ctxt || !ctxt_len || !mac || !mac_len || !output || !output_len)
         return -1;
     
-    OpenSSL_add_all_algorithms();
     memset(auth, 0, auth_len);
 
     // Verify the HMAC-SHA1
