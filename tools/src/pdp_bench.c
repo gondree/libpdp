@@ -391,10 +391,13 @@ int main(int argc, char **argv)
     if (params.noninteractive) {
         ctx->opts |= PDP_PW_NOINPUT;
     }
-    if (params.num_threads > 1) {
+    if (params.num_threads > 0) {
         ctx->num_threads = params.num_threads;
-        ctx->opts |= PDP_OPT_THREADED;
+        if (ctx->num_threads > 1) {
+            ctx->opts |= PDP_OPT_THREADED;
+        }
     }
+
     ctx->verbose = params.verb;
     ctx->file_st_size = params.file_st_size;
     switch(params.alg) {
