@@ -242,6 +242,9 @@ int sample_prp_sans_replacement(const unsigned char *ki, unsigned int ki_size,
         for (i = 0; i < M; i++) S[i] = i;
         status = 0;
         goto cleanup;
+    } else if (N < M) {
+        status = -1;
+        goto cleanup;
     }
 
     for(j = 0, i = N - M; i < N; j++, i++) {
