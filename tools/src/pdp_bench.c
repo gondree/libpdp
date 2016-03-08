@@ -744,7 +744,7 @@ TOC("Verify file");
                     "Filename", ctx->filepath);
             break;
         case PDP_SEPDP:
-            sprintf(meta, "%s:%s %d:%s %zd:%s %zd:%s %zd:%s %hu:%s %hu:"
+            sprintf(meta, "%s:%s %d:%s %zd:%s %zd:%s %zd:%s %u:%s %u:"
                           "%s %d:%s %d:%s %s",
                     params.algo,
                     "Block size", ctx->sepdp_param->block_size,
@@ -754,7 +754,7 @@ TOC("Verify file");
                     "years", ctx->sepdp_param->year,
                     "minutes", ctx->sepdp_param->min,
                     "# challenge blocks",
-                        ctx->cpor_param->num_challenge_blocks,
+                        ctx->sepdp_param->num_challenge_blocks,
                     "# threads", ctx->num_threads,
                     "Filename", ctx->filepath);
         default:
