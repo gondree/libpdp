@@ -7,7 +7,7 @@ from boto.s3.connection import OrdinaryCallingFormat
 from subprocess import call, Popen, PIPE
 from time import time
 import itertools as iter
-import inspect
+import inspect, glob
 
 ###############################################################################
 # constants
@@ -193,6 +193,75 @@ class TestSepdpExperiments(PdpExperiment):
 
 class TestAllSchemesLocal(PdpExperiment):
 
+    @unittest.skipUnless("TAG_SIZE" in os.environ, "Generate Tag Sizes")
+    def test_all_tag_sizes(self):
+        """ run tests across all file sizes """
+        fn = inspect.stack()[0][3]
+        output = tmpdir + str(time()) + output_pattern + fn + ".csv"
+        args = ["--numthreads",nthread,"-T"]
+        inputs = [self.inputs_by_size["32768KB"]]
+        blocks = all_block_sizes
+        for s, bs, file in iter.product(SCHEMES, blocks, inputs):
+            cmd = [app, "--algo", s["alg"], 
+                        "--blocksize", str(bs),
+                        "--cparam", s["challenges"],
+                        "--filename", file, 
+                        "--timing_output", output] + s["args"] + args
+            logger.info(" ".join(cmd))
+            p = subproc(cmd, stdout=PIPE, stderr=PIPE, env=test_env)
+            (out, err) = p.communicate()
+            p.wait()
+            if p.returncode != 0:
+                logger.error(out)
+                logger.error(err)
+
+            tags = glob.glob(testdir+"*.tag")
+            assert len(tags) == 1
+            p = subproc(["du", "-hb", tags[0]], stdout=PIPE, stderr=PIPE)
+            (out, err) = p.communicate()
+            p.wait()
+            logger.info(out)
+            
+            # neurotically remove the tags
+            self.remove_tags()
+            p = subproc(["rm", "-f", tags[0]], stdout=None, stderr=None)
+            p.wait()
+        self.outputs.append(output)
+
+    @unittest.skipUnless("TAG_SIZE" in os.environ, "Generate Tag Sizes")
+    def test_all_tag_file_sizes(self):
+        """ run tests across all file sizes """
+        fn = inspect.stack()[0][3]
+        output = tmpdir + str(time()) + output_pattern + fn + ".csv"
+        args = ["--numthreads",nthread,"-T"]
+        inputs = self.inputs
+        for s, file in iter.product(SCHEMES, inputs):
+            cmd = [app, "--algo", s["alg"], 
+                        "--blocksize", s["blocksize"], 
+                        "--cparam", s["challenges"],
+                        "--filename", file, 
+                        "--timing_output", output] + s["args"] + args
+            logger.info(" ".join(cmd))
+            p = subproc(cmd, stdout=PIPE, stderr=PIPE, env=test_env)
+            (out, err) = p.communicate()
+            p.wait()
+            if p.returncode != 0:
+                logger.error(out)
+                logger.error(err)
+
+            tags = glob.glob(testdir+"*.tag")
+            assert len(tags) == 1
+            p = subproc(["du", "-hb", tags[0]], stdout=PIPE, stderr=PIPE)
+            (out, err) = p.communicate()
+            p.wait()
+            logger.info(out)
+            
+            # neurotically remove the tags
+            self.remove_tags()
+            p = subproc(["rm", "-f", tags[0]], stdout=None, stderr=None)
+            p.wait()
+        self.outputs.append(output)
+
     def test_all_file_sizes(self):
         """ run tests across all file sizes """
         fn = inspect.stack()[0][3]
@@ -336,7 +405,7 @@ class TestAllSchemesLocal(PdpExperiment):
 
 class TestAllSchemes(PdpS3Experiment):
 
-    @unittest.skipUnless(not S3_HOSTNAME is None, "S3 test")
+    @unittest.skipUnless("S3_HOSTNAME" in os.environ, "S3 test")
     def test_all_file_sizes_s3(self):
         """ run tests across all file sizes """
         fn = inspect.stack()[0][3]
@@ -361,7 +430,7 @@ class TestAllSchemes(PdpS3Experiment):
                 self.remove_tags()
         self.outputs.append(output)
 
-    @unittest.skipUnless(not S3_HOSTNAME is None, "S3 test")
+    @unittest.skipUnless("S3_HOSTNAME" in os.environ, "S3 test")
     def test_all_file_sizes_no_threads_s3(self):
         """ run tests across all file sizes """
         fn = inspect.stack()[0][3]
@@ -386,7 +455,7 @@ class TestAllSchemes(PdpS3Experiment):
                 self.remove_tags()
         self.outputs.append(output)
 
-    @unittest.skipUnless(not S3_HOSTNAME is None, "S3 test")
+    @unittest.skipUnless("S3_HOSTNAME" in os.environ, "S3 test")
     def test_all_block_sizes_s3(self):
         """ run tests across all file sizes """
         fn = inspect.stack()[0][3]
@@ -412,7 +481,7 @@ class TestAllSchemes(PdpS3Experiment):
                 self.remove_tags()
         self.outputs.append(output)
 
-    @unittest.skipUnless(not S3_HOSTNAME is None, "S3 test")
+    @unittest.skipUnless("S3_HOSTNAME" in os.environ, "S3 test")
     def test_all_block_sizes_no_threads_s3(self):
         """ run tests across all file sizes """
         fn = inspect.stack()[0][3]
@@ -440,7 +509,7 @@ class TestAllSchemes(PdpS3Experiment):
 
 class TestAllSchemesCpu(PdpS3Experiment):
 
-    @unittest.skipUnless('CALLGRIND' in os.environ and not S3_HOSTNAME is None, "S3 test / non-performance test")
+    @unittest.skipUnless('CALLGRIND' in os.environ and "S3_HOSTNAME" in os.environ, "S3 test / non-performance test")
     def test_all_file_sizes_callgrind(self):
         """ gather data using callgrind """
         fn = inspect.stack()[0][3]
@@ -468,7 +537,7 @@ class TestAllSchemesCpu(PdpS3Experiment):
                 self.remove_tags()
         self.outputs.append(output)
 
-    @unittest.skipUnless('CALLGRIND' in os.environ and not S3_HOSTNAME is None, "S3 test / non-performance test")
+    @unittest.skipUnless('CALLGRIND' in os.environ and "S3_HOSTNAME" in os.environ, "S3 test / non-performance test")
     def test_all_block_sizes_callgrind(self):
         """ gather data using callgrind """
         fn = inspect.stack()[0][3]
@@ -497,7 +566,7 @@ class TestAllSchemesCpu(PdpS3Experiment):
                 self.remove_tags()
         self.outputs.append(output)
 
-    @unittest.skipUnless(not S3_HOSTNAME is None, "S3 test")
+    @unittest.skipUnless("S3_HOSTNAME" in os.environ, "S3 test")
     def test_all_file_sizes_cpu(self):
         """ run tests in a loop to gather timing data for operations """
         fn = inspect.stack()[0][3]
@@ -522,7 +591,7 @@ class TestAllSchemesCpu(PdpS3Experiment):
                 self.remove_tags()
         self.outputs.append(output)
 
-    @unittest.skipUnless(not S3_HOSTNAME is None, "S3 test")
+    @unittest.skipUnless("S3_HOSTNAME" in os.environ, "S3 test")
     def test_all_block_sizes_cpu(self):
         """ run tests in a loop to gather timing data for operations """
         fn = inspect.stack()[0][3]
