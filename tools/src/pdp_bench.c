@@ -395,6 +395,8 @@ int main(int argc, char **argv)
         ctx->num_threads = params.num_threads;
         if (ctx->num_threads > 1) {
             ctx->opts |= PDP_OPT_THREADED;
+        } else if (ctx->opts & PDP_OPT_THREADED) {
+            ctx->opts ^= PDP_OPT_THREADED;
         }
     }
 
