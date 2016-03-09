@@ -22,7 +22,7 @@ TIMEIT_INC = -I./lib/time_it
 #
 # libs3
 #
-LIBS3 = ../libs3/lib/libs3.a
+LIBS3 = ../libs3/build/lib/libs3.a
 LIBS3_TIMING = ./lib/libs3-2.0/build/lib/libs3.a
 S3_INC = -I../libs3/inc
 #S3_LIB = $(LIBS3_TIMING)              # timing instrumentation in libs3
