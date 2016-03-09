@@ -8,6 +8,7 @@ from subprocess import call, Popen, PIPE
 from time import time
 import itertools as iter
 import inspect, glob
+import random
 
 ###############################################################################
 # constants
@@ -26,7 +27,7 @@ output_pattern = "_output."
 
 buckets = ["libpdp_data"]
 trials = 3
-nthread = "4"
+nthread = "1"
 
 RSA_ACCESS_KEY = "Z" # fake passphrase for testing
 
@@ -49,13 +50,15 @@ MACPDP = {"alg":'MAC-PDP', "blocksize":'4096', "challenges":'460', "args":[]}
 APDP = {"alg":'APDP', "blocksize":'4096', "challenges":'460', "args":[]}
 CPOR = {"alg":'CPOR', "blocksize":'4096', "challenges":'80', "args":[]}
 SEPDP = {"alg":'SEPDP', "blocksize":'4096', "challenges":'460', 
-         "args":["--year", "1", "--minutes", "525600"]}
+         "args":["--year", "1", "--minutes", "60"]}
 SCHEMES = [MACPDP, APDP, CPOR, SEPDP]
 
 
 all_file_sizes = [str(2**i)+"KB" for i in range(1,21)]
 all_block_sizes = [str(2**i) for i in range(10,21)]
 
+#random.shuffle(all_file_sizes)
+#random.shuffle(all_block_sizes)
 
 ###############################################################################
 
@@ -128,8 +131,7 @@ class PdpS3Experiment(PdpExperiment):
 
     def setup_s3(self):
         """ make the buckets """
-        self.conn = boto.connect_s3(Id, Key, host=Host, port=Port, 
-                    is_secure=False, calling_format=OrdinaryCallingFormat())
+        self.conn = boto.connect_s3(Id, Key, port=Port)
         for b in buckets:
             try:
                 logger.info("Creating %s" % b)
@@ -164,6 +166,7 @@ class PdpS3Experiment(PdpExperiment):
 
 class TestSepdpExperiments(PdpExperiment):
 
+    @unittest.skipUnless("SEPDP" in os.environ, "SEPDP test")
     def test_sepdp_minutes(self):
         """ run tests for SEPDP """
         fn = inspect.stack()[0][3]
@@ -643,6 +646,8 @@ if __name__=="__main__":
         Port = int(Port)
     if not RSA_ACCESS_KEY is None:
         test_env["RSA_ACCESS_KEY"] = RSA_ACCESS_KEY
+    if not S3_BUCKET_NAME is None:
+        test_env["S3_BUCKET_NAME"] = S3_BUCKET_NAME
 
     if not os.path.exists(testdir):
         os.mkdir(testdir)
