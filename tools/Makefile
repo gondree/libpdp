@@ -25,8 +25,8 @@ TIMEIT_INC = -I./lib/time_it
 LIBS3 = ../libs3/lib/libs3.a
 LIBS3_TIMING = ./lib/libs3-2.0/build/lib/libs3.a
 S3_INC = -I../libs3/inc
-S3_LIB = $(LIBS3_TIMING)              # timing instrumentation in libs3
-#S3_LIB = $(LIBS3)                    # no timing data
+#S3_LIB = $(LIBS3_TIMING)              # timing instrumentation in libs3
+S3_LIB = $(LIBS3)                    # no timing data
 
 #-----------------------------------------------------------------------------
 INCLUDES  = $(LIBPDP_INC) $(TIMEIT_INC) $(S3_INC)
