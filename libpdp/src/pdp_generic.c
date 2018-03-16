@@ -23,6 +23,7 @@
 #include <pdp/apdp.h>
 #include <pdp/cpor.h>
 #include <pdp/sepdp.h>
+#include <pdp/mrpdp.h>
 #include "pdp_misc.h"
 
 #define DEFUALT_BUCKET_NAME "libpdp_data";
@@ -166,6 +167,9 @@ int pdp_ctx_init(pdp_ctx_t *ctx)
             break;
         case PDP_APDP:
             err = apdp_ctx_init(ctx);
+            break;
+        case PDP_MRPDP:
+            err = mrpdp_ctx_init(ctx);
             break;
         case PDP_CPOR:
             err = cpor_ctx_init(ctx);
@@ -359,6 +363,9 @@ int pdp_ctx_create(pdp_ctx_t *ctx, const char* filename, const char* output)
         case PDP_APDP:
             err = apdp_ctx_create(ctx);
             break;
+        case PDP_MRPDP:
+            err = mrpdp_ctx_create(ctx);
+            break;
         case PDP_CPOR:
             err = cpor_ctx_create(ctx);
             break;
@@ -398,6 +405,9 @@ int pdp_ctx_free(pdp_ctx_t *ctx)
             break;
         case PDP_APDP:
             err = apdp_ctx_free(ctx);
+            break;
+        case PDP_MRPDP:
+            err = mrpdp_ctx_free(ctx);
             break;
         case PDP_CPOR:
             err = cpor_ctx_free(ctx);
@@ -456,6 +466,9 @@ int pdp_key_open(pdp_ctx_t *ctx, pdp_key_t *key, pdp_key_t *pk,
         case PDP_APDP:
             err = apdp_key_open(ctx, key, pk, path);
             break;
+        case PDP_MRPDP:
+            err = mrpdp_key_open(ctx, key, pk, path);
+            break;
         case PDP_CPOR:
             err = cpor_key_open(ctx, key, pk, path);
             break;
@@ -508,6 +521,9 @@ int pdp_key_store(const pdp_ctx_t *ctx, const pdp_key_t *key,
         case PDP_APDP:
             err = apdp_key_store(ctx, key, path);
             break;
+        case PDP_MRPDP:
+            err = mrpdp_key_store(ctx, key, path);
+            break;
         case PDP_CPOR:
             err = cpor_key_store(ctx, key, path);
             break;
@@ -559,6 +575,9 @@ int pdp_key_gen(pdp_ctx_t *ctx, pdp_key_t *key, pdp_key_t *pk)
         case PDP_APDP:
             err = apdp_key_gen(ctx, key, pk);
             break;
+        case PDP_MRPDP:
+            err = mrpdp_key_gen(ctx, key, pk);
+            break;
         case PDP_CPOR:
             err = cpor_key_gen(ctx, key, pk);
             break;
@@ -601,6 +620,9 @@ int pdp_key_free(const pdp_ctx_t *ctx, pdp_key_t *key)
             break;
         case PDP_APDP:
             err = apdp_key_free(ctx, key);
+            break;
+        case PDP_MRPDP:
+            err = mrpdp_key_free(ctx, key);
             break;
         case PDP_CPOR:
             err = cpor_key_free(ctx, key);
@@ -671,6 +693,14 @@ int pdp_tags_gen(pdp_ctx_t *ctx, pdp_key_t *key, pdp_tag_t *tag)
             if ((err = apdp_tags_gen(ctx, key->apdp, tag->apdp)) != 0)
                 sfree(tag->apdp, sizeof(pdp_apdp_tagdata_t));
             break;
+        case PDP_MRPDP:
+            // malloc space, remember to free in pdp_destroy_tags
+            if ((tag->mrpdp = malloc(sizeof(pdp_mrpdp_tagdata_t))) == NULL)
+                return -1;
+            memset(tag->mrpdp, 0, sizeof(pdp_mrpdp_tagdata_t));
+            if ((err = mrpdp_tags_gen(ctx, key->mrpdp, tag->mrpdp)) != 0)
+                sfree(tag->mrpdp, sizeof(pdp_mrpdp_tagdata_t));
+            break;
         case PDP_CPOR:
             // malloc space, remember to free in pdp_destroy_tags
             if ((tag->cpor = malloc(sizeof(pdp_cpor_tagdata_t))) == NULL)
@@ -719,6 +749,10 @@ int pdp_tags_free(const pdp_ctx_t *ctx, pdp_tag_t *tag)
         case PDP_APDP:
             apdp_tags_free(ctx, tag->apdp);
             sfree(tag->apdp, sizeof(pdp_apdp_tagdata_t));
+            break;
+        case PDP_MRPDP:
+            mrpdp_tags_free(ctx, tag->mrpdp);
+            sfree(tag->mrpdp, sizeof(pdp_mrpdp_tagdata_t));
             break;
         case PDP_CPOR:
             cpor_tags_free(ctx, tag->cpor);
@@ -779,6 +813,9 @@ int pdp_store(const pdp_ctx_t *ctx, const pdp_key_t *key, const pdp_tag_t *tag)
         case PDP_APDP:
             err = apdp_store(ctx, tag->apdp);
             break;
+        case PDP_MRPDP:
+            err = mrpdp_store(ctx, tag->mrpdp);
+            break;
         case PDP_CPOR:
             err = cpor_store(ctx, key->cpor, tag->cpor);
             break;
@@ -828,6 +865,13 @@ int pdp_challenge_gen(const pdp_ctx_t *ctx, pdp_key_t *key, pdp_challenge_t *c)
             memset(c->apdp, 0, sizeof(pdp_apdp_challenge_t));
             if ((err = apdp_challenge_gen(ctx, key->apdp, c->apdp)) != 0)
                 sfree(c->apdp, sizeof(pdp_apdp_challenge_t));
+            break;
+        case PDP_MRPDP:
+            if ((c->mrpdp = malloc(sizeof(pdp_mrpdp_challenge_t))) == NULL)
+                return -1;
+            memset(c->mrpdp, 0, sizeof(pdp_mrpdp_challenge_t));
+            if ((err = mrpdp_challenge_gen(ctx, key->mrpdp, c->mrpdp)) != 0)
+                sfree(c->mrpdp, sizeof(pdp_mrpdp_challenge_t));
             break;
         case PDP_CPOR:
             if ((c->cpor = malloc(sizeof(pdp_cpor_challenge_t))) == NULL)
@@ -897,6 +941,10 @@ int pdp_challenge_free(const pdp_ctx_t *ctx, pdp_challenge_t *c)
             apdp_challenge_free(ctx, c->apdp);
             sfree(c->apdp, sizeof(pdp_apdp_challenge_t));
             break;
+        case PDP_MRPDP:
+            mrpdp_challenge_free(ctx, c->mrpdp);
+            sfree(c->mrpdp, sizeof(pdp_mrpdp_challenge_t));
+            break;
         case PDP_CPOR:
             cpor_challenge_free(ctx, c->cpor);
             sfree(c->cpor, sizeof(pdp_cpor_challenge_t));
@@ -948,6 +996,12 @@ int pdp_proof_gen(const pdp_ctx_t *ctx, const pdp_key_t *key,
             memset(p->apdp, 0, sizeof(pdp_apdp_proof_t));
             err = apdp_proof_gen(ctx, key->apdp, c->apdp, p->apdp);
             break;
+        case PDP_MRPDP:
+            if ((p->mrpdp = malloc(sizeof(pdp_mrpdp_proof_t))) == NULL)
+                return -1;
+            memset(p->mrpdp, 0, sizeof(pdp_mrpdp_proof_t));
+            err = mrpdp_proof_gen(ctx, key->mrpdp, c->mrpdp, p->mrpdp);
+            break;
         case PDP_CPOR:
             if ((p->cpor = malloc(sizeof(pdp_cpor_proof_t))) == NULL)
                 return -1;
@@ -996,6 +1050,9 @@ int pdp_proof_verify(const pdp_ctx_t *ctx, const pdp_key_t *key,
         case PDP_APDP:
             err = apdp_proof_verify(ctx, key->apdp, c->apdp, p->apdp);
             break;
+        case PDP_MRPDP:
+            err = mrpdp_proof_verify(ctx, key->mrpdp, c->mrpdp, p->mrpdp);
+            break;
         case PDP_CPOR:
             err = cpor_proof_verify(ctx, key->cpor, c->cpor, p->cpor);
             break;
@@ -1035,6 +1092,10 @@ int pdp_proof_free(const pdp_ctx_t *ctx, pdp_proof_t *proof)
         case PDP_APDP:
             err = apdp_proof_free(ctx, proof->apdp);
             sfree(proof->apdp, sizeof(pdp_apdp_proof_t));
+            break;
+        case PDP_MRPDP:
+            err = mrpdp_proof_free(ctx, proof->mrpdp);
+            sfree(proof->mrpdp, sizeof(pdp_mrpdp_proof_t));
             break;
         case PDP_CPOR:
             err = cpor_proof_free(ctx, proof->cpor);

@@ -530,7 +530,8 @@ int encrypt_then_mac(const unsigned char *ekey, size_t ekey_len,
                      unsigned char *mac, size_t *mac_len,
                      unsigned char *iv, size_t iv_len)
 {
-    EVP_CIPHER_CTX ctx;
+    EVP_CIPHER_CTX *ctx;
+    ctx = EVP_CIPHER_CTX_new();
     EVP_CIPHER *cipher = NULL;
     int len;
     
@@ -540,7 +541,7 @@ int encrypt_then_mac(const unsigned char *ekey, size_t ekey_len,
     
     OpenSSL_add_all_algorithms();
     
-    EVP_CIPHER_CTX_init(&ctx);
+    EVP_CIPHER_CTX_init(ctx);
     switch(ekey_len){
         case 16:
             cipher = (EVP_CIPHER *)EVP_aes_128_cbc();
@@ -559,12 +560,12 @@ int encrypt_then_mac(const unsigned char *ekey, size_t ekey_len,
         if (!RAND_bytes(iv, iv_len)) goto cleanup;
     }
 
-    if (!EVP_EncryptInit(&ctx, cipher, ekey, iv)) goto cleanup;    
+    if (!EVP_EncryptInit(ctx, cipher, ekey, iv)) goto cleanup;    
 
     *ctxt_len = 0;
-    if (!EVP_EncryptUpdate(&ctx, ctxt, (int *) ctxt_len, input, input_len))
+    if (!EVP_EncryptUpdate(ctx, ctxt, (int *) ctxt_len, input, input_len))
         goto cleanup;
-    EVP_EncryptFinal(&ctx, ctxt + *ctxt_len, &len);
+    EVP_EncryptFinal(ctx, ctxt + *ctxt_len, &len);
     *ctxt_len += len;
     
     // Do the HMAC-SHA1
@@ -572,7 +573,7 @@ int encrypt_then_mac(const unsigned char *ekey, size_t ekey_len,
     if (!HMAC(EVP_sha1(), mkey, mkey_len, ctxt, *ctxt_len,
                           mac, (unsigned int *) mac_len))
         goto cleanup;
-    EVP_CIPHER_CTX_cleanup(&ctx);
+    EVP_CIPHER_CTX_cleanup(ctx);
     return 0;
     
 cleanup:
@@ -605,7 +606,8 @@ int verify_then_decrypt(const unsigned char *ekey, size_t ekey_len,
                         const unsigned char *iv, size_t iv_len,
                         unsigned char *output, size_t *output_len)
 {
-    EVP_CIPHER_CTX ctx;
+    EVP_CIPHER_CTX *ctx;
+    ctx = EVP_CIPHER_CTX_new();
     EVP_CIPHER *cipher = NULL;
     unsigned char auth[EVP_MAX_MD_SIZE];
     size_t auth_len = EVP_MAX_MD_SIZE;
@@ -625,7 +627,7 @@ int verify_then_decrypt(const unsigned char *ekey, size_t ekey_len,
     if (auth_len != mac_len) goto cleanup;
     if (memcmp(mac, auth, mac_len) != 0) goto cleanup;
 
-    EVP_CIPHER_CTX_init(&ctx);
+    EVP_CIPHER_CTX_init(ctx);
     switch(ekey_len){
         case 16:
             cipher = (EVP_CIPHER *)EVP_aes_128_cbc();
@@ -642,13 +644,13 @@ int verify_then_decrypt(const unsigned char *ekey, size_t ekey_len,
     if (*output_len < ctxt_len) goto cleanup;
     *output_len = 0;
 
-    if (!EVP_DecryptInit(&ctx, cipher, ekey, iv)) goto cleanup;
-    if (!EVP_DecryptUpdate(&ctx, output, (int *) output_len, 
+    if (!EVP_DecryptInit(ctx, cipher, ekey, iv)) goto cleanup;
+    if (!EVP_DecryptUpdate(ctx, output, (int *) output_len, 
                            ctxt, ctxt_len)) goto cleanup;
-    EVP_DecryptFinal(&ctx, output + *output_len, &len);
+    EVP_DecryptFinal(ctx, output + *output_len, &len);
     *output_len += len;
     
-    EVP_CIPHER_CTX_cleanup(&ctx);
+    EVP_CIPHER_CTX_cleanup(ctx);
     return 0;
     
 cleanup:

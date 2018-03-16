@@ -12,6 +12,7 @@
 /** @addtogroup APDP
  * @{ 
  */
+#include <openssl/rsa.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
@@ -25,6 +26,7 @@
 #include "apdp_storage.h"
 #include "apdp_misc.h"
 #include "pdp_misc.h"
+
 
 /// a struct that holds all the arguments for a worker thread
 struct pdp_job_arg {

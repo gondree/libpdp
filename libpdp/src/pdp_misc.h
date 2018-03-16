@@ -81,6 +81,12 @@
     ((!ctx || (ctx->algo != PDP_APDP) || !ctx->apdp_param) ? 0 : 1)
 
 /**
+ * @brief Returns 1 if the context is appropriate for mrpdp.
+ **/
+#define is_mrpdp(ctx) \
+    ((!ctx || (ctx->algo != PDP_MRPDP) || !ctx->mrpdp_param) ? 0 : 1)
+
+/**
  * @brief Returns 1 if the context is appropriate for cpor.
  **/
 #define is_cpor(ctx) \

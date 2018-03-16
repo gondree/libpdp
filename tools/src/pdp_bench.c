@@ -18,6 +18,7 @@
 #include <pdp/apdp.h>
 #include <pdp/sepdp.h>
 #include <pdp/cpor.h>
+#include <pdp/mrpdp.h>
 #include "time_it.h"
 
 //
@@ -106,7 +107,7 @@ typedef struct {
 /// A data structure that organizes long_opts into a help menu
 const opts_desc_t opts_desc[] = {
     {-1, "Required arguments"},
-    {0, " [MAC-PDP, APDP, SEPDP, CPOR], select the algorithm"},
+    {0, " [MAC-PDP, APDP, MRPDP, SEPDP, CPOR], select the algorithm"},
     {1, " [filename], the name of file to process"},
     {-1, "Operation arguments"},
     {7, ", tag the file"},
@@ -142,6 +143,12 @@ const opts_desc_t opts_desc[] = {
     {20, " [bytes], encryption key length"},
     {23, ", no provable security / faster key generation (APDP)"},
     {24, ", use a weaker protocol, the E-PDP variant (of APDP)"},
+    {-1, "MRPDP algorithm OPTIONS"},
+    {17, " [bytes], PRF key length"},
+    {18, " [bytes], PRP key length"},
+    {19, " [bits], RSA key length (MRPDP)"},
+    {20, " [bytes], encryption key length"},
+    {23, ", no provable security / faster key generation (MRPDP)"},
     {-1, "CPOR algorithm OPTIONS"},
     {16, " [num], select non-default sector size (CPOR)"},
     {22, " [bits], bit-length of prime over which Z_p is generated (CPOR)"},
@@ -193,6 +200,8 @@ typedef struct {
     unsigned int prf_key_size;
     unsigned int prp_key_size;
     unsigned int apdp_opts;
+    unsigned int mrpdp_opts;
+    unsigned int numReplicas;
     unsigned int rsa_key_size;
     unsigned int aes_key_size;
     unsigned int enc_key_size;
@@ -364,6 +373,8 @@ int main(int argc, char **argv)
         params.alg = PDP_MACPDP;
     } else if (strncmp(params.algo, "APDP", strlen("APDP")) == 0) {
         params.alg = PDP_APDP;
+    } else if (strncmp(params.algo, "MRPDP", strlen("MRPDP")) == 0) {
+        params.alg = PDP_MRPDP;
     } else if (strncmp(params.algo, "SEPDP", strlen("SEPDP")) == 0) {
         params.alg = PDP_SEPDP;
     } else if (strncmp(params.algo, "CPOR", strlen("CPOR")) == 0) {
@@ -419,6 +430,22 @@ int main(int argc, char **argv)
                 ctx->apdp_param->rsa_key_size = params.rsa_key_size;
             if (params.apdp_opts)
                 ctx->apdp_param->opts = params.apdp_opts;
+            break;
+	case PDP_MRPDP:
+            if (params.block_size)
+                ctx->mrpdp_param->block_size = params.block_size;
+            if (params.numReplicas)
+                ctx->mrpdp_param->numReplicas = params.numReplicas;
+            if (params.cparam)
+                ctx->mrpdp_param->num_challenge_blocks = params.cparam;
+            if (params.prf_key_size)
+                ctx->mrpdp_param->prf_key_size = params.prf_key_size;
+            if (params.prp_key_size)
+                ctx->mrpdp_param->prp_key_size = params.prp_key_size;
+            if (params.rsa_key_size)
+                ctx->mrpdp_param->rsa_key_size = params.rsa_key_size;
+            if (params.apdp_opts)
+                ctx->mrpdp_param->opts = params.mrpdp_opts;
             break;
         case PDP_CPOR:
             if (params.block_size)
@@ -516,6 +543,14 @@ int main(int argc, char **argv)
                 printf("\tPRF Key Len: %zd\n", ctx->apdp_param->prf_key_size);
                 printf("\tPRP Key Len: %zd\n", ctx->apdp_param->prp_key_size);
                 printf("\tRSA Key Len: %zd\n", ctx->apdp_param->rsa_key_size);
+                break;
+	    case PDP_MRPDP:
+                printf("\tBlocksize: %d\n", ctx->mrpdp_param->block_size);
+                printf("\tNumber of challenges: %d\n", 
+                        ctx->mrpdp_param->num_challenge_blocks);
+                printf("\tPRF Key Len: %zd\n", ctx->mrpdp_param->prf_key_size);
+                printf("\tPRP Key Len: %zd\n", ctx->mrpdp_param->prp_key_size);
+                printf("\tRSA Key Len: %zd\n", ctx->mrpdp_param->rsa_key_size);
                 break;
             case PDP_CPOR:
                 printf("\tBlocksize: %d\n", ctx->cpor_param->block_size);
@@ -666,6 +701,11 @@ TOC("Verify file");
                 if (ver_chal.apdp)
                     printf("\tNum challenges: %d\n", ver_chal.apdp->c);
                 break;
+	    case PDP_MRPDP:
+                printf("\tNum blocks: %d\n", ctx->mrpdp_param->num_blocks);
+                if (ver_chal.mrpdp)
+                    printf("\tNum challenges: %d\n", ver_chal.mrpdp->c);
+                break;
             case PDP_CPOR:
                 printf("\tNum blocks: %d\n", ctx->cpor_param->num_blocks);
                 printf("\tNum Sectors: %u\n", ctx->cpor_param->num_sectors);
@@ -719,6 +759,23 @@ TOC("Verify file");
                         (params.apdp_opts & APDP_NO_SAFE_PRIMES) ? 0: 1,
                     "# challenges", 
                         ver_chal.apdp ? ver_chal.apdp->c : params.cparam,
+                    "# threads", ctx->num_threads,
+                    "Filename", ctx->filepath);
+            break;
+        case PDP_MRPDP:
+            sprintf(meta, "%s:%s %d:%s %zd:%s %zd:%s %zd: %s %hu:"
+                          "%s %hu:%s %d:%s %d:%s %s", 
+                    params.algo,
+                    "Block size", ctx->mrpdp_param->block_size,
+                    "PRF key size", ctx->mrpdp_param->prf_key_size,
+                    "PRP key size", ctx->mrpdp_param->prp_key_size,
+                    "RSA key size", ctx->mrpdp_param->rsa_key_size,
+                    "use E-PDP", 
+                        (params.mrpdp_opts & MRPDP_USE_E_PDP) ? 1 : 0,
+                    "use safe primes", 
+                        (params.mrpdp_opts & MRPDP_NO_SAFE_PRIMES) ? 0: 1,
+                    "# challenges", 
+                        ver_chal.mrpdp ? ver_chal.mrpdp->c : params.cparam,
                     "# threads", ctx->num_threads,
                     "Filename", ctx->filepath);
             break;

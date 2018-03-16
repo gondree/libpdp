@@ -12,6 +12,7 @@
 
 #include <pdp/macpdp_types.h>
 #include <pdp/apdp_types.h>
+#include <pdp/mrpdp_types.h>
 #include <pdp/cpor_types.h>
 #include <pdp/sepdp_types.h>
 #ifdef _S3_SUPPORT
@@ -55,6 +56,7 @@ typedef struct {
     union {
         pdp_macpdp_ctx_t *__macpdp;
         pdp_apdp_ctx_t *__apdp;
+        pdp_mrpdp_ctx_t *__mrpdp;
         pdp_cpor_ctx_t *__cpor;
         pdp_sepdp_ctx_t *__sepdp;
     } __pdp_ctx_param_u;
@@ -67,6 +69,8 @@ typedef struct {
 #define macpdp_param __pdp_ctx_param_u.__macpdp
 /// Macro magic to access ctx->apdp_param->x correctly
 #define apdp_param   __pdp_ctx_param_u.__apdp
+/// Macro magic to access ctx->mrpdp_param->x correctly
+#define mrpdp_param  __pdp_ctx_param_u.__mrpdp
 /// Macro magic to access ctx->cpor_param->x correctly
 #define cpor_param   __pdp_ctx_param_u.__cpor
 /// Macro magic to access ctx->sepdp_param->x correctly
@@ -76,6 +80,7 @@ typedef struct {
 typedef union {
     pdp_macpdp_key_t *macpdp;
     pdp_apdp_key_t *apdp;
+    pdp_mrpdp_key_t *mrpdp;
     pdp_cpor_key_t *cpor;
     pdp_sepdp_key_t *sepdp;
 } pdp_key_t;
@@ -84,6 +89,7 @@ typedef union {
 typedef union {
     pdp_macpdp_tagdata_t *macpdp;
     pdp_apdp_tagdata_t *apdp;
+    pdp_mrpdp_tagdata_t *mrpdp;
     pdp_cpor_tagdata_t *cpor;
     pdp_sepdp_tagdata_t *sepdp;
 } pdp_tag_t;
@@ -92,6 +98,7 @@ typedef union {
 typedef union {
     pdp_macpdp_challenge_t *macpdp;
     pdp_apdp_challenge_t *apdp;
+    pdp_mrpdp_challenge_t *mrpdp;
     pdp_cpor_challenge_t *cpor;
     pdp_sepdp_challenge_t *sepdp;
 } pdp_challenge_t;
@@ -100,6 +107,7 @@ typedef union {
 typedef union {
     pdp_macpdp_proof_t *macpdp;
     pdp_apdp_proof_t *apdp;
+    pdp_mrpdp_proof_t *mrpdp;
     pdp_cpor_proof_t *cpor;
     pdp_sepdp_proof_t *sepdp;
 } pdp_proof_t;

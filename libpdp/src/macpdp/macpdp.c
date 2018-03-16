@@ -180,7 +180,7 @@ static int macpdp_tag_block(const pdp_ctx_t *ctx, const pdp_macpdp_key_t *key,
                             const unsigned char *block, unsigned int index, 
                             unsigned char *tag, unsigned int *tag_len)
 {
-    HMAC_CTX hctx;
+    HMAC_CTX *hctx;
     pdp_macpdp_ctx_t *p;
     
     if (!is_macpdp(ctx) || !key || !block || !tag || !tag_len)
@@ -188,13 +188,13 @@ static int macpdp_tag_block(const pdp_ctx_t *ctx, const pdp_macpdp_key_t *key,
     p = ctx->macpdp_param;
     
     // calculate the tag for this block
-    HMAC_CTX_init(&hctx);
-    HMAC_Init(&hctx, key->prf_key, key->prf_key_size, EVP_sha1());
-    HMAC_Update(&hctx, (const unsigned char *) &index, sizeof(unsigned int));
-    HMAC_Update(&hctx, (unsigned char *) ctx->filepath, (int) ctx->filepath_len);
-    HMAC_Update(&hctx, block, p->block_size);
-    HMAC_Final(&hctx, tag, tag_len);
-    HMAC_cleanup(&hctx);
+    HMAC_CTX_init(hctx);
+    HMAC_Init(hctx, key->prf_key, key->prf_key_size, EVP_sha1());
+    HMAC_Update(hctx, (const unsigned char *) &index, sizeof(unsigned int));
+    HMAC_Update(hctx, (unsigned char *) ctx->filepath, (int) ctx->filepath_len);
+    HMAC_Update(hctx, block, p->block_size);
+    HMAC_Final(hctx, tag, tag_len);
+    HMAC_cleanup(hctx);
 
 #ifdef _PDP_DEBUG
     pdp_hexdump("block", index, block, p->block_size);
@@ -632,7 +632,8 @@ static int macpdp_verify_block(const pdp_ctx_t *ctx, const pdp_macpdp_key_t *key
                                unsigned int index, const unsigned char *block, 
                                const unsigned char *tag)
 {
-    HMAC_CTX hctx;
+    HMAC_CTX *hctx;
+    //hctx = HMAC_CTX_new();
     pdp_macpdp_ctx_t *p = NULL;
     unsigned char *digest = NULL;
     unsigned int digest_len = 0;
@@ -645,13 +646,13 @@ static int macpdp_verify_block(const pdp_ctx_t *ctx, const pdp_macpdp_key_t *key
     if ((digest = calloc(1, p->tag_size)) == NULL)
         return -1;
     
-    HMAC_CTX_init(&hctx);
-    HMAC_Init(&hctx, key->prf_key, key->prf_key_size, EVP_sha1());
-    HMAC_Update(&hctx, (const unsigned char *) &index, sizeof(unsigned int));
-    HMAC_Update(&hctx, (unsigned char *)ctx->filepath, (int)ctx->filepath_len);
-    HMAC_Update(&hctx, block, p->block_size);
-    HMAC_Final(&hctx, digest, &digest_len);
-    HMAC_cleanup(&hctx);
+    HMAC_CTX_init(hctx);
+    HMAC_Init(hctx, key->prf_key, key->prf_key_size, EVP_sha1());
+    HMAC_Update(hctx, (const unsigned char *) &index, sizeof(unsigned int));
+    HMAC_Update(hctx, (unsigned char *)ctx->filepath, (int)ctx->filepath_len);
+    HMAC_Update(hctx, block, p->block_size);
+    HMAC_Final(hctx, digest, &digest_len);
+    HMAC_cleanup(hctx);
     err = memcmp(digest, tag, digest_len);
 
 #ifdef _PDP_DEBUG

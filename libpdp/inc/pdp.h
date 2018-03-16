@@ -38,6 +38,7 @@
 #define PDP_APDP   0x01     ///< Select the A-PDP algo
 #define PDP_SEPDP  0x02     ///< Select the SE-PDP algo
 #define PDP_CPOR   0x03     ///< Select the CPOR algo
+#define PDP_MRPDP  0x04     ///< Select the MRPDP algo
 
 
 /*
