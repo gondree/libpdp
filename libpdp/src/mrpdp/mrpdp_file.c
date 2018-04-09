@@ -51,7 +51,7 @@ int mrpdp_write_tags_to_file(const pdp_ctx_t *ctx, const pdp_mrpdp_tagdata_t* t)
         PDP_ERR("unable to create %s", ctx->ofilepath);
         goto cleanup;
     }
-
+  
     if ((mrpdp_serialize_tags(ctx, t, &buf, &len)) != 0) goto cleanup;
     do {        
         off += fwrite(buf + off, 1, len, tagfile);

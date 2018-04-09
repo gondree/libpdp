@@ -84,6 +84,7 @@ static struct option long_opts[] = {
     {"apdp_use_epdp", no_argument, NULL, '#'},
     {"minutes", required_argument, NULL, 'M'},
     {"year", required_argument, NULL, 'Y'},
+    {"numReplicas", required_argument, NULL, '9'},
 #ifdef _THREAD_SUPPORT
     {"numthreads", required_argument, NULL, 'r'},
 #endif
@@ -149,6 +150,7 @@ const opts_desc_t opts_desc[] = {
     {19, " [bits], RSA key length (MRPDP)"},
     {20, " [bytes], encryption key length"},
     {23, ", no provable security / faster key generation (MRPDP)"},
+    {27, " [num], specify the number of file replicas"},
     {-1, "CPOR algorithm OPTIONS"},
     {16, " [num], select non-default sector size (CPOR)"},
     {22, " [bits], bit-length of prime over which Z_p is generated (CPOR)"},
@@ -266,7 +268,7 @@ int main(int argc, char **argv)
     }
 
     while ((opt = getopt_long(argc, argv, "a:b:c:d:ef:hk:l:m:n:r:t:vCM:PTVY:3"
-                              "4:5:6:7:8:~:*!#$", long_opts, NULL)) != -1) {
+                              "4:5:6:7:8:9:~:*!#$", long_opts, NULL)) != -1) {
         switch(opt) {
             case 'a':
                 params.algo = optarg;
@@ -343,6 +345,9 @@ int main(int argc, char **argv)
                 break;
             case '8':
                 params.mac_key_size = atoi(optarg);
+                break;
+            case '9':
+                params.numReplicas = atoi(optarg);
                 break;
             case '~':
                 params.lambda = atoi(optarg);

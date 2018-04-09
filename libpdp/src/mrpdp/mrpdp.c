@@ -308,22 +308,24 @@ cleanup:
 /*static int mrpdp_gen_replica(pdp_ctx_t *ctx, pdp_mrpdp_key_t *key,
                           unsigned char *block, size_t block_len,
                           int index, pdp_mrpdp_tag_t **t)*/
-static void *mrpdp_gen_replica(void *args, unsigned char *retData)
+static void *mrpdp_gen_replica(void *args, pdp_mrpdp_tagdata_t *retData)
 {
     // Add all the verification code
     struct pdp_job_arg *arg = (struct pdp_job_arg *) args;
     pdp_ctx_t *ctx;
     pdp_mrpdp_ctx_t *p;
     unsigned char *concat = NULL;
-    unsigned char *retblock = NULL;
+    //unsigned char *retblock = NULL;
     int *ret = NULL;
-    size_t len, block_len;
-    unsigned char *prf;
+    //size_t len, block_len;
+    //unsigned char *prf;
     unsigned char *buf = NULL;
-    BIGNUM *retbuf = NULL;
-    int blkShift = 0;
+    //BIGNUM *retbuf = NULL;
+    //int blkShift = 0;
+    int blockCounter = 0;
     BIGNUM *bigPRF = NULL;
     BIGNUM *bigbuf = NULL;
+    pdp_mrpdp_tag_t *tag = NULL;
     
     if (!arg || !arg->ctx || !arg->key || !arg->file ||
                 !arg->tags || !arg->numblocks)
@@ -333,47 +335,56 @@ static void *mrpdp_gen_replica(void *args, unsigned char *retData)
     p = ctx->mrpdp_param;
     
     // Initialize Memory
-    retData = malloc(p->numReplicas * arg->numblocks * p->block_size);
-    if ((retbuf = BN_new()) == NULL) goto cleanup;
+    //retData = malloc(p->numReplicas * arg->numblocks * p->block_size);
+    //if ((retbuf = BN_new()) == NULL) goto cleanup;
     if ((bigPRF = BN_new()) == NULL) goto cleanup;
     if ((bigbuf = BN_new()) == NULL) goto cleanup;
+    if ((tag = mrpdp_tag_new()) == NULL) goto cleanup;
+    concat = malloc(sizeof(int) * 2);
+    buf = malloc(p->block_size);
     
     // Psuedocode implementation
     for (int i = 0; i < p->numReplicas; i++) {
         for (int j = 0; j < arg->numblocks; j++) {
+            // create a new tag
+            tag->index = j;
             // Concatenate i and j to compute random value
-            concat = malloc(sizeof(int) * 2);
             memcpy(concat, &i, sizeof(int));
             memcpy(concat + sizeof(int), &j, sizeof(int));
             
             // Compute a random value prf = fx(i || j)
-            prf = gen_prf_f(arg->key->v, p->prf_key_size, *concat, &len);
+            tag->index_prf = gen_prf_f(arg->key->v, p->prf_key_size, 
+                    *concat, &(tag->index_prf_size));
+            if (!tag->index_prf) goto cleanup;
             
-            // Compute the replica's block (block = oldblock + prf (need to be large integers))
+            // Compute the replica's block 
+            //(block = oldblock + prf (need to be large integers))
             fseek(arg->file, j * p->block_size, SEEK_SET);
             fread(buf, 1, p->block_size, arg->file);
             
             // Turn the data into BIGNUM
             bigbuf = BN_bin2bn(buf, p->block_size, NULL);
             if (!bigbuf) goto cleanup;
-            bigPRF = BN_bin2bn(prf, p->prf_key_size, NULL);
+            bigPRF = BN_bin2bn(tag->index_prf, p->prf_key_size, NULL);
             if (!bigPRF) goto cleanup;
             
-            BN_add(retbuf, bigbuf, bigPRF);
+            BN_add(tag->Tim, bigbuf, bigPRF);
+            retData->tags[blockCounter] = tag;
+            blockCounter++;
             // convert retbuf to unsigned char. Add it to return buffer
-            block_len = BN_num_bytes(retbuf);
+            /*block_len = BN_num_bytes(retbuf);
             if ((retblock = malloc(block_len)) == NULL) goto cleanup;
             BN_bn2bin(retbuf, retblock);
             memcpy(retData + blkShift, retblock, block_len);
             blkShift += block_len;
-            free(retblock);
+            free(retblock);*/
         }
     }
-    free(retbuf);
+    //free(retbuf);
     
     cleanup:
-    if (!ret || (ret && *ret))
-        PDP_ERR("some thread was unable to create a tag.");
+    //if (!ret || (ret && *ret))
+        //PDP_ERR("some thread was unable to create a tag.");
       //sfree(buf, buf_len);
 #ifdef _THREAD_SUPPORT
     if (ctx->num_threads > 1)
@@ -461,7 +472,8 @@ static int mrpdp_gen_tags_all(pdp_ctx_t *ctx, pdp_mrpdp_key_t *k,
     struct pdp_job_arg arg;
     int *ret = NULL;
     int status = -1;
-    unsigned char *replicaData = NULL;
+    //unsigned char *replicaData = NULL;
+    pdp_mrpdp_tagdata_t replicaStruct;
 
     // populate the arguments to perform the job
     arg.ctx = ctx;
@@ -475,8 +487,41 @@ static int mrpdp_gen_tags_all(pdp_ctx_t *ctx, pdp_mrpdp_key_t *k,
     // perform the job
     ret = (int *) mrpdp_tag_thread((void *) &arg);
     
-    //static void *mrpdp_gen_replica(void *args, int numReplicas, unsigned char *retData)
-    mrpdp_gen_replica((void *) &arg, replicaData);
+    if (p->numReplicas > 0) {
+        // Number of tags combined for every replica
+        replicaStruct.tags_num = p->numReplicas * arg.numblocks;
+        // Byte length of tags
+        replicaStruct.tags_size = p->numReplicas * arg.numblocks 
+                * p->block_size;
+        // Allocate space for a pointer for each tag
+        replicaStruct.tags = malloc(sizeof(pdp_mrpdp_tag_t *) 
+                * replicaStruct.tags_num);
+        
+        mrpdp_gen_replica((void *) &arg, &replicaStruct);
+        mrpdp_store(ctx, &replicaStruct);
+        //I know numReplicas through p->numReplicas, 
+        //I know numBlocks and block size 
+        //Create pdp_mrpdp_tagdata_t structs and fill them with contents of
+        //replicaData then call mrpdp_write_tags_to_file for each of them
+
+        // Allocate memory for tagdata structs for replica files
+        
+        //pdp_mrpdp_tagdata_t replicaStruct = malloc(p->numReplicas * 
+        //        sizeof(pdp_mrpdp_tagdata_t));
+
+        // For each replica, create a struct and write to outfile
+        //for (int index = 0; index < p->numReplicas; index++) {
+            /*replicaStructs[index].tags = malloc(sizeof(pdp_mrpdp_tagdata_t));
+            replicaStructs[index].tags[0] = malloc(p->num_blocks * p->block_size);
+            memcpy(replicaStructs[index].tags[0], replicaData, 
+                    p->num_blocks * p->block_size);
+            replicaData += (p->num_blocks * p->block_size);
+            replicaStructs[index].tags_size = p->num_blocks * 
+                    sizeof(pdp_mrpdp_tagdata_t *);
+            replicaStructs[index].tags_num = p->num_blocks;
+            mrpdp_store(ctx, &replicaStructs[index]);*/
+        //}
+    }
     
     // check the return code for error
     if (!ret || (*ret != 0)) goto cleanup;

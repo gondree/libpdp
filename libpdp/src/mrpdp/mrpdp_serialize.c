@@ -105,7 +105,6 @@ int mrpdp_serialize_tags(const pdp_ctx_t *ctx, const pdp_mrpdp_tagdata_t* t,
         if (!BN_bn2bin(tag->Tim, tim)) goto cleanup;
         memcpy(buf_ptr, tim, tim_size);
         buf_ptr += tim_size;
-
         // write index
         memcpy(buf_ptr, &(tag->index), sizeof(tag->index));
         buf_ptr += sizeof(tag->index);
