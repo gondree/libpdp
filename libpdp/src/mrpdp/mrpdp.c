@@ -315,13 +315,8 @@ static void *mrpdp_gen_replica(void *args, pdp_mrpdp_tagdata_t *retData)
     pdp_ctx_t *ctx;
     pdp_mrpdp_ctx_t *p;
     unsigned char *concat = NULL;
-    //unsigned char *retblock = NULL;
     int *ret = NULL;
-    //size_t len, block_len;
-    //unsigned char *prf;
     unsigned char *buf = NULL;
-    //BIGNUM *retbuf = NULL;
-    //int blkShift = 0;
     int blockCounter = 0;
     BIGNUM *bigPRF = NULL;
     BIGNUM *bigbuf = NULL;
@@ -335,8 +330,6 @@ static void *mrpdp_gen_replica(void *args, pdp_mrpdp_tagdata_t *retData)
     p = ctx->mrpdp_param;
     
     // Initialize Memory
-    //retData = malloc(p->numReplicas * arg->numblocks * p->block_size);
-    //if ((retbuf = BN_new()) == NULL) goto cleanup;
     if ((bigPRF = BN_new()) == NULL) goto cleanup;
     if ((bigbuf = BN_new()) == NULL) goto cleanup;
     if ((tag = mrpdp_tag_new()) == NULL) goto cleanup;
@@ -358,7 +351,6 @@ static void *mrpdp_gen_replica(void *args, pdp_mrpdp_tagdata_t *retData)
             if (!tag->index_prf) goto cleanup;
             
             // Compute the replica's block 
-            //(block = oldblock + prf (need to be large integers))
             fseek(arg->file, j * p->block_size, SEEK_SET);
             fread(buf, 1, p->block_size, arg->file);
             
@@ -371,16 +363,8 @@ static void *mrpdp_gen_replica(void *args, pdp_mrpdp_tagdata_t *retData)
             BN_add(tag->Tim, bigbuf, bigPRF);
             retData->tags[blockCounter] = tag;
             blockCounter++;
-            // convert retbuf to unsigned char. Add it to return buffer
-            /*block_len = BN_num_bytes(retbuf);
-            if ((retblock = malloc(block_len)) == NULL) goto cleanup;
-            BN_bn2bin(retbuf, retblock);
-            memcpy(retData + blkShift, retblock, block_len);
-            blkShift += block_len;
-            free(retblock);*/
         }
     }
-    //free(retbuf);
     
     cleanup:
     //if (!ret || (ret && *ret))
@@ -499,28 +483,6 @@ static int mrpdp_gen_tags_all(pdp_ctx_t *ctx, pdp_mrpdp_key_t *k,
         
         mrpdp_gen_replica((void *) &arg, &replicaStruct);
         mrpdp_store(ctx, &replicaStruct);
-        //I know numReplicas through p->numReplicas, 
-        //I know numBlocks and block size 
-        //Create pdp_mrpdp_tagdata_t structs and fill them with contents of
-        //replicaData then call mrpdp_write_tags_to_file for each of them
-
-        // Allocate memory for tagdata structs for replica files
-        
-        //pdp_mrpdp_tagdata_t replicaStruct = malloc(p->numReplicas * 
-        //        sizeof(pdp_mrpdp_tagdata_t));
-
-        // For each replica, create a struct and write to outfile
-        //for (int index = 0; index < p->numReplicas; index++) {
-            /*replicaStructs[index].tags = malloc(sizeof(pdp_mrpdp_tagdata_t));
-            replicaStructs[index].tags[0] = malloc(p->num_blocks * p->block_size);
-            memcpy(replicaStructs[index].tags[0], replicaData, 
-                    p->num_blocks * p->block_size);
-            replicaData += (p->num_blocks * p->block_size);
-            replicaStructs[index].tags_size = p->num_blocks * 
-                    sizeof(pdp_mrpdp_tagdata_t *);
-            replicaStructs[index].tags_num = p->num_blocks;
-            mrpdp_store(ctx, &replicaStructs[index]);*/
-        //}
     }
     
     // check the return code for error
