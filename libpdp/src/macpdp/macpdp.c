@@ -188,13 +188,17 @@ static int macpdp_tag_block(const pdp_ctx_t *ctx, const pdp_macpdp_key_t *key,
     p = ctx->macpdp_param;
     
     // calculate the tag for this block
-    HMAC_CTX_init(hctx);
-    HMAC_Init(hctx, key->prf_key, key->prf_key_size, EVP_sha1());
+    hctx = HMAC_CTX_new();
+    //  REPLACED::
+    // HMAC_CTX_init(hctx);
+    HMAC_Init_ex(hctx, key->prf_key, key->prf_key_size, EVP_sha1(),NULL);
     HMAC_Update(hctx, (const unsigned char *) &index, sizeof(unsigned int));
     HMAC_Update(hctx, (unsigned char *) ctx->filepath, (int) ctx->filepath_len);
     HMAC_Update(hctx, block, p->block_size);
     HMAC_Final(hctx, tag, tag_len);
-    HMAC_cleanup(hctx);
+    HMAC_CTX_free(hctx);
+    // REPLACED::
+    // HMAC_cleanup(hctx);
 
 #ifdef _PDP_DEBUG
     pdp_hexdump("block", index, block, p->block_size);
@@ -264,6 +268,7 @@ static void *macpdp_tag_thread(void *args)
             goto cleanup;
 
         // store the computed digest to correct location in tags output buffer
+
         memcpy((arg->tags + (p->tag_size * block)), tag, tag_len);
 
         block += ctx->num_threads;
@@ -645,14 +650,19 @@ static int macpdp_verify_block(const pdp_ctx_t *ctx, const pdp_macpdp_key_t *key
 
     if ((digest = calloc(1, p->tag_size)) == NULL)
         return -1;
-    
-    HMAC_CTX_init(hctx);
-    HMAC_Init(hctx, key->prf_key, key->prf_key_size, EVP_sha1());
+    //  REPLACED::
+    // HMAC_CTX_init(hctx);
+
+    hctx = HMAC_CTX_new();
+    HMAC_Init_ex(hctx, key->prf_key, key->prf_key_size, EVP_sha1(),NULL);
     HMAC_Update(hctx, (const unsigned char *) &index, sizeof(unsigned int));
     HMAC_Update(hctx, (unsigned char *)ctx->filepath, (int)ctx->filepath_len);
     HMAC_Update(hctx, block, p->block_size);
     HMAC_Final(hctx, digest, &digest_len);
-    HMAC_cleanup(hctx);
+
+    // REPLACED::
+    // HMAC_cleanup(hctx);
+    HMAC_CTX_free(hctx);
     err = memcmp(digest, tag, digest_len);
 
 #ifdef _PDP_DEBUG

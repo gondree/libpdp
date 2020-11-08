@@ -121,6 +121,18 @@ int apdp_key_gen(const pdp_ctx_t *ctx, pdp_key_t *k, pdp_key_t *pub)
     pdp_apdp_key_t *key = NULL;
     pdp_apdp_key_t *pk = NULL;
 
+    BIGNUM *key_n = NULL;
+    BIGNUM *key_e = NULL;
+    BIGNUM *key_d = NULL;
+    BIGNUM *key_p = NULL;
+    BIGNUM *key_q = NULL;
+    BIGNUM *key_dmp1 = NULL;
+    BIGNUM *key_dmq1 = NULL;
+    BIGNUM *key_iqmp = NULL;
+
+    BIGNUM *bne = NULL;
+
+
     if (!is_apdp(ctx) || !k) return -1;
     p = ctx->apdp_param;
 
@@ -136,68 +148,94 @@ int apdp_key_gen(const pdp_ctx_t *ctx, pdp_key_t *k, pdp_key_t *pub)
     if ((bctx=BN_CTX_new()) == NULL) goto cleanup;
     if ((phi=BN_new()) == NULL) goto cleanup;
     if (use_safe_primes) {
+        //TODO: FIND A FIX FOR INITIALIZATION
+
         if ((key->rsa=RSA_new()) == NULL) goto cleanup;
-        if ((key->rsa->n=BN_new()) == NULL) goto cleanup;
-        if ((key->rsa->d=BN_new()) == NULL) goto cleanup;
-        if ((key->rsa->e=BN_new()) == NULL) goto cleanup;
-        if ((key->rsa->p=BN_new()) == NULL) goto cleanup;
-        if ((key->rsa->q=BN_new()) == NULL) goto cleanup;
-        if ((key->rsa->dmp1=BN_new()) == NULL) goto cleanup;
-        if ((key->rsa->dmq1=BN_new()) == NULL) goto cleanup;
-        if ((key->rsa->iqmp=BN_new()) == NULL) goto cleanup;
+        
+        key_n = BN_new();
+        key_e = BN_new();
+        key_d = BN_new();
+        key_p = BN_new();
+        key_q = BN_new();
+        key_dmp1 = BN_new();
+        key_dmq1 = BN_new();
+        key_iqmp = BN_new();
+
+        if (!key_n || !key_d || !key_e || !key_p
+            || !key_q || !key_dmp1 || !key_dmq1 || !key_iqmp)
+            goto cleanup;
+
+        // if ((key->rsa->n=BN_new()) == NULL) goto cleanup;
+        // if ((key->rsa->d=BN_new()) == NULL) goto cleanup;
+        // if ((key->rsa->e=BN_new()) == NULL) goto cleanup;
+        // if ((key->rsa->p=BN_new()) == NULL) goto cleanup;
+        // if ((key->rsa->q=BN_new()) == NULL) goto cleanup;
+        // if ((key->rsa->dmp1=BN_new()) == NULL) goto cleanup;
+        // if ((key->rsa->dmq1=BN_new()) == NULL) goto cleanup;
+        // if ((key->rsa->iqmp=BN_new()) == NULL) goto cleanup;
     }
     if ((key->v = malloc(p->prf_key_size)) == NULL) goto cleanup;
     memset(key->v, 0, p->prf_key_size);
 
     // Generate the RSA key pair
     if (!use_safe_primes) {
-        key->rsa = RSA_generate_key(p->rsa_key_size, APDP_DEFAULT_RSA_PUB_EXP,
-                                    NULL, NULL);
+
+        bne = BN_new();
+        if(!BN_set_word(bne, APDP_DEFAULT_RSA_PUB_EXP)) goto cleanup;
+
+
+        RSA_generate_key_ex(key->rsa,p->rsa_key_size, bne,
+                                    NULL);
         if (!key->rsa) goto cleanup;
     } else {
         // Generate two different, safe primes p and q
-        if (!BN_generate_prime(key->rsa->p, (p->rsa_key_size/2), 1, 
-                               NULL, NULL, NULL, NULL))
+
+
+        if (!BN_generate_prime_ex(key_p, (p->rsa_key_size/2), 1, 
+                               NULL, NULL, NULL))
             goto cleanup;
-        if (!BN_is_prime(key->rsa->p, BN_prime_checks, NULL, bctx, NULL))
+        if (!BN_is_prime_ex(key_p, BN_prime_checks, bctx, NULL))
             goto cleanup;
-        if (!BN_generate_prime(key->rsa->q, (p->rsa_key_size/2), 1, 
-                               NULL, NULL, NULL, NULL))
+        if (!BN_generate_prime_ex(key_q, (p->rsa_key_size/2), 1, 
+                               NULL, NULL, NULL))
             goto cleanup;
-        if (!BN_is_prime(key->rsa->q, BN_prime_checks, NULL, bctx, NULL))
+        if (!BN_is_prime_ex(key_q, BN_prime_checks, bctx, NULL))
             goto cleanup;
-        if (BN_cmp(key->rsa->p, key->rsa->q) == 0)
+        if (BN_cmp(key_p, key_q) == 0)
             goto cleanup;
         // Create RSA modulus N
-        if (!BN_mul(key->rsa->n, key->rsa->p, key->rsa->q, bctx))
+        if (!BN_mul(key_n, key_p, key_q, bctx))
             goto cleanup;
         // Set e
-        if (!BN_set_word(key->rsa->e, APDP_DEFAULT_RSA_PUB_EXP))
+        if (!BN_set_word(key_e, APDP_DEFAULT_RSA_PUB_EXP))
             goto cleanup;
         // Generate phi and d
-        if (!BN_sub(r1, key->rsa->p, BN_value_one()))  // = p-1
+        if (!BN_sub(r1, key_p, BN_value_one()))  // = p-1
             goto cleanup;
-        if (!BN_sub(r2, key->rsa->q, BN_value_one()))  // = q-1
+        if (!BN_sub(r2, key_q, BN_value_one()))  // = q-1
             goto cleanup;
         if (!BN_mul(phi, r1, r2, bctx))                // phi = (p-1)(q-1)
             goto cleanup;
-        if (!BN_mod_inverse(key->rsa->d, key->rsa->e, phi, bctx)) // = d
+        if (!BN_mod_inverse(key_d, key_e, phi, bctx)) // = d
             goto cleanup;
         // Calculate d mod (p-1)
-        if (!BN_mod(key->rsa->dmp1, key->rsa->d, r1, bctx))
+        if (!BN_mod(key_dmp1, key_d, r1, bctx))
             goto cleanup;
         // Calculate d mod (q-1)
-        if (!BN_mod(key->rsa->dmq1, key->rsa->d, r2, bctx))
+        if (!BN_mod(key_dmq1, key_d, r2, bctx))
             goto cleanup;
         // Calculate the inverse of q mod p
-        if (!BN_mod_inverse(key->rsa->iqmp, key->rsa->q, key->rsa->p, bctx))
+        if (!BN_mod_inverse(key_iqmp, key_q, key_p, bctx))
             goto cleanup;
+        RSA_set0_key(key->rsa,key_n,key_e,key_d);
+        RSA_set0_factors(key->rsa,key_p,key_q);
+        RSA_set0_crt_params(key->rsa,key_dmp1,key_dmq1,key_iqmp);
     }
     // Check the RSA key pair
     if (!RSA_check_key(key->rsa)) goto cleanup;
 
     // Pick a PDP generator, using the RSA modulus N
-    if (pick_pdp_generator(&(key->g), key->rsa->n)) goto cleanup;
+    if (pick_pdp_generator(&(key->g), key_n)) goto cleanup;
 
     // Generate v, the symmetric key for the PRF
     if (!RAND_bytes(key->v, p->prf_key_size)) goto cleanup;
@@ -216,10 +254,30 @@ int apdp_key_gen(const pdp_ctx_t *ctx, pdp_key_t *k, pdp_key_t *pub)
     pub->apdp = pk;
 
     if ((pk->rsa=RSA_new()) == NULL) goto cleanup;
-    if ((pk->rsa->n = BN_dup(key->rsa->n)) == NULL) goto cleanup;
-    if ((pk->rsa->e = BN_dup(key->rsa->e)) == NULL) goto cleanup;
-    pk->rsa->d = pk->rsa->p = pk->rsa->q = NULL;
-    pk->rsa->dmp1 = pk->rsa->dmq1 = pk->rsa->iqmp = NULL;
+
+    BIGNUM *pk_n = NULL;
+    BIGNUM *pk_e = NULL;
+    BIGNUM *pk_d = NULL;
+    BIGNUM *pk_p = NULL;
+    BIGNUM *pk_q = NULL;
+    BIGNUM *pk_dmp1 = NULL;
+    BIGNUM *pk_dmq1 = NULL;
+    BIGNUM *pk_iqmp = NULL;
+
+    pk_n = BN_dup(key_n);
+    pk_e = BN_dup(key_e);
+
+    if (!pk_n || !pk_e) goto cleanup;
+
+    // if ((pk->rsa->n = BN_dup(key->rsa->n)) == NULL) goto cleanup;
+    // if ((pk->rsa->e = BN_dup(key->rsa->e)) == NULL) goto cleanup;
+    // pk->rsa->d = pk->rsa->p = pk->rsa->q = NULL;
+    // pk->rsa->dmp1 = pk->rsa->dmq1 = pk->rsa->iqmp = NULL;
+
+    RSA_set0_key(pk->rsa,pk_n,pk_e,pk_d);
+    RSA_set0_factors(pk->rsa,pk_p,pk_q);
+    RSA_set0_crt_params(pk->rsa,pk_dmp1,pk_dmq1,pk_iqmp);
+
     if ((pk->g = BN_dup(key->g)) == NULL) goto cleanup;
     pk->v = NULL;
  
@@ -241,7 +299,7 @@ int apdp_key_gen(const pdp_ctx_t *ctx, pdp_key_t *k, pdp_key_t *pub)
 
 /**
  * @brief Store key data to files.
- *
+ *s
  * Serializes and stores key data, protecting private key data
  * using a password-based key.
  *
@@ -409,7 +467,11 @@ static int apdp_pub_key_open(const pdp_ctx_t *ctx, pdp_key_t *k,
     // Read in the public key
     key->rsa = PEM_read_RSAPublicKey(pub_key, NULL, NULL, NULL);
     if (key->rsa == NULL) goto cleanup;
-    if (!key->rsa->n || !key->rsa->e) goto cleanup;
+
+    const BIGNUM *key_n;
+    const BIGNUM *key_e;
+    RSA_get0_key(key->rsa,&key_n,&key_e,NULL);
+    if (!key_n || !key_e) goto cleanup;
     
     // Read g data length and then binary g data
     fread(&gen_len, sizeof(gen_len), 1, pub_key);
