@@ -77,10 +77,10 @@ int cpor_key_gen(const pdp_ctx_t *ctx, pdp_key_t *k, pdp_key_t *pub)
     // generate Zp
     key->Zp = BN_new();
     // Generate a Zp_bits sized safe prime for our group Zp
-    if (!BN_generate_prime(key->Zp, p->Zp_bits, 1, NULL, NULL, NULL, NULL))
+    if (!BN_generate_prime_ex(key->Zp, p->Zp_bits, 1, NULL, NULL, NULL))
         goto cleanup;
     // Check to see it's prime
-    if (!BN_is_prime(key->Zp, BN_prime_checks, NULL, bctx, NULL))
+    if (!BN_is_prime_ex(key->Zp, BN_prime_checks, bctx, NULL))
         goto cleanup;
 
     // duplicate Zp so prover has access to it  
@@ -296,12 +296,12 @@ static size_t ctx_overhead(void)
 {
     size_t len = 0;
 
-    EVP_CIPHER_CTX ctx;
-    EVP_CIPHER_CTX_init(&ctx);
-    if (!EVP_EncryptInit_ex(&ctx, EVP_aes_256_cbc(), NULL, NULL, NULL))
+    EVP_CIPHER_CTX *ctx;
+    ctx = EVP_CIPHER_CTX_new();
+    if (!EVP_EncryptInit_ex(ctx, EVP_aes_256_cbc(), NULL, NULL, NULL))
         return 0;
-    len = EVP_CIPHER_CTX_block_size(&ctx);
-    EVP_CIPHER_CTX_cleanup(&ctx);
+    len = EVP_CIPHER_CTX_block_size(ctx);
+    EVP_CIPHER_CTX_cleanup(ctx);
     return len;
 }
 

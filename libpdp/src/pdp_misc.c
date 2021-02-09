@@ -286,12 +286,17 @@ BIGNUM *gen_fdh(const RSA *key, const unsigned char *input, size_t len)
     unsigned char *fdh = NULL;
     BIGNUM *fdh_bn = NULL;
     int err = -1;
+    const BIGNUM *key_n;
 
-    if (!key || !key->n || !input || !len)
+    if (!key || !input || !len)
         return NULL;
     
+    RSA_get0_key(key,&key_n,NULL,NULL);
+    if (!key_n)
+        return NULL;
+
     // Get the size of the RSA modulus in bytes
-    n_len = BN_num_bytes(key->n);
+    n_len = BN_num_bytes(key_n);
     
     // Calculate the number of hashes to perform minus one
     num_hashes = n_len/SHA_DIGEST_LENGTH;
@@ -323,7 +328,7 @@ BIGNUM *gen_fdh(const RSA *key, const unsigned char *input, size_t len)
         // Turn the first sizeof(rsa->n) bytes into a big number
         if (!BN_bin2bn(fdh, n_len, fdh_bn)) goto cleanup;
         counter++;
-    } while (BN_ucmp(fdh_bn, key->n) > 0);
+    } while (BN_ucmp(fdh_bn, key_n) > 0);
     err = 0;
 
 cleanup:

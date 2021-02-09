@@ -238,10 +238,18 @@ static int apdp_tag_block(pdp_ctx_t *ctx, pdp_apdp_key_t *key,
     p = ctx->apdp_param;
     
     // Verify keys
-    if (!key->rsa || !key->rsa->d || !key->rsa->n ||
-                     !key->rsa->p || !key->rsa->q || !key->g)
+    if (!key->rsa || !key->g)
         return -1;
-    
+    const BIGNUM *key_d;
+    const BIGNUM *key_n;
+    const BIGNUM *key_q;
+    const BIGNUM *key_p;
+
+    RSA_get0_key(key->rsa,&key_n,NULL,&key_d);
+    RSA_get0_factors(key->rsa,&key_p,&key_q);
+
+    if(!key_n || !key_p || !key_q || !key_d)
+        return -1;
     // Allocate memory
     if ((tag = apdp_tag_new()) == NULL) goto cleanup;
     if ((phi = BN_new()) == NULL) goto cleanup;
@@ -266,19 +274,19 @@ static int apdp_tag_block(pdp_ctx_t *ctx, pdp_apdp_key_t *key,
     if (!message) goto cleanup;
     
     // Calculate phi
-    if (!BN_sub(r0, key->rsa->p, BN_value_one())) goto cleanup; // p-1
-    if (!BN_sub(r1, key->rsa->q, BN_value_one())) goto cleanup; // q-1
+    if (!BN_sub(r0, key_p, BN_value_one())) goto cleanup; // p-1
+    if (!BN_sub(r1, key_q, BN_value_one())) goto cleanup; // q-1
     if (!BN_mul(phi, r0, r1, bctx)) goto cleanup;   // phi = (p-1)(q-1)
     
     // Reduce the message modulo phi(N)
     if (!BN_mod(message, message, phi, bctx)) goto cleanup;
     
     // r0 = g^m
-    if (!BN_mod_exp(r0, key->g, message, key->rsa->n, bctx)) goto cleanup;
+    if (!BN_mod_exp(r0, key->g, message, key_n, bctx)) goto cleanup;
     // r1 = h(W_i) * g^m
     if (!BN_mul(r1, fdh_hash, r0, bctx)) goto cleanup;
     // T_im = (h(W_i) * g^m)^d mod N
-    if (!BN_mod_exp(tag->Tim, r1, key->rsa->d, key->rsa->n, bctx))
+    if (!BN_mod_exp(tag->Tim, r1, key_d, key_n, bctx))
         goto cleanup;
 
     *t = tag;
@@ -596,8 +604,13 @@ int apdp_challenge_gen(const pdp_ctx_t *ctx, const pdp_apdp_key_t *key,
         return -1;
     p = ctx->apdp_param;
 
-    if (!key->rsa || !key->rsa->n || !key->g || 
+    if (!key->rsa ||  !key->g || 
         !p->num_challenge_blocks || !p->num_blocks)
+        return -1;
+
+    const BIGNUM *key_n;
+    RSA_get0_key(key->rsa,&key_n,NULL,NULL);
+    if(!key_n)
         return -1;
 
     // Allocate memory
@@ -614,12 +627,12 @@ int apdp_challenge_gen(const pdp_ctx_t *ctx, const pdp_apdp_key_t *key,
 
     // Generate a random secret s of RSA modulus size from Z*N
     do {
-        if (!BN_rand_range(chal->s, key->rsa->n)) goto cleanup;
-        if (!BN_gcd(r0, chal->s, key->rsa->n, bctx)) goto cleanup;
+        if (!BN_rand_range(chal->s, key_n)) goto cleanup;
+        if (!BN_gcd(r0, chal->s, key_n, bctx)) goto cleanup;
     } while(!BN_is_one(r0));
 
     // Generate the secret base g_s = g^s
-    if (!BN_mod_exp(chal->g_s, key->g, chal->s, key->rsa->n, bctx))
+    if (!BN_mod_exp(chal->g_s, key->g, chal->s, key_n, bctx))
         goto cleanup;
 
     // Generate random bytes for symmetric challenge keys
@@ -687,9 +700,13 @@ static int apdp_proof_update(const pdp_ctx_t *ctx, const pdp_apdp_key_t *key,
     
     if (!is_apdp(ctx) || !key || !proof || !chal)
         return -1;
+
+    const BIGNUM *key_n;
+
+    RSA_get0_key(key->rsa,&key_n,NULL,NULL);
     
     // Verify Key
-    if (!key->rsa->n) return -1;
+    if (!key_n) return -1;
 
     // Allocate memory
     if ((bctx = BN_CTX_new()) == NULL) goto cleanup;
@@ -729,7 +746,7 @@ static int apdp_proof_update(const pdp_ctx_t *ctx, const pdp_apdp_key_t *key,
             goto cleanup;
         
         // Compute T_im ^ coefficient_a */
-        if (!BN_mod_exp(r0, tag->Tim, coefficient_a, key->rsa->n, bctx))
+        if (!BN_mod_exp(r0, tag->Tim, coefficient_a, key_n, bctx))
             goto cleanup;
         // Update T, where T = T1m^a1 * ... * Tim^aj
         if (BN_is_zero(proof->T)) {
@@ -759,7 +776,7 @@ finalize:
     
     // Compute g_s^ (M1 + M2 + ... + Mc) mod N
     if (!BN_mod_exp(proof->rho_temp, chal->g_s, proof->rho_temp, 
-                    key->rsa->n, bctx))
+                    key_n, bctx))
         goto cleanup;
     
     // Compute H(g_s^(M1 + M2 + ... + Mc))
@@ -870,7 +887,15 @@ int apdp_proof_verify(const pdp_ctx_t *ctx, const pdp_apdp_key_t *key,
     p = ctx->apdp_param;
 
     // Verify keys
-    if (!key->rsa || !key->rsa->e || !key->rsa->n)
+
+
+    if (!key->rsa)
+        return -1;
+
+    const BIGNUM *key_n;
+    const BIGNUM *key_e;
+    RSA_get0_key(key->rsa,&key_n,&key_e,NULL);
+    if (!key_n || !key_e)
         return -1;
 
     // Make sure we don't have a "sanitized" challenge
@@ -886,7 +911,7 @@ int apdp_proof_verify(const pdp_ctx_t *ctx, const pdp_apdp_key_t *key,
     if ((bctx = BN_CTX_new()) == NULL) goto cleanup;
 
     // Compute tao where tao = T^e 
-    if (!BN_mod_exp(tao, proof->T, key->rsa->e, key->rsa->n, bctx))
+    if (!BN_mod_exp(tao, proof->T, key_e, key_n, bctx))
         goto cleanup;
 
     // Compute the indices i_j = pi_k1(j); the indices of blocks to sample
@@ -917,14 +942,14 @@ int apdp_proof_verify(const pdp_ctx_t *ctx, const pdp_apdp_key_t *key,
                 goto cleanup;
 
             // Calculate h(W_i)^a
-            if (!BN_mod_exp(r0, fdh_hash, coefficient_a, key->rsa->n, bctx))
+            if (!BN_mod_exp(r0, fdh_hash, coefficient_a, key_n, bctx))
                 goto cleanup;
         }
         // Calculate products of h(W_i)^a (no coefficeint a in E-PDP)
         if (BN_is_zero(denom)) {
             if (!BN_copy(denom, r0)) goto cleanup;
         } else {
-            if (!BN_mod_mul(denom, denom, r0, key->rsa->n, bctx)) goto cleanup;
+            if (!BN_mod_mul(denom, denom, r0, key_n, bctx)) goto cleanup;
         }
         
         // Free memory before next loop iteration
@@ -935,12 +960,12 @@ int apdp_proof_verify(const pdp_ctx_t *ctx, const pdp_apdp_key_t *key,
 
     // Calculate tao, where tao = tao/h(W_i)^a mod N
     // Inverse h(W_i)^a to create 1/h(W_i)^a
-    if (!BN_mod_inverse(denom, denom, key->rsa->n, bctx)) goto cleanup;
+    if (!BN_mod_inverse(denom, denom, key_n, bctx)) goto cleanup;
     // tao = tao * 1/h(W_i)^a mod N
-    if (!BN_mod_mul(tao, tao, denom, key->rsa->n, bctx)) goto cleanup;
+    if (!BN_mod_mul(tao, tao, denom, key_n, bctx)) goto cleanup;
 
     // Calculate tao^s mod N
-    if (!BN_mod_exp(tao_s, tao, chal->s, key->rsa->n, bctx)) goto cleanup;
+    if (!BN_mod_exp(tao_s, tao, chal->s, key_n, bctx)) goto cleanup;
     
     // Calculate H(tao^s mod N)
     H_result = gen_bn_H(tao_s, &(H_result_size));
